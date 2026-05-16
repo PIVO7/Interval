@@ -1,0 +1,461 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04678A75B08319A645E1F633 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9DA9A411DDAC91317A47E15E /* README.md */; };
+		0AE515443A6E22ED5CD1752E /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20627C98A4C8D512E2BCDE3A /* RootTabView.swift */; };
+		1BD170AAA30B95284D7FC156 /* schema.sql in Resources */ = {isa = PBXBuildFile; fileRef = 66A6CDA41091D54124338210 /* schema.sql */; };
+		1FA5DD192AAED161D8C3C6F2 /* IntervalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484355F434C44F806731F9B /* IntervalApp.swift */; };
+		291C0C3EE0D5C89F18DDE75A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 07DE35D61F94F544C94B7E2F /* Localizable.xcstrings */; };
+		2AAFB93F717994638933890A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC5F2596FE2F3A0C1606738 /* HomeView.swift */; };
+		2AF864E11AD2D7D63AA96EBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F0EDBF47A45F8BD7595D1BA /* LaunchScreen.storyboard */; };
+		2B1A506AAEB329A5EACFC5AA /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A69C1F8DEA73FDE65ADF28 /* AccountView.swift */; };
+		429F0DB3FEA29EE41325583B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704F09BF332567EC9ADA8289 /* OnboardingView.swift */; };
+		44133D2151A5848A5755C5FD /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4419A45F035E74D556B60F9 /* AppTheme.swift */; };
+		47929C9AB9C74B46B506794E /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE0D4319DE0D8E63AFE149E /* WorkoutStore.swift */; };
+		4A4D11909F49850F3F9F71C2 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A43E3B68219F6F83F8ED24 /* AudioEngine.swift */; };
+		64A1604F11E93F68743D821B /* FinishedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61318F0E0B965A3A803B7F56 /* FinishedView.swift */; };
+		6F0E8DB303459D483CFE1531 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743D6B0A7D3ADB86B2ADD246 /* CountdownView.swift */; };
+		7EAF8396FD6903D87A0F9E59 /* AudioSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DEE8F83356E0556F83707C /* AudioSettings.swift */; };
+		927B1586414370BEF5D84C29 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C5F0E2E1C757153E6F46A /* FavoritesView.swift */; };
+		A07905595BB0D233B12869E8 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA0056F71F6F39178E7598B /* AuthManager.swift */; };
+		A17BF01BAC09E852E82F4831 /* RoundsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60480A3604D117EEB7DEF405 /* RoundsCard.swift */; };
+		A3B457F9D874C1992D1FFAB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C6AF7C7A136B0B66D856B /* Assets.xcassets */; };
+		A4DD6716BB8588A3EC0FFAD2 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E07EF02E4D97B31FEEC6EEA /* Workout.swift */; };
+		ABACFBA651CF8E11DD06C335 /* ActiveTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA4FA00A621D7D0E5FE2ED /* ActiveTrainingView.swift */; };
+		B13411C45D0F9280A8B0BEEC /* WorkoutEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42169C636F95173A8FAF7B27 /* WorkoutEntity.swift */; };
+		B678B361E4D97F0EA29958AE /* TimePickerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FB683EBF5267D7FC08FA9C /* TimePickerCard.swift */; };
+		B7C7F435EFF180F663765826 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBF417A11F9E0E1675E6DD /* SupabaseManager.swift */; };
+		DA9FD87FB8F37F31B3A77E64 /* SaveFavoriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24BB45715541464AD162385 /* SaveFavoriteSheet.swift */; };
+		DB53AED0D32F52EC2202DEF1 /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72031F1E7D3A722E75F130B3 /* SupabaseConfig.swift */; };
+		DE433687F5F89830CD5D8476 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = CB437C5FD64AA075E0E6F7B3 /* Supabase */; };
+		EA9ED321DBED5A896DC20300 /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE96B872CFACAB6C070AE62 /* TimerEngine.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		07DE35D61F94F544C94B7E2F /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		085C6AF7C7A136B0B66D856B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1484355F434C44F806731F9B /* IntervalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalApp.swift; sourceTree = "<group>"; };
+		20627C98A4C8D512E2BCDE3A /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		2AE96B872CFACAB6C070AE62 /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
+		31DEE8F83356E0556F83707C /* AudioSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSettings.swift; sourceTree = "<group>"; };
+		3DC5F2596FE2F3A0C1606738 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		42169C636F95173A8FAF7B27 /* WorkoutEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutEntity.swift; sourceTree = "<group>"; };
+		44543D7DFF399DB634544935 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		461C5F0E2E1C757153E6F46A /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		463E77F4A71FDE337B83133E /* Interval v1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Interval v1.entitlements"; sourceTree = "<group>"; };
+		549A53017D7ECA154DD398BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		60480A3604D117EEB7DEF405 /* RoundsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundsCard.swift; sourceTree = "<group>"; };
+		61318F0E0B965A3A803B7F56 /* FinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedView.swift; sourceTree = "<group>"; };
+		61A69C1F8DEA73FDE65ADF28 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		66A6CDA41091D54124338210 /* schema.sql */ = {isa = PBXFileReference; path = schema.sql; sourceTree = "<group>"; };
+		704F09BF332567EC9ADA8289 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		72031F1E7D3A722E75F130B3 /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
+		743D6B0A7D3ADB86B2ADD246 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
+		78FB683EBF5267D7FC08FA9C /* TimePickerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerCard.swift; sourceTree = "<group>"; };
+		7E07EF02E4D97B31FEEC6EEA /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		83BBF417A11F9E0E1675E6DD /* SupabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseManager.swift; sourceTree = "<group>"; };
+		84EA4FA00A621D7D0E5FE2ED /* ActiveTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTrainingView.swift; sourceTree = "<group>"; };
+		9DA9A411DDAC91317A47E15E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B24BB45715541464AD162385 /* SaveFavoriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFavoriteSheet.swift; sourceTree = "<group>"; };
+		BCA0056F71F6F39178E7598B /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		C2A43E3B68219F6F83F8ED24 /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		CF2D57CB6C236BBEB65FF6A5 /* Interval v1.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "Interval v1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4419A45F035E74D556B60F9 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		FDE0D4319DE0D8E63AFE149E /* WorkoutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStore.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A5A4C0F2DC1A1167573C4D1A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DE433687F5F89830CD5D8476 /* Supabase in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		23130B48F9CBD6D8D0597DCB = {
+			isa = PBXGroup;
+			children = (
+				92AC1FAD3CDDC8D7948B3204 /* Interval v1 */,
+				35840D326718078B5852511E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		35840D326718078B5852511E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CF2D57CB6C236BBEB65FF6A5 /* Interval v1.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		45D86C501417FF525D30745F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7E07EF02E4D97B31FEEC6EEA /* Workout.swift */,
+				42169C636F95173A8FAF7B27 /* WorkoutEntity.swift */,
+				FDE0D4319DE0D8E63AFE149E /* WorkoutStore.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4D513CF6E4FD6FE370E2B702 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				BCA0056F71F6F39178E7598B /* AuthManager.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		4E64553B775D941DCE33B9C8 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				3DC5F2596FE2F3A0C1606738 /* HomeView.swift */,
+				60480A3604D117EEB7DEF405 /* RoundsCard.swift */,
+				B24BB45715541464AD162385 /* SaveFavoriteSheet.swift */,
+				78FB683EBF5267D7FC08FA9C /* TimePickerCard.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		4EF4528FD1A9055AF45F959B /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				20627C98A4C8D512E2BCDE3A /* RootTabView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		612042B8BD8A102E291194E3 /* Supabase */ = {
+			isa = PBXGroup;
+			children = (
+				66A6CDA41091D54124338210 /* schema.sql */,
+				72031F1E7D3A722E75F130B3 /* SupabaseConfig.swift */,
+				83BBF417A11F9E0E1675E6DD /* SupabaseManager.swift */,
+			);
+			path = Supabase;
+			sourceTree = "<group>";
+		};
+		6505FCD2585D91FEDC5D62D7 /* Active */ = {
+			isa = PBXGroup;
+			children = (
+				84EA4FA00A621D7D0E5FE2ED /* ActiveTrainingView.swift */,
+				743D6B0A7D3ADB86B2ADD246 /* CountdownView.swift */,
+				61318F0E0B965A3A803B7F56 /* FinishedView.swift */,
+				2AE96B872CFACAB6C070AE62 /* TimerEngine.swift */,
+			);
+			path = Active;
+			sourceTree = "<group>";
+		};
+		82323F07C5E6E6F3FF83E4FA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				877621DB108BC16244BE87AC /* Audio */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		83EACDD640F91EC6B702AC10 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				61A69C1F8DEA73FDE65ADF28 /* AccountView.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		877621DB108BC16244BE87AC /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				9DA9A411DDAC91317A47E15E /* README.md */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		879CF06D8B701C1DB4033F9A /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				D4419A45F035E74D556B60F9 /* AppTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		92AC1FAD3CDDC8D7948B3204 /* Interval v1 */ = {
+			isa = PBXGroup;
+			children = (
+				085C6AF7C7A136B0B66D856B /* Assets.xcassets */,
+				549A53017D7ECA154DD398BE /* Info.plist */,
+				463E77F4A71FDE337B83133E /* Interval v1.entitlements */,
+				1484355F434C44F806731F9B /* IntervalApp.swift */,
+				0F0EDBF47A45F8BD7595D1BA /* LaunchScreen.storyboard */,
+				07DE35D61F94F544C94B7E2F /* Localizable.xcstrings */,
+				AD2D894CBD5F651952ABB3AA /* Audio */,
+				4D513CF6E4FD6FE370E2B702 /* Auth */,
+				45D86C501417FF525D30745F /* Models */,
+				4EF4528FD1A9055AF45F959B /* Navigation */,
+				82323F07C5E6E6F3FF83E4FA /* Resources */,
+				C8D2A4EE250F5ED457CBA3F4 /* Screens */,
+				612042B8BD8A102E291194E3 /* Supabase */,
+				879CF06D8B701C1DB4033F9A /* Theme */,
+			);
+			path = "Interval v1";
+			sourceTree = "<group>";
+		};
+		AA08960D06F75D4AFD230441 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				704F09BF332567EC9ADA8289 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		AD2D894CBD5F651952ABB3AA /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				C2A43E3B68219F6F83F8ED24 /* AudioEngine.swift */,
+				31DEE8F83356E0556F83707C /* AudioSettings.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		C0118441E4A5FA8FA90CA6DA /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				461C5F0E2E1C757153E6F46A /* FavoritesView.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		C8D2A4EE250F5ED457CBA3F4 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				83EACDD640F91EC6B702AC10 /* Account */,
+				6505FCD2585D91FEDC5D62D7 /* Active */,
+				C0118441E4A5FA8FA90CA6DA /* Favorites */,
+				4E64553B775D941DCE33B9C8 /* Home */,
+				AA08960D06F75D4AFD230441 /* Onboarding */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FBF5E7D5C8B5BD2B19E1D57E /* Interval v1 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ECFB4D5989F04EAC092088E1 /* Build configuration list for PBXNativeTarget "Interval v1" */;
+			buildPhases = (
+				367B29468EADC36B06EEDA56 /* Sources */,
+				3BF67ECCA1334F9110896DE7 /* Resources */,
+				A5A4C0F2DC1A1167573C4D1A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Interval v1";
+			packageProductDependencies = (
+				CB437C5FD64AA075E0E6F7B3 /* Supabase */,
+			);
+			productName = "Interval v1";
+			productReference = CF2D57CB6C236BBEB65FF6A5 /* Interval v1.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E9B280FDCB3D7FB821C692BE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = 80946DB639ADF21CD5C34F86 /* Build configuration list for PBXProject "Interval v1" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = nl;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				nl,
+			);
+			mainGroup = 23130B48F9CBD6D8D0597DCB;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D9C2E22E342721E2AC858AA1 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FBF5E7D5C8B5BD2B19E1D57E /* Interval v1 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3BF67ECCA1334F9110896DE7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3B457F9D874C1992D1FFAB1 /* Assets.xcassets in Resources */,
+				2AF864E11AD2D7D63AA96EBD /* LaunchScreen.storyboard in Resources */,
+				291C0C3EE0D5C89F18DDE75A /* Localizable.xcstrings in Resources */,
+				04678A75B08319A645E1F633 /* README.md in Resources */,
+				1BD170AAA30B95284D7FC156 /* schema.sql in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		367B29468EADC36B06EEDA56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B1A506AAEB329A5EACFC5AA /* AccountView.swift in Sources */,
+				ABACFBA651CF8E11DD06C335 /* ActiveTrainingView.swift in Sources */,
+				44133D2151A5848A5755C5FD /* AppTheme.swift in Sources */,
+				4A4D11909F49850F3F9F71C2 /* AudioEngine.swift in Sources */,
+				7EAF8396FD6903D87A0F9E59 /* AudioSettings.swift in Sources */,
+				A07905595BB0D233B12869E8 /* AuthManager.swift in Sources */,
+				6F0E8DB303459D483CFE1531 /* CountdownView.swift in Sources */,
+				927B1586414370BEF5D84C29 /* FavoritesView.swift in Sources */,
+				64A1604F11E93F68743D821B /* FinishedView.swift in Sources */,
+				2AAFB93F717994638933890A /* HomeView.swift in Sources */,
+				1FA5DD192AAED161D8C3C6F2 /* IntervalApp.swift in Sources */,
+				429F0DB3FEA29EE41325583B /* OnboardingView.swift in Sources */,
+				0AE515443A6E22ED5CD1752E /* RootTabView.swift in Sources */,
+				A17BF01BAC09E852E82F4831 /* RoundsCard.swift in Sources */,
+				DA9FD87FB8F37F31B3A77E64 /* SaveFavoriteSheet.swift in Sources */,
+				DB53AED0D32F52EC2202DEF1 /* SupabaseConfig.swift in Sources */,
+				B7C7F435EFF180F663765826 /* SupabaseManager.swift in Sources */,
+				B678B361E4D97F0EA29958AE /* TimePickerCard.swift in Sources */,
+				EA9ED321DBED5A896DC20300 /* TimerEngine.swift in Sources */,
+				A4DD6716BB8588A3EC0FFAD2 /* Workout.swift in Sources */,
+				B13411C45D0F9280A8B0BEEC /* WorkoutEntity.swift in Sources */,
+				47929C9AB9C74B46B506794E /* WorkoutStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0F0EDBF47A45F8BD7595D1BA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				44543D7DFF399DB634544935 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		266A4B860500B2D90EA4BD11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_NAME = "Interval v1";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		559A19C0CE015235D7240E5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_NAME = "Interval v1";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		602E294107DE17BCEA0E2942 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Interval v1/Interval v1.entitlements";
+				INFOPLIST_FILE = "Interval v1/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.superapp.intervalv1;
+			};
+			name = Debug;
+		};
+		6D3C5475A575A6B2F7EE2849 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Interval v1/Interval v1.entitlements";
+				INFOPLIST_FILE = "Interval v1/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.superapp.intervalv1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		80946DB639ADF21CD5C34F86 /* Build configuration list for PBXProject "Interval v1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				559A19C0CE015235D7240E5D /* Debug */,
+				266A4B860500B2D90EA4BD11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		ECFB4D5989F04EAC092088E1 /* Build configuration list for PBXNativeTarget "Interval v1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				602E294107DE17BCEA0E2942 /* Debug */,
+				6D3C5475A575A6B2F7EE2849 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D9C2E22E342721E2AC858AA1 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CB437C5FD64AA075E0E6F7B3 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9C2E22E342721E2AC858AA1 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = E9B280FDCB3D7FB821C692BE /* Project object */;
+}
