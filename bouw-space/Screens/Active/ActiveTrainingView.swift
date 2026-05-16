@@ -3,13 +3,14 @@ import SwiftUI
 struct ActiveTrainingView: View {
     @StateObject private var engine: TimerEngine
     @EnvironmentObject private var store: WorkoutStore
+    @EnvironmentObject private var audioSettings: AudioSettings
     @Environment(\.dismiss) private var dismiss
 
     @State private var showStopAlert = false
     @State private var showSaveSheet = false
 
-    init(workout: Workout) {
-        _engine = StateObject(wrappedValue: TimerEngine(workout: workout))
+    init(workout: Workout, audioSettings: AudioSettings) {
+        _engine = StateObject(wrappedValue: TimerEngine(workout: workout, audioSettings: audioSettings))
     }
 
     var body: some View {
@@ -53,6 +54,8 @@ struct ActiveTrainingView: View {
             Spacer()
             phaseLabel
             Spacer()
+            ambientControl
+                .padding(.bottom, 16)
             controlButtons
                 .padding(.bottom, 48)
         }
@@ -105,6 +108,33 @@ struct ActiveTrainingView: View {
         .font(.system(size: 34, weight: .heavy, design: .rounded))
         .foregroundStyle(.white.opacity(0.9))
         .tracking(4)
+    }
+
+    // MARK: - Ambient volume mini-control
+    private var ambientControl: some View {
+        HStack(spacing: 10) {
+            Image(systemName: audioSettings.ambientSound == .none
+                  ? "speaker.slash.fill" : "speaker.wave.2.fill")
+                .foregroundStyle(.white.opacity(0.7))
+                .font(.callout)
+            if audioSettings.ambientSound != .none {
+                Slider(
+                    value: Binding(
+                        get: { Double(audioSettings.ambientVolume) },
+                        set: { v in
+                            audioSettings.ambientVolume = Float(v)
+                            engine.updateVolume(Float(v))
+                        }
+                    ),
+                    in: 0...1
+                )
+                .tint(.white.opacity(0.8))
+                .frame(maxWidth: 200)
+            }
+            Text(audioSettings.ambientSound.displayName)
+                .font(.system(.caption, design: .rounded))
+                .foregroundStyle(.white.opacity(0.6))
+        }
     }
 
     // MARK: - Control buttons

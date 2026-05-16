@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject private var store: WorkoutStore
+    @EnvironmentObject private var audioSettings: AudioSettings
     @State private var showSaveSheet = false
     @State private var showActive = false
 
@@ -48,8 +49,9 @@ struct HomeView: View {
                 .presentationDetents([.medium])
             }
             .fullScreenCover(isPresented: $showActive) {
-                ActiveTrainingView(workout: store.current)
+                ActiveTrainingView(workout: store.current, audioSettings: audioSettings)
                     .environmentObject(store)
+                    .environmentObject(audioSettings)
             }
         }
     }
