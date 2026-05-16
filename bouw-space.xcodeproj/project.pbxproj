@@ -15,8 +15,12 @@
 		771D7FB4C94F38BE4BE6198A /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482CF603866D021BFA05487A /* Workout.swift */; };
 		7B81E5315B248E29FA30341B /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C295CA1BA5CDEEBDFFD531C6 /* WorkoutStore.swift */; };
 		8C4F36E08EAF4985D1E66824 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B84434834C990A89CC0AF8 /* AccountView.swift */; };
+		9710DAB28ED449A4F44B6A0C /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E460BA9A6F05B846362B0B /* TimerEngine.swift */; };
+		9912B722ECFA39B594663CAA /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ECCC82EC57F34703892553 /* CountdownView.swift */; };
 		BA81DDA275177C349B4B7B0A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A693B22BDECC1B2AC1D534E /* LaunchScreen.storyboard */; };
+		D0208B96970F93B4FB484C9D /* FinishedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7719842B80805ECFFBA1F735 /* FinishedView.swift */; };
 		DDD5315B9341EF1C3FF2DEE9 /* TimePickerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06C31B7314FA9985A8008B6 /* TimePickerCard.swift */; };
+		E816D175ED752916A727A9C8 /* ActiveTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8CFECF49C09590DFA08F1B /* ActiveTrainingView.swift */; };
 		EA4AB6E09438AADA6D26D16F /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B8C889057A58A59105DB82 /* RootTabView.swift */; };
 		ECD876AF571A950BE763867E /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42C9BB84B2D5CF42C7A9B1 /* AppTheme.swift */; };
 		F870842EEB6AC710C662BFB1 /* IntervalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A5212017476B06800569C6 /* IntervalApp.swift */; };
@@ -31,13 +35,17 @@
 		3D42C9BB84B2D5CF42C7A9B1 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		482CF603866D021BFA05487A /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		694D0D6B2B8370BEE02A639B /* SaveFavoriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFavoriteSheet.swift; sourceTree = "<group>"; };
+		73ECCC82EC57F34703892553 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
+		7719842B80805ECFFBA1F735 /* FinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedView.swift; sourceTree = "<group>"; };
 		9AF6D6B97C08BE051398E963 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AE8CFECF49C09590DFA08F1B /* ActiveTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTrainingView.swift; sourceTree = "<group>"; };
 		B7A5212017476B06800569C6 /* IntervalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalApp.swift; sourceTree = "<group>"; };
 		B8B84434834C990A89CC0AF8 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		C295CA1BA5CDEEBDFFD531C6 /* WorkoutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStore.swift; sourceTree = "<group>"; };
 		C90F26D5C8A193362646BE2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		D77B6D346B68A3F0D289B385 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		F06C31B7314FA9985A8008B6 /* TimePickerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerCard.swift; sourceTree = "<group>"; };
+		F4E460BA9A6F05B846362B0B /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -61,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				E320628481D52258B45EBA96 /* Account */,
+				A69B3A8DE90DCAB680CB721A /* Active */,
 				CE7400D5BF5208DB765F9919 /* Favorites */,
 				6B67611E0DDA913C6BBBCB32 /* Home */,
 			);
@@ -101,6 +110,17 @@
 				ACA297108424AAB85B538BEC /* bouw-space */,
 				3767629B2A7021C338390AC2 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		A69B3A8DE90DCAB680CB721A /* Active */ = {
+			isa = PBXGroup;
+			children = (
+				AE8CFECF49C09590DFA08F1B /* ActiveTrainingView.swift */,
+				73ECCC82EC57F34703892553 /* CountdownView.swift */,
+				7719842B80805ECFFBA1F735 /* FinishedView.swift */,
+				F4E460BA9A6F05B846362B0B /* TimerEngine.swift */,
+			);
+			path = Active;
 			sourceTree = "<group>";
 		};
 		ACA297108424AAB85B538BEC /* bouw-space */ = {
@@ -201,14 +221,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C4F36E08EAF4985D1E66824 /* AccountView.swift in Sources */,
+				E816D175ED752916A727A9C8 /* ActiveTrainingView.swift in Sources */,
 				ECD876AF571A950BE763867E /* AppTheme.swift in Sources */,
+				9912B722ECFA39B594663CAA /* CountdownView.swift in Sources */,
 				4601CDC7D5B4CC295BDC94A9 /* FavoritesView.swift in Sources */,
+				D0208B96970F93B4FB484C9D /* FinishedView.swift in Sources */,
 				5E1A9DF8B981AEB067F417A4 /* HomeView.swift in Sources */,
 				F870842EEB6AC710C662BFB1 /* IntervalApp.swift in Sources */,
 				EA4AB6E09438AADA6D26D16F /* RootTabView.swift in Sources */,
 				1C3B5FD4D53ED6E9CFED753E /* RoundsCard.swift in Sources */,
 				66A1F6B17DBA082FEF72A328 /* SaveFavoriteSheet.swift in Sources */,
 				DDD5315B9341EF1C3FF2DEE9 /* TimePickerCard.swift in Sources */,
+				9710DAB28ED449A4F44B6A0C /* TimerEngine.swift in Sources */,
 				771D7FB4C94F38BE4BE6198A /* Workout.swift in Sources */,
 				7B81E5315B248E29FA30341B /* WorkoutStore.swift in Sources */,
 			);

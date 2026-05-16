@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject private var store: WorkoutStore
     @State private var showSaveSheet = false
+    @State private var showActive = false
 
     var body: some View {
         NavigationStack {
@@ -45,6 +46,10 @@ struct HomeView: View {
                     store.addFavorite(saved)
                 }
                 .presentationDetents([.medium])
+            }
+            .fullScreenCover(isPresented: $showActive) {
+                ActiveTrainingView(workout: store.current)
+                    .environmentObject(store)
             }
         }
     }
@@ -114,7 +119,7 @@ struct HomeView: View {
             .accessibilityLabel("Opslaan als favoriet")
 
             Button {
-                // Placeholder voor v1 — activeert active training scherm later.
+                showActive = true
             } label: {
                 HStack(spacing: 10) {
                     Image(systemName: "play.fill")
