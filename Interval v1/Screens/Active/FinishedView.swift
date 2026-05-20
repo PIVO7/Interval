@@ -8,7 +8,15 @@ struct FinishedView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var favorites: [WorkoutEntity]
     @State private var showSaveSheet = false
-    @State private var appear = false
+    @State private var savedTrigger = 0
+    @State private var syncErrorMessage: String?
+    @State private var showSyncErrorAlert = false
+
+    // Staggered entrance — each element pops in shortly after the previous.
+    @State private var trophyAppear = false
+    @State private var titleAppear = false
+    @State private var statsAppear = false
+    @State private var buttonsAppear = false
 
     private var alreadySaved: Bool {
         favorites.contains { $0.workSeconds == workout.workSeconds
@@ -28,8 +36,8 @@ struct FinishedView: View {
                     .font(.system(size: 52))
                     .foregroundStyle(.white)
             }
-            .scaleEffect(appear ? 1 : 0.3)
-            .opacity(appear ? 1 : 0)
+            .scaleEffect(trophyAppear ? 1 : 0.3)
+            .opacity(trophyAppear ? 1 : 0)
 
             VStack(spacing: 10) {
                 Text("Goed gedaan! 🎉")
@@ -39,22 +47,32 @@ struct FinishedView: View {
                     .font(.system(.title3, design: .rounded, weight: .medium))
                     .foregroundStyle(.white.opacity(0.75))
             }
-            .opacity(appear ? 1 : 0)
+            .opacity(titleAppear ? 1 : 0)
+            .offset(y: titleAppear ? 0 : 10)
 
             // Stats card
             HStack(spacing: 32) {
                 statItem(label: "Ronden", value: "\(workout.rounds)")
                 divider
-                statItem(label: "Work", value: formatted(workout.workSeconds))
+                statItem(
+                    label: "Per ronde",
+                    value: Duration.seconds(workout.workSeconds)
+                        .formatted(.units(allowed: [.minutes, .seconds], width: .narrow))
+                )
                 divider
-                statItem(label: "Totaal", value: formattedTotal)
+                statItem(
+                    label: "Totaal",
+                    value: Duration.seconds(totalSeconds)
+                        .formatted(.units(allowed: [.minutes, .seconds], width: .narrow))
+                )
             }
             .padding(.horizontal, 28)
             .padding(.vertical, 22)
             .background(Color.white.opacity(0.18))
             .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
             .padding(.horizontal, 32)
-            .opacity(appear ? 1 : 0)
+            .opacity(statsAppear ? 1 : 0)
+            .offset(y: statsAppear ? 0 : 12)
 
             Spacer()
 
@@ -86,19 +104,35 @@ struct FinishedView: View {
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 48)
-            .opacity(appear ? 1 : 0)
+            .opacity(buttonsAppear ? 1 : 0)
+            .offset(y: buttonsAppear ? 0 : 14)
         }
         .onAppear {
-            withAnimation(.spring(response: 0.6, dampingFraction: 0.65).delay(0.1)) {
-                appear = true
-            }
+            withAnimation(.appBounce.delay(0.05)) { trophyAppear = true }
+            withAnimation(.appSmooth.delay(0.25)) { titleAppear = true }
+            withAnimation(.appSmooth.delay(0.4)) { statsAppear = true }
+            withAnimation(.appSmooth.delay(0.55)) { buttonsAppear = true }
         }
         .sheet(isPresented: $showSaveSheet) {
             SaveFavoriteSheet(workout: workout) { saved in
                 modelContext.insert(WorkoutEntity(from: saved))
-                Task { try? await SupabaseManager.shared.upsertWorkout(saved) }
+                savedTrigger &+= 1
+                Task {
+                    do {
+                        try await SupabaseManager.shared.upsertWorkout(saved)
+                    } catch {
+                        syncErrorMessage = error.localizedDescription
+                        showSyncErrorAlert = true
+                    }
+                }
             }
             .presentationDetents([.medium])
+        }
+        .sensoryFeedback(.success, trigger: savedTrigger)
+        .alert("Synchroniseren mislukt", isPresented: $showSyncErrorAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(syncErrorMessage ?? "")
         }
     }
 
@@ -108,9 +142,9 @@ struct FinishedView: View {
             .frame(width: 1, height: 36)
     }
 
-    private func statItem(label: String, value: String) -> some View {
+    private func statItem(label: LocalizedStringKey, value: String) -> some View {
         VStack(spacing: 4) {
-            Text(value)
+            Text(verbatim: value)
                 .font(.system(.title2, design: .rounded, weight: .bold))
                 .foregroundStyle(.white)
             Text(label)
@@ -119,25 +153,16 @@ struct FinishedView: View {
         }
     }
 
-    private func formatted(_ seconds: Int) -> String {
-        if seconds < 60 { return "\(seconds)s" }
-        let m = seconds / 60; let s = seconds % 60
-        return s == 0 ? "\(m)m" : "\(m)m\(s)s"
-    }
-
-    private var formattedTotal: String {
-        let total = workout.rounds * workout.workSeconds
+    private var totalSeconds: Int {
+        workout.rounds * workout.workSeconds
             + max(0, workout.rounds - 1) * workout.restSeconds
-        let m = total / 60; let s = total % 60
-        if m == 0 { return "\(s)s" }
-        return s == 0 ? "\(m)m" : "\(m)m \(s)s"
     }
 }
 
 #Preview {
     ZStack {
-        LinearGradient(colors: [AppTheme.sage, AppTheme.cream],
-                       startPoint: .top, endPoint: .bottom).ignoresSafeArea()
+        LinearGradient(colors: [AppTheme.sageDeep, AppTheme.forestDeep],
+                       startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
         FinishedView(workout: .placeholder, onHome: {})
             .modelContainer(for: WorkoutEntity.self, inMemory: true)
     }

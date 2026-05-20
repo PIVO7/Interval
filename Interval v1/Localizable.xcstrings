@@ -1,434 +1,869 @@
 {
   "sourceLanguage" : "nl",
-  "version" : "1.0",
   "strings" : {
+    "%@ werk · %@ rust · %lld ronden" : {
+      "comment" : "Workout summary line (work duration, rest duration, rounds)",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ werk · %@ rust · %lld ronden"
+          }
+        }
+      }
+    },
     "Aantal ronden" : {
       "comment" : "Subtitle for the rounds card",
+      "extractionState" : "stale",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Aantal ronden" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aantal ronden"
+          }
+        }
       }
     },
     "Account" : {
       "comment" : "Account tab navigation title",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Account" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        }
       }
     },
     "Achtergrondgeluid" : {
       "comment" : "Section header in Account settings",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Achtergrondgeluid" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achtergrondgeluid"
+          }
+        }
       }
     },
     "Ambient geluiden" : {
       "comment" : "Onboarding feature title",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Ambient geluiden" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ambient geluiden"
+          }
+        }
       }
     },
     "Annuleer" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Annuleer" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuleer"
+          }
+        }
       }
     },
     "Apple-gebruiker" : {
       "comment" : "Fallback name when Apple ID provides no full name",
+      "extractionState" : "stale",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Apple-gebruiker" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple-gebruiker"
+          }
+        }
       }
     },
     "Begin..." : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Begin..." } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Begin..."
+          }
+        }
       }
     },
     "Betalingen" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Betalingen" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betalingen"
+          }
+        }
       }
+    },
+    "Bewerk %@" : {
+
     },
     "Binnenkort" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Binnenkort" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Binnenkort"
+          }
+        }
       }
     },
     "Bos / vogels" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Bos / vogels" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bos / vogels"
+          }
+        }
       }
     },
     "Brown noise" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Brown noise" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brown noise"
+          }
+        }
       }
+    },
+    "Cloud sync komt later beschikbaar." : {
+
     },
     "Doorgaan" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Doorgaan" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doorgaan"
+          }
+        }
       }
     },
     "Favoriet opslaan" : {
       "comment" : "Save favorite sheet navigation title",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Favoriet opslaan" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favoriet opslaan"
+          }
+        }
       }
     },
     "Favorieten" : {
       "comment" : "Favorites tab title",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Favorieten" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favorieten"
+          }
+        }
       }
     },
     "Geen geluid" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Geen geluid" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen geluid"
+          }
+        }
       }
     },
     "GO!" : {
       "comment" : "Countdown go indicator",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "GO!" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GO!"
+          }
+        }
       }
     },
     "Goed gedaan! 🎉" : {
       "comment" : "Workout finished celebration",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Goed gedaan! 🎉" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goed gedaan! 🎉"
+          }
+        }
       }
     },
     "Haptic feedback" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Haptic feedback" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haptic feedback"
+          }
+        }
       }
+    },
+    "Hervat" : {
+
     },
     "Hervatten" : {
       "comment" : "Resume training accessibility label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Hervatten" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hervatten"
+          }
+        }
       }
     },
     "Ingelogd met Apple" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Ingelogd met Apple" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingelogd met Apple"
+          }
+        }
       }
     },
     "Interval" : {
       "comment" : "App name — typically not translated",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Interval" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval"
+          }
+        }
       }
     },
     "Intervaltimer voor coaches\nen kinesitherapeuten" : {
       "comment" : "Onboarding tagline",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Intervaltimer voor coaches\nen kinesitherapeuten" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intervaltimer voor coaches\nen kinesitherapeuten"
+          }
+        }
       }
     },
     "Je huidige voortgang gaat verloren." : {
       "comment" : "Stop training alert message",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Je huidige voortgang gaat verloren." } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je huidige voortgang gaat verloren."
+          }
+        }
       }
     },
     "Klaar voor de start?" : {
       "comment" : "Pre-workout countdown header",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Klaar voor de start?" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaar voor de start?"
+          }
+        }
       }
     },
     "Klaar voor je sessie" : {
       "comment" : "Home screen header",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Klaar voor je sessie" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaar voor je sessie"
+          }
+        }
       }
     },
     "Lo-fi beats" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Lo-fi beats" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo-fi beats"
+          }
+        }
       }
     },
     "Log out" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Log out" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log out"
+          }
+        }
       }
     },
+    "Lokale modus" : {
+
+    },
     "Meld je aan met Apple voor synchronisatie." : {
+      "extractionState" : "stale",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Meld je aan met Apple voor synchronisatie." } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meld je aan met Apple voor synchronisatie."
+          }
+        }
       }
     },
     "min" : {
       "comment" : "Minutes wheel picker label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "min" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min"
+          }
+        }
       }
     },
     "Naam" : {
       "comment" : "Name field label in save favorite sheet",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Naam" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naam"
+          }
+        }
       }
     },
+    "niet beschikbaar" : {
+
+    },
     "Niet ingelogd" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Niet ingelogd" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niet ingelogd"
+          }
+        }
       }
     },
     "Nieuwe training" : {
       "comment" : "Default name for an unsaved workout draft",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Nieuwe training" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe training"
+          }
+        }
       }
     },
     "Nog geen favorieten" : {
       "comment" : "Empty state title",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Nog geen favorieten" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nog geen favorieten"
+          }
+        }
       }
     },
     "Notificaties" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Notificaties" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notificaties"
+          }
+        }
       }
     },
     "Oceaangolven" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Oceaangolven" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oceaangolven"
+          }
+        }
       }
+    },
+    "OK" : {
+
     },
     "Onboarding overslaan" : {
       "comment" : "Skip onboarding accessibility label",
+      "extractionState" : "stale",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Onboarding overslaan" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding overslaan"
+          }
+        }
       }
+    },
+    "Opgeslagen" : {
+
     },
     "Opslaan" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Opslaan" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opslaan"
+          }
+        }
       }
     },
     "Opslaan als favoriet" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Opslaan als favoriet" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opslaan als favoriet"
+          }
+        }
       }
     },
     "Overslaan" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Overslaan" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overslaan"
+          }
+        }
       }
+    },
+    "Pauze" : {
+
     },
     "Pauzeren" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Pauzeren" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pauzeren"
+          }
+        }
       }
+    },
+    "Per ronde" : {
+
     },
     "Regen" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Regen" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regen"
+          }
+        }
       }
     },
     "Regen, oceaan, bos — loopt door op slot" : {
       "comment" : "Onboarding feature description",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Regen, oceaan, bos — loopt door op slot" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regen, oceaan, bos — loopt door op slot"
+          }
+        }
       }
     },
     "Rest" : {
-      "comment" : "Rest interval label — usually kept as-is across languages",
+      "comment" : "Rest interval label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Rest" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rust"
+          }
+        }
       }
     },
     "REST" : {
       "comment" : "Active workout phase label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "REST" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RUST"
+          }
+        }
       }
     },
     "Ronde %lld / %lld" : {
       "comment" : "Round indicator during active workout (current / total)",
       "localizations" : {
         "nl" : {
-          "stringUnit" : { "state" : "translated", "value" : "Ronde %lld / %lld" }
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ronde %lld / %lld"
+          }
         }
       }
     },
     "Ronden" : {
       "comment" : "Stat label on finished screen",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Ronden" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ronden"
+          }
+        }
       }
     },
     "Rounds" : {
-      "comment" : "Rounds card title — universal English term kept on purpose",
+      "comment" : "Rounds card title",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Rounds" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ronden"
+          }
+        }
       }
+    },
+    "Rust" : {
+      "comment" : "WorkoutKit step display name for rest intervals"
     },
     "sec" : {
       "comment" : "Seconds wheel picker label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "sec" } }
-      }
-    },
-    "Signalen" : {
-      "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Signalen" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sec"
+          }
+        }
       }
     },
     "Signaaltonen" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Signaaltonen" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signaaltonen"
+          }
+        }
       }
+    },
+    "Signalen" : {
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signalen"
+          }
+        }
+      }
+    },
+    "Skip" : {
+
     },
     "Sla je schema's op voor hergebruik" : {
       "comment" : "Onboarding feature description",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Sla je schema's op voor hergebruik" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sla je schema's op voor hergebruik"
+          }
+        }
       }
     },
     "Sla je veelgebruikte intervallen op vanaf het trainingsscherm." : {
       "comment" : "Favorites empty state subtitle",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Sla je veelgebruikte intervallen op vanaf het trainingsscherm." } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sla je veelgebruikte intervallen op vanaf het trainingsscherm."
+          }
+        }
       }
     },
     "Snel instellen" : {
       "comment" : "Onboarding feature title",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Snel instellen" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snel instellen"
+          }
+        }
       }
+    },
+    "Start %@" : {
+
+    },
+    "Start met Interval" : {
+
     },
     "Start training" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Start training" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start training"
+          }
+        }
       }
     },
     "Stel je intervallen in en begin wanneer je klaar bent." : {
       "comment" : "Home screen subtitle",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Stel je intervallen in en begin wanneer je klaar bent." } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stel je intervallen in en begin wanneer je klaar bent."
+          }
+        }
       }
+    },
+    "Stop" : {
+
     },
     "Stop training" : {
       "comment" : "Stop training accessibility label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Stop training" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop training"
+          }
+        }
       }
     },
     "Stoppen" : {
       "comment" : "Stop training alert confirm button",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Stoppen" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stoppen"
+          }
+        }
       }
+    },
+    "Synchroniseren mislukt" : {
+
     },
     "Tabata %lld/%lld" : {
       "comment" : "Auto-suggested favorite name (work seconds / rest seconds)",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Tabata %lld/%lld" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tabata %lld/%lld"
+          }
+        }
       }
     },
     "Terug naar home" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Terug naar home" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terug naar home"
+          }
+        }
       }
     },
     "Toon bij start work/rest en laatste 3s" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Toon bij start work/rest en laatste 3s" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toon bij start werk/rust en laatste 3s"
+          }
+        }
       }
     },
     "Totaal" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Totaal" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Totaal"
+          }
+        }
       }
     },
     "Totale duur" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Totale duur" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Totale duur"
+          }
+        }
       }
     },
     "Training" : {
       "comment" : "Training tab title",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Training" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Training"
+          }
+        }
       }
     },
     "Training stoppen?" : {
       "comment" : "Stop training alert title",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Training stoppen?" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Training stoppen?"
+          }
+        }
       }
     },
     "Training voltooid" : {
       "comment" : "Finished screen subtitle",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Training voltooid" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Training voltooid"
+          }
+        }
       }
     },
     "Trillen bij elke fase-overgang" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Trillen bij elke fase-overgang" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trillen bij elke fase-overgang"
+          }
+        }
       }
     },
     "v2" : {
       "comment" : "Coming-soon version marker",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "v2" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "v2"
+          }
+        }
       }
     },
     "Verhoog ronden" : {
       "comment" : "Increase rounds accessibility label",
+      "extractionState" : "stale",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Verhoog ronden" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verhoog ronden"
+          }
+        }
       }
     },
     "Verlaag ronden" : {
       "comment" : "Decrease rounds accessibility label",
+      "extractionState" : "stale",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Verlaag ronden" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlaag ronden"
+          }
+        }
       }
     },
     "Verwijderen" : {
       "comment" : "Swipe-to-delete action label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Verwijderen" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwijderen"
+          }
+        }
       }
     },
     "Volgende fase overslaan" : {
       "comment" : "Skip phase accessibility label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Volgende fase overslaan" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volgende fase overslaan"
+          }
+        }
       }
+    },
+    "Werk" : {
+      "comment" : "WorkoutKit step display name for work intervals"
     },
     "White noise" : {
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "White noise" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "White noise"
+          }
+        }
       }
     },
     "Work" : {
-      "comment" : "Work interval label — usually kept as-is across languages",
+      "comment" : "Work interval label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Work" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Werk"
+          }
+        }
       }
     },
     "WORK" : {
       "comment" : "Active workout phase label",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "WORK" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WERK"
+          }
+        }
       }
     },
     "Work, rest en ronden in één oogopslag" : {
       "comment" : "Onboarding feature description",
       "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Work, rest en ronden in één oogopslag" } }
-      }
-    },
-    "%@ werk · %@ rust · %lld ronden" : {
-      "comment" : "Workout summary line (work duration, rest duration, rounds)",
-      "localizations" : {
-        "nl" : { "stringUnit" : { "state" : "translated", "value" : "%@ werk · %@ rust · %lld ronden" } }
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Werk, rust en ronden in één oogopslag"
+          }
+        }
       }
     }
-  }
+  },
+  "version" : "1.0"
 }

@@ -7,6 +7,11 @@ enum AppTheme {
     static let sage = Color(hex: 0xA8B89C)
     static let cream = Color(hex: 0xFAF6F1)
 
+    // Deeper variants for full-screen workout backgrounds (white-text contrast)
+    static let coralDeep = Color(hex: 0xC76A48)   // ≈ 4.75:1 white-text contrast
+    static let sageDeep  = Color(hex: 0x5B8071)   // ≈ 4.27:1 white-text contrast
+    static let forestDeep = Color(hex: 0x3D6353)  // accent for finished/celebration
+
     // Dark
     static let darkBg = Color(hex: 0x1C1A18)
     static let darkCard = Color(hex: 0x2A2724)

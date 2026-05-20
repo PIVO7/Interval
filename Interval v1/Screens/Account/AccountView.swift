@@ -1,9 +1,9 @@
 import SwiftUI
-import AuthenticationServices
+// Sign in with Apple disabled — re-add `import AuthenticationServices` when restoring.
 
 struct AccountView: View {
-    @EnvironmentObject private var audioSettings: AudioSettings
-    @EnvironmentObject private var auth: AuthManager
+    @Environment(AudioSettings.self) private var audioSettings
+    @Environment(AuthManager.self) private var auth
 
     var body: some View {
         NavigationStack {
@@ -27,6 +27,8 @@ struct AccountView: View {
     }
 
     // MARK: - Profile
+    // Sign in with Apple is disabled in this build (requires paid Apple Developer
+    // Program). When re-enabled, restore the signed-in/signed-out variants here.
     private var profileCard: some View {
         HStack(spacing: 16) {
             ZStack {
@@ -34,39 +36,14 @@ struct AccountView: View {
                 Image(systemName: "person.fill").font(.title).foregroundStyle(.white)
             }
             VStack(alignment: .leading, spacing: 4) {
-                if auth.isSignedIn {
-                    Text(auth.user?.fullName ?? "Apple-gebruiker")
-                        .font(.system(.title3, design: .rounded, weight: .bold))
-                        .foregroundStyle(AppTheme.primaryText)
-                    if let email = auth.user?.email {
-                        Text(email)
-                            .font(.system(.footnote, design: .rounded))
-                            .foregroundStyle(AppTheme.secondaryText)
-                    } else {
-                        Text("Ingelogd met Apple")
-                            .font(.system(.footnote, design: .rounded))
-                            .foregroundStyle(AppTheme.secondaryText)
-                    }
-                } else {
-                    Text("Niet ingelogd")
-                        .font(.system(.title3, design: .rounded, weight: .bold))
-                        .foregroundStyle(AppTheme.primaryText)
-                    Text("Meld je aan met Apple voor synchronisatie.")
-                        .font(.system(.footnote, design: .rounded))
-                        .foregroundStyle(AppTheme.secondaryText)
-                }
+                Text("Lokale modus")
+                    .font(.system(.title3, design: .rounded, weight: .bold))
+                    .foregroundStyle(AppTheme.primaryText)
+                Text("Cloud sync komt later beschikbaar.")
+                    .font(.system(.footnote, design: .rounded))
+                    .foregroundStyle(AppTheme.secondaryText)
             }
             Spacer()
-            if !auth.isSignedIn {
-                SignInWithAppleButton(.signIn) { req in
-                    req.requestedScopes = [.fullName, .email]
-                } onCompletion: { result in
-                    auth.handleAuthorization(result)
-                }
-                .signInWithAppleButtonStyle(.black)
-                .frame(width: 140, height: 38)
-                .clipShape(Capsule())
-            }
         }
         .padding(20)
         .softCard()
@@ -74,12 +51,17 @@ struct AccountView: View {
 
     // MARK: - Ambient audio
     private var audioSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        // `@Bindable` projects the @Observable audio settings into a Binding
+        // context so we can write `$audioSettings.ambientVolume`.
+        @Bindable var audioSettings = audioSettings
+        return VStack(alignment: .leading, spacing: 10) {
             sectionHeader("Achtergrondgeluid")
             VStack(spacing: 0) {
                 // Sound picker
                 ForEach(Array(AmbientSound.allCases.enumerated()), id: \.element.id) { idx, sound in
+                    let available = AudioEngine.isAvailable(sound)
                     Button {
+                        guard available else { return }
                         audioSettings.ambientSound = sound
                         if sound != .none {
                             AudioEngine.shared.playAmbient(sound, volume: audioSettings.ambientVolume)
@@ -90,17 +72,27 @@ struct AccountView: View {
                         HStack(spacing: 14) {
                             ZStack {
                                 Circle()
-                                    .fill(AppTheme.coral.opacity(0.15))
+                                    .fill(AppTheme.coral.opacity(available ? 0.15 : 0.06))
                                     .frame(width: 30, height: 30)
                                 Image(systemName: sound.icon)
-                                    .foregroundStyle(AppTheme.coral)
+                                    .foregroundStyle(available ? AppTheme.coral : AppTheme.secondaryText)
                                     .font(.caption)
                             }
                             Text(sound.displayName)
                                 .font(.system(.body, design: .rounded))
-                                .foregroundStyle(AppTheme.primaryText)
+                                .foregroundStyle(available ? AppTheme.primaryText : AppTheme.secondaryText)
+                            if !available {
+                                Text("niet beschikbaar")
+                                    .font(.system(.caption, design: .rounded))
+                                    .foregroundStyle(AppTheme.secondaryText)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 2)
+                                    .background(
+                                        Capsule().fill(AppTheme.secondaryText.opacity(0.12))
+                                    )
+                            }
                             Spacer()
-                            if audioSettings.ambientSound == sound {
+                            if audioSettings.ambientSound == sound && available {
                                 Image(systemName: "checkmark")
                                     .foregroundStyle(AppTheme.coral)
                                     .font(.callout.weight(.semibold))
@@ -110,6 +102,7 @@ struct AccountView: View {
                         .padding(.vertical, 12)
                     }
                     .buttonStyle(.plain)
+                    .disabled(!available)
                     if idx < AmbientSound.allCases.count - 1 {
                         Divider().padding(.leading, 60)
                     }
@@ -121,17 +114,11 @@ struct AccountView: View {
                         Image(systemName: "speaker.fill")
                             .foregroundStyle(AppTheme.secondaryText)
                             .font(.callout)
-                        Slider(
-                            value: Binding(
-                                get: { Double(audioSettings.ambientVolume) },
-                                set: { v in
-                                    audioSettings.ambientVolume = Float(v)
-                                    AudioEngine.shared.setAmbientVolume(Float(v))
-                                }
-                            ),
-                            in: 0...1
-                        )
-                        .tint(AppTheme.coral)
+                        Slider(value: $audioSettings.ambientVolume, in: 0...1)
+                            .tint(AppTheme.coral)
+                            .onChange(of: audioSettings.ambientVolume) { _, new in
+                                AudioEngine.shared.setAmbientVolume(new)
+                            }
                         Image(systemName: "speaker.wave.3.fill")
                             .foregroundStyle(AppTheme.secondaryText)
                             .font(.callout)
@@ -146,7 +133,8 @@ struct AccountView: View {
 
     // MARK: - Signal tones & haptics
     private var signalSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        @Bindable var audioSettings = audioSettings
+        return VStack(alignment: .leading, spacing: 10) {
             sectionHeader("Signalen")
             VStack(spacing: 0) {
                 toggleRow(
@@ -202,14 +190,14 @@ struct AccountView: View {
     }
 
     // MARK: - Helpers
-    private func sectionHeader(_ title: String) -> some View {
+    private func sectionHeader(_ title: LocalizedStringKey) -> some View {
         Text(title)
             .font(.system(.subheadline, design: .rounded, weight: .semibold))
             .foregroundStyle(AppTheme.secondaryText)
             .padding(.leading, 8)
     }
 
-    private func toggleRow(icon: String, tint: Color, label: String, sub: String, isOn: Binding<Bool>) -> some View {
+    private func toggleRow(icon: String, tint: Color, label: LocalizedStringKey, sub: LocalizedStringKey, isOn: Binding<Bool>) -> some View {
         HStack(spacing: 14) {
             ZStack {
                 Circle().fill(tint.opacity(0.18)).frame(width: 30, height: 30)
@@ -217,16 +205,16 @@ struct AccountView: View {
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(label).font(.system(.body, design: .rounded)).foregroundStyle(AppTheme.primaryText)
-                Text(sub).font(.system(.caption2, design: .rounded)).foregroundStyle(AppTheme.secondaryText)
+                Text(sub).font(.system(.caption, design: .rounded)).foregroundStyle(AppTheme.secondaryText)
             }
             Spacer()
-            Toggle("", isOn: isOn).tint(AppTheme.coral).labelsHidden()
+            Toggle(label, isOn: isOn).tint(AppTheme.coral).labelsHidden()
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
     }
 
-    private func infoRow(icon: String, tint: Color, label: String, value: String) -> some View {
+    private func infoRow(icon: String, tint: Color, label: LocalizedStringKey, value: LocalizedStringKey) -> some View {
         HStack(spacing: 14) {
             ZStack {
                 Circle().fill(tint.opacity(0.18)).frame(width: 30, height: 30)
@@ -241,4 +229,8 @@ struct AccountView: View {
     }
 }
 
-#Preview { AccountView().environmentObject(AudioSettings()).environmentObject(AuthManager()) }
+#Preview {
+    AccountView()
+        .environment(AudioSettings())
+        .environment(AuthManager())
+}

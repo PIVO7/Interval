@@ -16,7 +16,7 @@ final class WorkoutEntity {
         workSeconds: Int,
         restSeconds: Int,
         rounds: Int,
-        createdAt: Date = Date()
+        createdAt: Date = .now
     ) {
         self.id = id
         self.name = name

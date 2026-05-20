@@ -1,5 +1,5 @@
 import Foundation
-import Combine
+import Observation
 
 enum AmbientSound: String, CaseIterable, Identifiable, Codable {
     case none       = "none"
@@ -37,17 +37,18 @@ enum AmbientSound: String, CaseIterable, Identifiable, Codable {
     }
 }
 
-final class AudioSettings: ObservableObject {
-    @Published var ambientSound: AmbientSound {
+@Observable
+final class AudioSettings {
+    var ambientSound: AmbientSound {
         didSet { UserDefaults.standard.set(ambientSound.rawValue, forKey: "ambientSound") }
     }
-    @Published var ambientVolume: Float {
+    var ambientVolume: Float {
         didSet { UserDefaults.standard.set(ambientVolume, forKey: "ambientVolume") }
     }
-    @Published var signalTonesEnabled: Bool {
+    var signalTonesEnabled: Bool {
         didSet { UserDefaults.standard.set(signalTonesEnabled, forKey: "signalTones") }
     }
-    @Published var hapticsEnabled: Bool {
+    var hapticsEnabled: Bool {
         didSet { UserDefaults.standard.set(hapticsEnabled, forKey: "haptics") }
     }
 

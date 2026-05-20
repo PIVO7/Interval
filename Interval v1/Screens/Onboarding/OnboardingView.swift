@@ -1,8 +1,8 @@
 import SwiftUI
-import AuthenticationServices
+// Sign in with Apple disabled — re-add `import AuthenticationServices` when restoring.
 
 struct OnboardingView: View {
-    @EnvironmentObject private var auth: AuthManager
+    @Environment(AuthManager.self) private var auth
     @State private var appeared = false
 
     var body: some View {
@@ -83,7 +83,7 @@ struct OnboardingView: View {
         .animation(.easeOut(duration: 0.5).delay(0.5), value: appeared)
     }
 
-    private func featureRow(icon: String, title: String, sub: String) -> some View {
+    private func featureRow(icon: String, title: LocalizedStringKey, sub: LocalizedStringKey) -> some View {
         HStack(spacing: 16) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -111,41 +111,30 @@ struct OnboardingView: View {
     // MARK: - Buttons
     private var bottomButtons: some View {
         VStack(spacing: 14) {
-            // Sign in with Apple
-            SignInWithAppleButton(.signIn) { request in
-                request.requestedScopes = [.fullName, .email]
-            } onCompletion: { result in
-                auth.handleAuthorization(result)
-            }
-            .signInWithAppleButtonStyle(.white)
-            .frame(height: 54)
-            .clipShape(Capsule())
-            .shadow(color: Color.black.opacity(0.15), radius: 12, x: 0, y: 6)
-
-            // Skip
-            Button {
-                auth.skipOnboarding()
-            } label: {
-                Text("Overslaan")
-                    .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.75))
+            // Primary: enter app. Sign in with Apple temporarily disabled —
+            // requires paid Apple Developer Program enrollment.
+            Button(action: auth.skipOnboarding) {
+                Text("Start met Interval")
+                    .font(.system(.headline, design: .rounded, weight: .bold))
+                    .foregroundStyle(AppTheme.coral)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
+                    .padding(.vertical, 16)
+                    .background(Color.white)
+                    .clipShape(Capsule())
+                    .shadow(color: Color.black.opacity(0.15), radius: 12, x: 0, y: 6)
             }
-            .accessibilityLabel("Onboarding overslaan")
-
-            if let err = auth.errorMessage {
-                Text(err)
-                    .font(.system(.caption, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.8))
-                    .multilineTextAlignment(.center)
-            }
+            .accessibilityLabel("Start met Interval")
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.5).delay(0.65), value: appeared)
     }
 
     // MARK: - Background
+    //
+    // Decorative blobs — positions and sizes scale with the container so they
+    // sit consistently on iPhone SE through Pro Max + iPad. Using
+    // `containerRelativeFrame` + alignment-based positioning instead of
+    // `GeometryReader` to keep the view hierarchy flat.
     private var background: some View {
         ZStack {
             LinearGradient(
@@ -153,20 +142,21 @@ struct OnboardingView: View {
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
-            // Decorative blobs
             Circle()
                 .fill(Color.white.opacity(0.07))
-                .frame(width: 340, height: 340)
-                .offset(x: 160, y: -200)
+                .containerRelativeFrame(.horizontal) { width, _ in width * 0.85 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                .offset(x: 90, y: -90)
             Circle()
                 .fill(Color(hex: 0xF4B860).opacity(0.2))
-                .frame(width: 260, height: 260)
-                .offset(x: -140, y: 280)
+                .containerRelativeFrame(.horizontal) { width, _ in width * 0.65 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                .offset(x: -70, y: 70)
         }
     }
 }
 
 #Preview {
     OnboardingView()
-        .environmentObject(AuthManager())
+        .environment(AuthManager())
 }

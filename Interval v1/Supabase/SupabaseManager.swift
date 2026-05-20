@@ -1,6 +1,7 @@
 import Foundation
 import Supabase
 import AuthenticationServices
+import os
 
 /// Singleton wrapper around the Supabase client.
 ///
@@ -18,6 +19,7 @@ final class SupabaseManager {
     static let shared = SupabaseManager()
 
     let client: SupabaseClient
+    private let log = Logger(subsystem: "com.superapp.intervalv1", category: "Supabase")
 
     private init() {
         self.client = SupabaseClient(
@@ -48,7 +50,11 @@ final class SupabaseManager {
 
     func signOut() async {
         guard SupabaseConfig.isConfigured else { return }
-        try? await client.auth.signOut()
+        do {
+            try await client.auth.signOut()
+        } catch {
+            log.warning("signOut failed: \(error.localizedDescription, privacy: .public)")
+        }
     }
 
     var currentUserId: UUID? {

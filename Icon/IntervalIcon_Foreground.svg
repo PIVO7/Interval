@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- 3/4 progress ring: start at 12 o'clock, sweep 270° clockwise, end at 9 o'clock.
+       Center (512, 512), radius 320, stroke 80, rounded caps. -->
+  <path d="M 512 192 A 320 320 0 1 1 192 512"
+        stroke="white"
+        stroke-width="80"
+        fill="none"
+        stroke-linecap="round"/>
+  <!-- Progress marker dot at end of ring (9 o'clock position) -->
+  <circle cx="192" cy="512" r="52" fill="white"/>
+</svg>

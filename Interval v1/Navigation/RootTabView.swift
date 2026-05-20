@@ -1,10 +1,11 @@
 import SwiftUI
 
 struct RootTabView: View {
-    @EnvironmentObject private var auth: AuthManager
-    @State private var selection: Tab = .training
+    @Environment(AuthManager.self) private var auth
+    @Environment(WorkoutStore.self) private var store
+    @State private var selection: AppTab = .training
 
-    enum Tab: Hashable { case training, favorites, account }
+    enum AppTab: Hashable { case training, favorites, account }
 
     var body: some View {
         Group {
@@ -21,25 +22,32 @@ struct RootTabView: View {
 
     private var mainTabs: some View {
         TabView(selection: $selection) {
-            HomeView()
-                .tabItem { Label("Training", systemImage: "timer") }
-                .tag(Tab.training)
-
-            FavoritesView()
-                .tabItem { Label("Favorieten", systemImage: "heart.fill") }
-                .tag(Tab.favorites)
-
-            AccountView()
-                .tabItem { Label("Account", systemImage: "person.crop.circle") }
-                .tag(Tab.account)
+            Tab("Training", systemImage: "timer", value: AppTab.training) {
+                HomeView()
+            }
+            Tab("Favorieten", systemImage: "heart.fill", value: AppTab.favorites) {
+                FavoritesView()
+            }
+            Tab("Account", systemImage: "person.crop.circle", value: AppTab.account) {
+                AccountView()
+            }
+        }
+        .onChange(of: store.pendingStart) { _, newValue in
+            if newValue != nil { selection = .training }
+        }
+        .onChange(of: store.pendingEdit) { _, newValue in
+            if newValue != nil {
+                selection = .training
+                store.pendingEdit = nil  // consumed — no further action needed
+            }
         }
     }
 }
 
 #Preview {
     RootTabView()
-        .environmentObject(WorkoutStore())
-        .environmentObject(AudioSettings())
-        .environmentObject(AuthManager())
+        .environment(WorkoutStore())
+        .environment(AudioSettings())
+        .environment(AuthManager())
         .modelContainer(for: WorkoutEntity.self, inMemory: true)
 }

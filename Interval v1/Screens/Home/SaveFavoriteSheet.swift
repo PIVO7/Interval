@@ -57,9 +57,9 @@ struct SaveFavoriteSheet: View {
     }
 
     private var autoSuggestion: String {
-        String(format: NSLocalizedString("Tabata %lld/%lld",
-                                         comment: "Auto-suggested favorite name (work seconds / rest seconds)"),
-               workout.workSeconds,
-               workout.restSeconds)
+        String(
+            localized: "Tabata \(workout.workSeconds)/\(workout.restSeconds)",
+            comment: "Auto-suggested favorite name (work seconds / rest seconds)"
+        )
     }
 }

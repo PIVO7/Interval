@@ -3,9 +3,9 @@ import SwiftData
 
 @main
 struct IntervalApp: App {
-    @StateObject private var workoutStore = WorkoutStore()
-    @StateObject private var audioSettings = AudioSettings()
-    @StateObject private var auth = AuthManager()
+    @State private var workoutStore = WorkoutStore()
+    @State private var audioSettings = AudioSettings()
+    @State private var auth = AuthManager()
 
     let modelContainer: ModelContainer = {
         do {
@@ -18,9 +18,9 @@ struct IntervalApp: App {
     var body: some Scene {
         WindowGroup {
             RootTabView()
-                .environmentObject(workoutStore)
-                .environmentObject(audioSettings)
-                .environmentObject(auth)
+                .environment(workoutStore)
+                .environment(audioSettings)
+                .environment(auth)
                 .tint(AppTheme.coral)
         }
         .modelContainer(modelContainer)

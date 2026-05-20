@@ -21,6 +21,20 @@
                ReferencedContainer = "container:Interval v1.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D5FFBB9648D063549E00B778"
+               BuildableName = "Interval v1 Tests.xctest"
+               BlueprintName = "Interval v1 Tests"
+               ReferencedContainer = "container:Interval v1.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -39,7 +53,20 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D5FFBB9648D063549E00B778"
+               BuildableName = "Interval v1 Tests.xctest"
+               BlueprintName = "Interval v1 Tests"
+               ReferencedContainer = "container:Interval v1.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <CommandLineArguments>
+      </CommandLineArguments>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"

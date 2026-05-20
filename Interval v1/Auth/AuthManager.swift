@@ -1,6 +1,8 @@
 import Foundation
 import AuthenticationServices
 import SwiftUI
+import Observation
+import os
 
 struct AppleUser: Codable {
     let userId: String
@@ -10,16 +12,26 @@ struct AppleUser: Codable {
 }
 
 @MainActor
-final class AuthManager: ObservableObject {
-    @Published var user: AppleUser?
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
+@Observable
+final class AuthManager {
+    var user: AppleUser?
+    var isLoading: Bool = false
+    var errorMessage: String?
 
-    @AppStorage("hasSeenOnboarding") var hasSeenOnboarding: Bool = false
+    /// `@AppStorage` cannot live inside an `@Observable` class — it doesn't
+    /// trigger observation. Use a plain `var` with `didSet` writing through
+    /// to `UserDefaults` instead. View updates fire via the observation macro,
+    /// persistence runs as a side-effect.
+    var hasSeenOnboarding: Bool {
+        didSet { UserDefaults.standard.set(hasSeenOnboarding, forKey: Self.onboardingKey) }
+    }
 
-    private let userKey = "interval_apple_user"
+    @ObservationIgnored private let log = Logger(subsystem: "com.superapp.intervalv1", category: "Auth")
+    @ObservationIgnored private let userKey = "interval_apple_user"
+    @ObservationIgnored private static let onboardingKey = "hasSeenOnboarding"
 
     init() {
+        self.hasSeenOnboarding = UserDefaults.standard.bool(forKey: Self.onboardingKey)
         loadPersistedUser()
     }
 
@@ -47,18 +59,18 @@ final class AuthManager: ObservableObject {
             hasSeenOnboarding = true
 
             // Bridge into Supabase Auth — best effort. Local sign-in succeeds either way.
+            // The Task inherits @MainActor from the enclosing class, so no
+            // MainActor.run hop is needed.
             Task { [weak self] in
                 do {
                     let supabaseId = try await SupabaseManager.shared.signInWithApple(cred)
                     newUser.supabaseUserId = supabaseId
-                    await MainActor.run {
-                        self?.user = newUser
-                        self?.persist(newUser)
-                    }
+                    self?.user = newUser
+                    self?.persist(newUser)
                 } catch SupabaseError.notConfigured {
-                    NSLog("[AuthManager] Supabase not configured — skipping cloud sign-in")
+                    self?.log.info("Supabase not configured — skipping cloud sign-in")
                 } catch {
-                    NSLog("[AuthManager] Supabase sign-in failed: %@", error.localizedDescription)
+                    self?.log.error("Supabase sign-in failed: \(error.localizedDescription, privacy: .public)")
                 }
             }
 
