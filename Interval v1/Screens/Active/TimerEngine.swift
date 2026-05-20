@@ -24,7 +24,11 @@ final class TimerEngine {
     private let audio = AudioEngine.shared
 
     // MARK: - Wall-clock state
-    @ObservationIgnored private var tickTask: Task<Void, Never>?
+    //
+    // `nonisolated(unsafe)` on `tickTask` lets `deinit` (which is implicitly
+    // nonisolated under Swift 6 strict concurrency) call `cancel()` without
+    // crossing the actor boundary. `Task.cancel()` itself is thread-safe.
+    @ObservationIgnored private nonisolated(unsafe) var tickTask: Task<Void, Never>?
     @ObservationIgnored private var phaseTotal: Int = 3
     @ObservationIgnored private var phaseStartedAt: Date = .now
     @ObservationIgnored private var phaseEndsAt: Date = .now

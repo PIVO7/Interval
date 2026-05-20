@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Composited app icon source — combines IntervalIcon_Background.svg and
-  IntervalIcon_Foreground.svg into a single 1024x1024 file ready for
+  Composited app icon source — merges IntervalIcon_Background.svg and
+  IntervalIcon_Foreground.svg into a single 1024×1024 file ready for
   rendering to PNG (qlmanage -t -s 1024 -o out AppIcon.svg).
 
-  The two source files (Background, Foreground) are kept separate in case
-  Apple's new layered icon workflow is adopted later — they map directly
-  to "Background" and "Foreground" layers in Icon Composer.
+  Keep the two source files separate too: they map directly to
+  "Background" and "Foreground" layers in Apple's Icon Composer when
+  you adopt the iOS 26 Liquid Glass workflow — same layout, same
+  coordinates, same colours.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>
-    <linearGradient id="warmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E8826B"/>
-      <stop offset="55%" stop-color="#EE946F"/>
-      <stop offset="100%" stop-color="#F4B860"/>
+    <linearGradient id="creamWarmGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FBF7F2"/>
+      <stop offset="55%" stop-color="#F5EEE1"/>
+      <stop offset="100%" stop-color="#EFE5D3"/>
     </linearGradient>
   </defs>
-  <!-- Background: coral → amber warm gradient -->
-  <rect width="1024" height="1024" fill="url(#warmGradient)"/>
-  <!-- 3/4 progress ring: start at 12 o'clock, sweep 270° clockwise, end at 9 o'clock.
-       Center (512, 512), radius 320, stroke 80, rounded caps. -->
-  <path d="M 512 192 A 320 320 0 1 1 192 512"
-        stroke="white"
-        stroke-width="80"
-        fill="none"
-        stroke-linecap="round"/>
-  <!-- Progress marker dot at end of ring (9 o'clock position) -->
-  <circle cx="192" cy="512" r="52" fill="white"/>
+
+  <!-- Background: warm cream gradient -->
+  <rect width="1024" height="1024" fill="url(#creamWarmGradient)"/>
+
+  <!-- Foreground: coral stopwatch -->
+  <rect x="476" y="206" width="72" height="42" rx="14" fill="#E8826B"/>
+  <rect x="497" y="240" width="30" height="36" fill="#E8826B"/>
+  <circle cx="512" cy="568" r="290"
+          stroke="#E8826B" stroke-width="64" fill="none"/>
+  <line x1="512" y1="568" x2="653.4" y2="426.6"
+        stroke="#E8826B" stroke-width="52" stroke-linecap="round"/>
+  <circle cx="512" cy="568" r="30" fill="#E8826B"/>
 </svg>

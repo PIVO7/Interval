@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  App icon foreground layer — coral stopwatch on transparent canvas.
+
+  Geometry (viewBox 1024×1024):
+  - Face centred at (512, 568) so the crown + stem at the top still
+    leave the whole silhouette vertically balanced inside the canvas.
+  - Face radius 290, stroke 64 → outer Ø = 644 (~63% of canvas) →
+    safely inside the ~80% Apple safe zone in all directions.
+  - Crown (top button) sits at y=206..248, stem to y=276.
+  - Hand from face centre to roughly the 1:30 position (45° from
+    vertical). Length ≈ 200 so the cap stays well clear of the rim.
+  - Pivot dot at centre prevents the hand from looking detached.
+
+  All elements share the same coral colour so the silhouette stays
+  consistent when Icon Composer tints / desaturates / clarifies it.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
-  <!-- 3/4 progress ring: start at 12 o'clock, sweep 270° clockwise, end at 9 o'clock.
-       Center (512, 512), radius 320, stroke 80, rounded caps. -->
-  <path d="M 512 192 A 320 320 0 1 1 192 512"
-        stroke="white"
-        stroke-width="80"
-        fill="none"
-        stroke-linecap="round"/>
-  <!-- Progress marker dot at end of ring (9 o'clock position) -->
-  <circle cx="192" cy="512" r="52" fill="white"/>
+  <!-- Top crown (the stopwatch's start/stop button) -->
+  <rect x="476" y="206" width="72" height="42" rx="14" fill="#E8826B"/>
+  <!-- Stem connecting crown to face -->
+  <rect x="497" y="240" width="30" height="36" fill="#E8826B"/>
+
+  <!-- Stopwatch face outline -->
+  <circle cx="512" cy="568" r="290"
+          stroke="#E8826B" stroke-width="64" fill="none"/>
+
+  <!-- Timer hand pointing toward ~1:30 (45° from vertical, length 200) -->
+  <line x1="512" y1="568" x2="653.4" y2="426.6"
+        stroke="#E8826B" stroke-width="52" stroke-linecap="round"/>
+
+  <!-- Center pivot so the hand doesn't look detached -->
+  <circle cx="512" cy="568" r="30" fill="#E8826B"/>
 </svg>

@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  App icon background layer — paired with IntervalIcon_Foreground.svg.
+
+  Layered for Apple Icon Composer (iOS 26 Liquid Glass):
+  - Single flat-but-warm cream gradient, no detail.
+  - When Icon Composer auto-renders Dark / Tinted / Clear variants, this
+    layer is what gets recoloured. The foreground stays the symbol.
+  - Cream tone matches AppTheme.cream so the app icon sits visually in
+    the same warm palette as the in-app cream background.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>
-    <linearGradient id="warmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E8826B"/>
-      <stop offset="55%" stop-color="#EE946F"/>
-      <stop offset="100%" stop-color="#F4B860"/>
+    <linearGradient id="creamWarmGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FBF7F2"/>
+      <stop offset="55%" stop-color="#F5EEE1"/>
+      <stop offset="100%" stop-color="#EFE5D3"/>
     </linearGradient>
   </defs>
-  <rect width="1024" height="1024" fill="url(#warmGradient)"/>
+  <rect width="1024" height="1024" fill="url(#creamWarmGradient)"/>
 </svg>

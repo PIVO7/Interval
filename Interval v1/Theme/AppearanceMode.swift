@@ -8,19 +8,22 @@ enum AppearanceMode: String, CaseIterable, Identifiable, Codable, Sendable {
 
     var id: String { rawValue }
 
-    var displayName: String {
+    /// Returned as `LocalizedStringResource` so SwiftUI views can interpolate
+    /// the values into `Text(...)` directly. Auto-extracts into the project's
+    /// String Catalog with the source key matching the literal below.
+    var displayName: LocalizedStringResource {
         switch self {
-        case .system: NSLocalizedString("Systeem", comment: "Appearance mode: follow the system setting")
-        case .light:  NSLocalizedString("Licht", comment: "Appearance mode: force light")
-        case .dark:   NSLocalizedString("Donker", comment: "Appearance mode: force dark")
+        case .system: "Systeem"
+        case .light:  "Licht"
+        case .dark:   "Donker"
         }
     }
 
-    var subtitle: String {
+    var subtitle: LocalizedStringResource {
         switch self {
-        case .system: NSLocalizedString("Volg iPad / iPhone", comment: "Subtitle for system appearance mode")
-        case .light:  NSLocalizedString("Altijd licht", comment: "Subtitle for light appearance mode")
-        case .dark:   NSLocalizedString("Altijd donker", comment: "Subtitle for dark appearance mode")
+        case .system: "Volg iPad / iPhone"
+        case .light:  "Altijd licht"
+        case .dark:   "Altijd donker"
         }
     }
 

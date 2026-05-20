@@ -12,7 +12,7 @@ final class AppearanceSettings {
         didSet { UserDefaults.standard.set(mode.rawValue, forKey: Self.storageKey) }
     }
 
-    @ObservationIgnored private static let storageKey = "appearanceMode"
+    private static let storageKey = "appearanceMode"
 
     init() {
         let raw = UserDefaults.standard.string(forKey: Self.storageKey)

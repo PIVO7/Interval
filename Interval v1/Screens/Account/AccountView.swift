@@ -55,11 +55,15 @@ struct AccountView: View {
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     if auth.isSignedIn {
-                        Text(auth.user?.fullName?.isEmpty == false
-                             ? (auth.user?.fullName ?? "")
-                             : "Ingelogd met Apple")
-                            .font(.system(.title3, design: .rounded, weight: .bold))
-                            .foregroundStyle(AppTheme.primaryText)
+                        if let fullName = auth.user?.fullName, !fullName.isEmpty {
+                            Text(fullName)
+                                .font(.system(.title3, design: .rounded, weight: .bold))
+                                .foregroundStyle(AppTheme.primaryText)
+                        } else {
+                            Text("Ingelogd met Apple")
+                                .font(.system(.title3, design: .rounded, weight: .bold))
+                                .foregroundStyle(AppTheme.primaryText)
+                        }
                         if let email = auth.user?.email, !email.isEmpty {
                             Text(email)
                                 .font(.system(.footnote, design: .rounded))
@@ -163,6 +167,7 @@ struct AccountView: View {
                         .padding(.vertical, 12)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityAddTraits(audioSettings.ambientSound == sound ? .isSelected : [])
                     .disabled(!available)
                     if idx < AmbientSound.allCases.count - 1 {
                         Divider().padding(.leading, 60)
@@ -268,6 +273,7 @@ struct AccountView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .contentShape(Rectangle())
+        .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
     // MARK: - Logout

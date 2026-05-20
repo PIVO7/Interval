@@ -35,12 +35,6 @@ struct RootTabView: View {
         .onChange(of: store.pendingStart) { _, newValue in
             if newValue != nil { selection = .training }
         }
-        .onChange(of: store.pendingEdit) { _, newValue in
-            if newValue != nil {
-                selection = .training
-                store.pendingEdit = nil  // consumed — no further action needed
-            }
-        }
     }
 }
 

@@ -152,10 +152,10 @@ struct OnboardingView: View {
 
     // MARK: - Background
     //
-    // Decorative blobs — positions and sizes scale with the container so they
-    // sit consistently on iPhone SE through Pro Max + iPad. Using
-    // `containerRelativeFrame` + alignment-based positioning instead of
-    // `GeometryReader` to keep the view hierarchy flat.
+    // Decorative blobs — sizes scale with the container via
+    // `containerRelativeFrame`. Corner-bleed offsets scale with the blob's
+    // own size via `visualEffect`, so the proportions look right from
+    // iPhone SE all the way to 13" iPad without device-specific tuning.
     private var background: some View {
         ZStack {
             LinearGradient(
@@ -167,12 +167,16 @@ struct OnboardingView: View {
                 .fill(Color.white.opacity(0.07))
                 .containerRelativeFrame(.horizontal) { width, _ in width * 0.85 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                .offset(x: 90, y: -90)
+                .visualEffect { content, proxy in
+                    content.offset(x: proxy.size.width * 0.1, y: -proxy.size.height * 0.1)
+                }
             Circle()
                 .fill(Color(hex: 0xF4B860).opacity(0.2))
                 .containerRelativeFrame(.horizontal) { width, _ in width * 0.65 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                .offset(x: -70, y: 70)
+                .visualEffect { content, proxy in
+                    content.offset(x: -proxy.size.width * 0.08, y: proxy.size.height * 0.08)
+                }
         }
     }
 }

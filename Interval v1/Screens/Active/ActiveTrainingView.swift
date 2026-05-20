@@ -93,11 +93,13 @@ struct ActiveTrainingView: View {
             .padding(.top, 8)
     }
 
-    // Visual sizing for the timer ring. Tuned so the circle stays inside
-    // iPhone SE's 320pt width with breathing room (10pt margin per side),
-    // while still feeling hero-sized on bigger devices.
-    private let ringSize: CGFloat = 320
-    private let ringStroke: CGFloat = 22
+    // Visual sizing for the timer ring + countdown text, scaled relative to
+    // Dynamic Type so users with accessibility text sizes see a proportionally
+    // larger hero element. Base values tuned for the default size class:
+    // ring stays inside iPhone SE's 320pt width with ~10pt breathing room.
+    @ScaledMetric(relativeTo: .largeTitle) private var ringSize: CGFloat = 320
+    @ScaledMetric(relativeTo: .largeTitle) private var ringStroke: CGFloat = 22
+    @ScaledMetric(relativeTo: .largeTitle) private var timeFontSize: CGFloat = 96
 
     private var timerRing: some View {
         ZStack {
@@ -122,7 +124,7 @@ struct ActiveTrainingView: View {
                     Duration.seconds(engine.secondsLeft),
                     format: .time(pattern: .minuteSecond)
                 )
-                .font(.system(size: 96, weight: .heavy, design: .rounded).monospacedDigit())
+                .font(.system(size: timeFontSize, weight: .heavy, design: .rounded).monospacedDigit())
                 .foregroundStyle(.white)
                 .contentTransition(.numericText(countsDown: true))
                 .animation(.easeOut(duration: 0.3), value: engine.secondsLeft)

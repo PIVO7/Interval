@@ -10,6 +10,7 @@ struct FavoritesView: View {
 
     @State private var syncErrorMessage: String?
     @State private var showSyncErrorAlert = false
+    @State private var editingEntity: WorkoutEntity?
 
     var body: some View {
         NavigationStack {
@@ -26,6 +27,11 @@ struct FavoritesView: View {
                 Button("OK", role: .cancel) {}
             } message: {
                 Text(syncErrorMessage ?? "")
+            }
+            .sheet(item: $editingEntity) { entity in
+                EditFavoriteSheet(entity: entity) {
+                    syncEditedFavorite(entity)
+                }
             }
         }
     }
@@ -63,36 +69,40 @@ struct FavoritesView: View {
         .frame(maxWidth: .infinity)
     }
 
+    /// Each row is split into THREE zones with clearly distinct affordances:
+    ///   - Play circle (left, coral, tap target 44pt) → starts the workout.
+    ///   - Descriptive text (middle) → read-only display, NOT tappable.
+    ///   - Adjust icon (right, neutral, tap target 44pt) → opens the edit sheet.
+    /// Swipe-to-delete is handled by the parent List.
     private func favoriteRow(_ entity: WorkoutEntity) -> some View {
-        HStack(spacing: 0) {
-            // Primary tap area: name + summary → start the workout immediately.
+        HStack(spacing: 16) {
             Button {
                 store.startWorkout(entity.toWorkout())
             } label: {
-                HStack(spacing: 16) {
-                    ZStack {
-                        Circle().fill(AppTheme.coral.opacity(0.15)).frame(width: 44, height: 44)
-                        Image(systemName: "play.fill")
-                            .foregroundStyle(AppTheme.coral)
-                    }
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(entity.name)
-                            .font(.system(.headline, design: .rounded, weight: .semibold))
-                            .foregroundStyle(AppTheme.primaryText)
-                        Text(entity.summary)
-                            .font(.system(.footnote, design: .rounded))
-                            .foregroundStyle(AppTheme.secondaryText)
-                    }
-                    Spacer()
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.coral.opacity(0.15))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "play.fill")
+                        .foregroundStyle(AppTheme.coral)
                 }
-                .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .accessibilityLabel("Start \(entity.name)")
 
-            // Secondary tap area: edit icon → load into editor without starting.
+            VStack(alignment: .leading, spacing: 4) {
+                Text(entity.name)
+                    .font(.system(.headline, design: .rounded, weight: .semibold))
+                    .foregroundStyle(AppTheme.primaryText)
+                Text(entity.summary)
+                    .font(.system(.footnote, design: .rounded))
+                    .foregroundStyle(AppTheme.secondaryText)
+            }
+
+            Spacer()
+
             Button {
-                store.loadForEditing(entity.toWorkout())
+                editingEntity = entity
             } label: {
                 ZStack {
                     Circle()
@@ -110,6 +120,19 @@ struct FavoritesView: View {
         }
         .padding(16)
         .softCard()
+    }
+
+    private func syncEditedFavorite(_ entity: WorkoutEntity) {
+        Task {
+            do {
+                try await SupabaseManager.shared.upsertWorkout(entity.toWorkout())
+            } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
+                // Guest mode or unconfigured — local edit is enough.
+            } catch {
+                syncErrorMessage = error.localizedDescription
+                showSyncErrorAlert = true
+            }
+        }
     }
 
     private var emptyState: some View {

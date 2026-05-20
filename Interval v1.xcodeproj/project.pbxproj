@@ -50,6 +50,7 @@
 		B7C7F435EFF180F663765826 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBF417A11F9E0E1675E6DD /* SupabaseManager.swift */; };
 		C49601EC34E9E42C408A3835 /* IntervalWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447664BAAB78608659C2D094 /* IntervalWidgetBundle.swift */; };
 		D1B95E7ED1E8E607FFAEFB56 /* ActivityPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E348B289D1B87DDA39D0AEFB /* ActivityPhase.swift */; };
+		DA330D1731A96BD01AE29794 /* EditFavoriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F34EB6261FB8DEBF845729 /* EditFavoriteSheet.swift */; };
 		DA9FD87FB8F37F31B3A77E64 /* SaveFavoriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24BB45715541464AD162385 /* SaveFavoriteSheet.swift */; };
 		DB53AED0D32F52EC2202DEF1 /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72031F1E7D3A722E75F130B3 /* SupabaseConfig.swift */; };
 		DE433687F5F89830CD5D8476 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = CB437C5FD64AA075E0E6F7B3 /* Supabase */; };
@@ -102,6 +103,7 @@
 		2AE96B872CFACAB6C070AE62 /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
 		2B28FD10129B24EE41F8B2F4 /* WorkoutKitExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutKitExporter.swift; sourceTree = "<group>"; };
 		31DEE8F83356E0556F83707C /* AudioSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSettings.swift; sourceTree = "<group>"; };
+		36F34EB6261FB8DEBF845729 /* EditFavoriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFavoriteSheet.swift; sourceTree = "<group>"; };
 		3BEB990625E39ABBC05414DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3DC5F2596FE2F3A0C1606738 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		42169C636F95173A8FAF7B27 /* WorkoutEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutEntity.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 		C0118441E4A5FA8FA90CA6DA /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
+				36F34EB6261FB8DEBF845729 /* EditFavoriteSheet.swift */,
 				461C5F0E2E1C757153E6F46A /* FavoritesView.swift */,
 			);
 			path = Favorites;
@@ -528,6 +531,7 @@
 				7EAF8396FD6903D87A0F9E59 /* AudioSettings.swift in Sources */,
 				A07905595BB0D233B12869E8 /* AuthManager.swift in Sources */,
 				6F0E8DB303459D483CFE1531 /* CountdownView.swift in Sources */,
+				DA330D1731A96BD01AE29794 /* EditFavoriteSheet.swift in Sources */,
 				927B1586414370BEF5D84C29 /* FavoritesView.swift in Sources */,
 				64A1604F11E93F68743D821B /* FinishedView.swift in Sources */,
 				2AAFB93F717994638933890A /* HomeView.swift in Sources */,
