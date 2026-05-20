@@ -132,9 +132,6 @@
         }
       }
     },
-    "Cloud sync komt later beschikbaar." : {
-
-    },
     "Doorgaan" : {
       "localizations" : {
         "nl" : {
@@ -298,6 +295,9 @@
           }
         }
       }
+    },
+    "Log in om je trainingen te syncen tussen apparaten." : {
+
     },
     "Log out" : {
       "localizations" : {
@@ -615,9 +615,6 @@
     "Start %@" : {
 
     },
-    "Start met Interval" : {
-
-    },
     "Start training" : {
       "localizations" : {
         "nl" : {
@@ -751,6 +748,9 @@
         }
       }
     },
+    "Trainingen worden gesyncd" : {
+
+    },
     "Trillen bij elke fase-overgang" : {
       "localizations" : {
         "nl" : {
@@ -771,6 +771,9 @@
           }
         }
       }
+    },
+    "Verder zonder account" : {
+
     },
     "Verhoog ronden" : {
       "comment" : "Increase rounds accessibility label",

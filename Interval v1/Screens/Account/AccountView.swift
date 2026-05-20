@@ -1,9 +1,11 @@
 import SwiftUI
-// Sign in with Apple disabled — re-add `import AuthenticationServices` when restoring.
+import AuthenticationServices
 
 struct AccountView: View {
     @Environment(AudioSettings.self) private var audioSettings
     @Environment(AuthManager.self) private var auth
+
+    @State private var showAuthErrorAlert = false
 
     var body: some View {
         NavigationStack {
@@ -23,30 +25,88 @@ struct AccountView: View {
                 }
             }
             .navigationTitle("Account")
+            .onChange(of: auth.errorMessage) { _, new in
+                showAuthErrorAlert = new != nil
+            }
+            .alert("Inloggen mislukt", isPresented: $showAuthErrorAlert) {
+                Button("OK", role: .cancel) { auth.errorMessage = nil }
+            } message: {
+                Text(auth.errorMessage ?? "")
+            }
         }
     }
 
     // MARK: - Profile
-    // Sign in with Apple is disabled in this build (requires paid Apple Developer
-    // Program). When re-enabled, restore the signed-in/signed-out variants here.
     private var profileCard: some View {
-        HStack(spacing: 16) {
-            ZStack {
-                Circle().fill(AppTheme.workGradient).frame(width: 64, height: 64)
-                Image(systemName: "person.fill").font(.title).foregroundStyle(.white)
+        VStack(alignment: .leading, spacing: 16) {
+            HStack(spacing: 16) {
+                ZStack {
+                    Circle().fill(AppTheme.workGradient).frame(width: 64, height: 64)
+                    if let initials = userInitials {
+                        Text(initials)
+                            .font(.system(.title, design: .rounded, weight: .bold))
+                            .foregroundStyle(.white)
+                    } else {
+                        Image(systemName: "person.fill")
+                            .font(.title)
+                            .foregroundStyle(.white)
+                    }
+                }
+                VStack(alignment: .leading, spacing: 4) {
+                    if auth.isSignedIn {
+                        Text(auth.user?.fullName?.isEmpty == false
+                             ? (auth.user?.fullName ?? "")
+                             : "Ingelogd met Apple")
+                            .font(.system(.title3, design: .rounded, weight: .bold))
+                            .foregroundStyle(AppTheme.primaryText)
+                        if let email = auth.user?.email, !email.isEmpty {
+                            Text(email)
+                                .font(.system(.footnote, design: .rounded))
+                                .foregroundStyle(AppTheme.secondaryText)
+                                .lineLimit(1)
+                        } else {
+                            Label("Trainingen worden gesyncd", systemImage: "checkmark.icloud.fill")
+                                .font(.system(.footnote, design: .rounded))
+                                .foregroundStyle(AppTheme.secondaryText)
+                        }
+                    } else {
+                        Text("Lokale modus")
+                            .font(.system(.title3, design: .rounded, weight: .bold))
+                            .foregroundStyle(AppTheme.primaryText)
+                        Text("Log in om je trainingen te syncen tussen apparaten.")
+                            .font(.system(.footnote, design: .rounded))
+                            .foregroundStyle(AppTheme.secondaryText)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                Spacer()
             }
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Lokale modus")
-                    .font(.system(.title3, design: .rounded, weight: .bold))
-                    .foregroundStyle(AppTheme.primaryText)
-                Text("Cloud sync komt later beschikbaar.")
-                    .font(.system(.footnote, design: .rounded))
-                    .foregroundStyle(AppTheme.secondaryText)
+
+            if !auth.isSignedIn {
+                SignInWithAppleButton(
+                    .signIn,
+                    onRequest: { request in
+                        request.requestedScopes = [.fullName, .email]
+                    },
+                    onCompletion: { result in
+                        auth.handleAuthorization(result)
+                    }
+                )
+                .signInWithAppleButtonStyle(.black)
+                .frame(height: 48)
+                .clipShape(Capsule())
             }
-            Spacer()
         }
         .padding(20)
         .softCard()
+        .animation(.appSmooth, value: auth.isSignedIn)
+    }
+
+    private var userInitials: String? {
+        guard let name = auth.user?.fullName, !name.isEmpty else { return nil }
+        let parts = name.split(separator: " ").prefix(2)
+        let initials = parts.map { $0.prefix(1) }.joined().uppercased()
+        return initials.isEmpty ? nil : initials
     }
 
     // MARK: - Ambient audio

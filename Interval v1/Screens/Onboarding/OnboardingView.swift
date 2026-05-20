@@ -1,9 +1,10 @@
 import SwiftUI
-// Sign in with Apple disabled — re-add `import AuthenticationServices` when restoring.
+import AuthenticationServices
 
 struct OnboardingView: View {
     @Environment(AuthManager.self) private var auth
     @State private var appeared = false
+    @State private var showAuthErrorAlert = false
 
     var body: some View {
         ZStack {
@@ -20,6 +21,14 @@ struct OnboardingView: View {
             .padding(.horizontal, 40)
             .frame(maxWidth: 560)
             .frame(maxWidth: .infinity)
+        }
+        .onChange(of: auth.errorMessage) { _, new in
+            showAuthErrorAlert = new != nil
+        }
+        .alert("Inloggen mislukt", isPresented: $showAuthErrorAlert) {
+            Button("OK", role: .cancel) { auth.errorMessage = nil }
+        } message: {
+            Text(auth.errorMessage ?? "")
         }
     }
 
@@ -111,19 +120,31 @@ struct OnboardingView: View {
     // MARK: - Buttons
     private var bottomButtons: some View {
         VStack(spacing: 14) {
-            // Primary: enter app. Sign in with Apple temporarily disabled —
-            // requires paid Apple Developer Program enrollment.
+            // Primary: Sign in with Apple. Once signed in, AuthManager bridges
+            // the credential into Supabase Auth so the user's favorites sync
+            // across devices.
+            SignInWithAppleButton(
+                .signIn,
+                onRequest: { request in
+                    request.requestedScopes = [.fullName, .email]
+                },
+                onCompletion: { result in
+                    auth.handleAuthorization(result)
+                }
+            )
+            .signInWithAppleButtonStyle(.white)
+            .frame(height: 56)
+            .clipShape(Capsule())
+            .shadow(color: Color.black.opacity(0.15), radius: 12, x: 0, y: 6)
+
+            // Secondary: continue without an account (local-only mode).
             Button(action: auth.skipOnboarding) {
-                Text("Start met Interval")
-                    .font(.system(.headline, design: .rounded, weight: .bold))
-                    .foregroundStyle(AppTheme.coral)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    .background(Color.white)
-                    .clipShape(Capsule())
-                    .shadow(color: Color.black.opacity(0.15), radius: 12, x: 0, y: 6)
+                Text("Verder zonder account")
+                    .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.85))
+                    .padding(.vertical, 8)
             }
-            .accessibilityLabel("Start met Interval")
+            .accessibilityLabel("Verder zonder account")
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.5).delay(0.65), value: appeared)

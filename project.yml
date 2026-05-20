@@ -32,15 +32,12 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.superapp.intervalv1
-        # Sign in with Apple disabled — requires paid Apple Developer Program.
-        # When you enroll, restore the CODE_SIGN_ENTITLEMENTS line + entitlements
-        # block below.
-        # CODE_SIGN_ENTITLEMENTS: Interval v1/Interval v1.entitlements
-    # entitlements:
-    #   path: Interval v1/Interval v1.entitlements
-    #   properties:
-    #     com.apple.developer.applesignin:
-    #       - Default
+        CODE_SIGN_ENTITLEMENTS: Interval v1/Interval v1.entitlements
+    entitlements:
+      path: Interval v1/Interval v1.entitlements
+      properties:
+        com.apple.developer.applesignin:
+          - Default
     dependencies:
       - package: Supabase
         product: Supabase

@@ -14,6 +14,7 @@
 		1AA518B3BA6AA2A3AF447AA0 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FBF50D0D81DB9623EC3296 /* LiveActivityManager.swift */; };
 		1BD170AAA30B95284D7FC156 /* schema.sql in Resources */ = {isa = PBXBuildFile; fileRef = 66A6CDA41091D54124338210 /* schema.sql */; };
 		1CC585E974EFA8ACA33756A6 /* TimerEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF38F836176890F13921DA3 /* TimerEngineTests.swift */; };
+		1E34CA30C96A2DAA9277BAF6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B1AB367F33E195113E625DE1 /* PrivacyInfo.xcprivacy */; };
 		1FA5DD192AAED161D8C3C6F2 /* IntervalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1484355F434C44F806731F9B /* IntervalApp.swift */; };
 		291C0C3EE0D5C89F18DDE75A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 07DE35D61F94F544C94B7E2F /* Localizable.xcstrings */; };
 		2AAFB93F717994638933890A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC5F2596FE2F3A0C1606738 /* HomeView.swift */; };
@@ -53,6 +54,7 @@
 		E5D27C9CBABC078F59698503 /* InlineRoundsWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4462E6903E287743021CE370 /* InlineRoundsWheel.swift */; };
 		EA9ED321DBED5A896DC20300 /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE96B872CFACAB6C070AE62 /* TimerEngine.swift */; };
 		EF27DCA18A5F294A7B4746DF /* ActivityPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E348B289D1B87DDA39D0AEFB /* ActivityPhase.swift */; };
+		FAF744945469F826A06572D5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6D450BC57768A77F4C729966 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +114,7 @@
 		61318F0E0B965A3A803B7F56 /* FinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedView.swift; sourceTree = "<group>"; };
 		61A69C1F8DEA73FDE65ADF28 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		66A6CDA41091D54124338210 /* schema.sql */ = {isa = PBXFileReference; path = schema.sql; sourceTree = "<group>"; };
+		6D450BC57768A77F4C729966 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		704F09BF332567EC9ADA8289 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		70AA7CB88399234378115053 /* Interval Widget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = "Interval Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72031F1E7D3A722E75F130B3 /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
@@ -123,6 +126,7 @@
 		8745C9D53DFC9BC29EEFD814 /* WorkoutEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutEntityTests.swift; sourceTree = "<group>"; };
 		94A6B11C4072CB2A062858C5 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		9DA9A411DDAC91317A47E15E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B1AB367F33E195113E625DE1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B24BB45715541464AD162385 /* SaveFavoriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFavoriteSheet.swift; sourceTree = "<group>"; };
 		BCA0056F71F6F39178E7598B /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C2A43E3B68219F6F83F8ED24 /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
@@ -298,6 +302,7 @@
 				463E77F4A71FDE337B83133E /* Interval v1.entitlements */,
 				1484355F434C44F806731F9B /* IntervalApp.swift */,
 				07DE35D61F94F544C94B7E2F /* Localizable.xcstrings */,
+				B1AB367F33E195113E625DE1 /* PrivacyInfo.xcprivacy */,
 				AD2D894CBD5F651952ABB3AA /* Audio */,
 				4D513CF6E4FD6FE370E2B702 /* Auth */,
 				0F0EDBF47A45F8BD7595D1BA /* LaunchScreen.storyboard */,
@@ -366,6 +371,7 @@
 				55C1CE8AF0E29B686B47482E /* IntervalLiveActivity.swift */,
 				447664BAAB78608659C2D094 /* IntervalWidgetBundle.swift */,
 				EF983C2F7F4D8E59A32C3B8F /* LockScreenView.swift */,
+				6D450BC57768A77F4C729966 /* PrivacyInfo.xcprivacy */,
 				2A96D5ADCDD0A4E13D4B5126 /* WidgetBrand.swift */,
 			);
 			path = "Interval Widget";
@@ -397,6 +403,7 @@
 			buildConfigurationList = 26768D8CA2543F95BC685742 /* Build configuration list for PBXNativeTarget "Interval Widget" */;
 			buildPhases = (
 				A13EBC3E75618C3B1AA8E533 /* Sources */,
+				79A98D8A393E41167064418A /* Resources */,
 			);
 			buildRules = (
 			);
@@ -483,8 +490,17 @@
 				A3B457F9D874C1992D1FFAB1 /* Assets.xcassets in Resources */,
 				2AF864E11AD2D7D63AA96EBD /* LaunchScreen.storyboard in Resources */,
 				291C0C3EE0D5C89F18DDE75A /* Localizable.xcstrings in Resources */,
+				1E34CA30C96A2DAA9277BAF6 /* PrivacyInfo.xcprivacy in Resources */,
 				04678A75B08319A645E1F633 /* README.md in Resources */,
 				1BD170AAA30B95284D7FC156 /* schema.sql in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79A98D8A393E41167064418A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAF744945469F826A06572D5 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -734,6 +750,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Interval v1/Interval v1.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Interval v1/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -769,6 +786,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Interval v1/Interval v1.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Interval v1/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
