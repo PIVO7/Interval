@@ -4,6 +4,7 @@ import AuthenticationServices
 struct AccountView: View {
     @Environment(AudioSettings.self) private var audioSettings
     @Environment(AuthManager.self) private var auth
+    @Environment(AppearanceSettings.self) private var appearance
 
     @State private var showAuthErrorAlert = false
 
@@ -16,7 +17,7 @@ struct AccountView: View {
                         profileCard
                         audioSection
                         signalSection
-                        comingSoonSection
+                        appearanceSection
                         logoutButton
                     }
                     .padding(20)
@@ -70,10 +71,10 @@ struct AccountView: View {
                                 .foregroundStyle(AppTheme.secondaryText)
                         }
                     } else {
-                        Text("Lokale modus")
+                        Text("Sync je trainingen")
                             .font(.system(.title3, design: .rounded, weight: .bold))
                             .foregroundStyle(AppTheme.primaryText)
-                        Text("Log in om je trainingen te syncen tussen apparaten.")
+                        Text("Log in met Apple om je favorieten te bewaren op al je apparaten.")
                             .font(.system(.footnote, design: .rounded))
                             .foregroundStyle(AppTheme.secondaryText)
                             .fixedSize(horizontal: false, vertical: true)
@@ -217,17 +218,56 @@ struct AccountView: View {
         }
     }
 
-    // MARK: - Coming soon
-    private var comingSoonSection: some View {
+    // MARK: - Appearance
+    private var appearanceSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            sectionHeader("Binnenkort")
+            sectionHeader("Weergave")
             VStack(spacing: 0) {
-                infoRow(icon: "bell", tint: AppTheme.secondaryText, label: "Notificaties", value: "v2")
-                Divider().padding(.leading, 60)
-                infoRow(icon: "creditcard", tint: AppTheme.secondaryText, label: "Betalingen", value: "v2")
+                ForEach(Array(AppearanceMode.allCases.enumerated()), id: \.element.id) { idx, mode in
+                    Button {
+                        appearance.mode = mode
+                    } label: {
+                        appearanceRow(mode: mode, selected: appearance.mode == mode)
+                    }
+                    .buttonStyle(.plain)
+                    if idx < AppearanceMode.allCases.count - 1 {
+                        Divider().padding(.leading, 60)
+                    }
+                }
             }
             .softCard()
         }
+        .animation(.appSmooth, value: appearance.mode)
+    }
+
+    private func appearanceRow(mode: AppearanceMode, selected: Bool) -> some View {
+        HStack(spacing: 14) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.coral.opacity(0.15))
+                    .frame(width: 30, height: 30)
+                Image(systemName: mode.icon)
+                    .foregroundStyle(AppTheme.coral)
+                    .font(.caption)
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(mode.displayName)
+                    .font(.system(.body, design: .rounded))
+                    .foregroundStyle(AppTheme.primaryText)
+                Text(mode.subtitle)
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(AppTheme.secondaryText)
+            }
+            Spacer()
+            if selected {
+                Image(systemName: "checkmark")
+                    .foregroundStyle(AppTheme.coral)
+                    .font(.callout.weight(.semibold))
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .contentShape(Rectangle())
     }
 
     // MARK: - Logout
@@ -274,23 +314,11 @@ struct AccountView: View {
         .padding(.vertical, 12)
     }
 
-    private func infoRow(icon: String, tint: Color, label: LocalizedStringKey, value: LocalizedStringKey) -> some View {
-        HStack(spacing: 14) {
-            ZStack {
-                Circle().fill(tint.opacity(0.18)).frame(width: 30, height: 30)
-                Image(systemName: icon).foregroundStyle(tint).font(.caption)
-            }
-            Text(label).font(.system(.body, design: .rounded)).foregroundStyle(AppTheme.primaryText)
-            Spacer()
-            Text(value).font(.system(.subheadline, design: .rounded)).foregroundStyle(AppTheme.secondaryText)
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 14)
-    }
 }
 
 #Preview {
     AccountView()
         .environment(AudioSettings())
         .environment(AuthManager())
+        .environment(AppearanceSettings())
 }

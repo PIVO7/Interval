@@ -6,6 +6,7 @@ struct IntervalApp: App {
     @State private var workoutStore = WorkoutStore()
     @State private var audioSettings = AudioSettings()
     @State private var auth = AuthManager()
+    @State private var appearance = AppearanceSettings()
 
     let modelContainer: ModelContainer = {
         do {
@@ -21,7 +22,9 @@ struct IntervalApp: App {
                 .environment(workoutStore)
                 .environment(audioSettings)
                 .environment(auth)
+                .environment(appearance)
                 .tint(AppTheme.coral)
+                .preferredColorScheme(appearance.mode.colorScheme)
         }
         .modelContainer(modelContainer)
     }

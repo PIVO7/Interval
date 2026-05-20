@@ -231,6 +231,9 @@
         }
       }
     },
+    "Inloggen mislukt" : {
+
+    },
     "Interval" : {
       "comment" : "App name — typically not translated",
       "localizations" : {

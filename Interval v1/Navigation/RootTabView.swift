@@ -49,5 +49,6 @@ struct RootTabView: View {
         .environment(WorkoutStore())
         .environment(AudioSettings())
         .environment(AuthManager())
+        .environment(AppearanceSettings())
         .modelContainer(for: WorkoutEntity.self, inMemory: true)
 }

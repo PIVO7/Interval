@@ -32,8 +32,10 @@
 		4A4D11909F49850F3F9F71C2 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A43E3B68219F6F83F8ED24 /* AudioEngine.swift */; };
 		5B69F541E6DD4523D6131F24 /* WidgetBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A96D5ADCDD0A4E13D4B5126 /* WidgetBrand.swift */; };
 		64A1604F11E93F68743D821B /* FinishedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61318F0E0B965A3A803B7F56 /* FinishedView.swift */; };
+		6C985DECBCE94BF391393AE0 /* AppearanceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45835DA23FF5CFCA60F29707 /* AppearanceSettings.swift */; };
 		6F0E8DB303459D483CFE1531 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743D6B0A7D3ADB86B2ADD246 /* CountdownView.swift */; };
 		7EAF8396FD6903D87A0F9E59 /* AudioSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DEE8F83356E0556F83707C /* AudioSettings.swift */; };
+		82BB578DAB8785E4194BD2E3 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1FDA818CC047AFFBEA47C3A /* AppearanceMode.swift */; };
 		927B1586414370BEF5D84C29 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461C5F0E2E1C757153E6F46A /* FavoritesView.swift */; };
 		98AFC9A4A1F855598D6D5FAD /* IntervalLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C1CE8AF0E29B686B47482E /* IntervalLiveActivity.swift */; };
 		9B560898D3D242FC468383C5 /* WorkoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042671CDF4FF83920C14A08F /* WorkoutTests.swift */; };
@@ -106,6 +108,7 @@
 		44543D7DFF399DB634544935 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4462E6903E287743021CE370 /* InlineRoundsWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineRoundsWheel.swift; sourceTree = "<group>"; };
 		447664BAAB78608659C2D094 /* IntervalWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalWidgetBundle.swift; sourceTree = "<group>"; };
+		45835DA23FF5CFCA60F29707 /* AppearanceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettings.swift; sourceTree = "<group>"; };
 		461C5F0E2E1C757153E6F46A /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		463E77F4A71FDE337B83133E /* Interval v1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Interval v1.entitlements"; sourceTree = "<group>"; };
 		549A53017D7ECA154DD398BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -137,6 +140,7 @@
 		EEF38F836176890F13921DA3 /* TimerEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngineTests.swift; sourceTree = "<group>"; };
 		EF983C2F7F4D8E59A32C3B8F /* LockScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenView.swift; sourceTree = "<group>"; };
 		F1D23B0DAC25EC0787897AF5 /* InlineTimeWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTimeWheel.swift; sourceTree = "<group>"; };
+		F1FDA818CC047AFFBEA47C3A /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
 		FC807B88BF4535DDAA572FEE /* IntervalActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalActivityAttributes.swift; sourceTree = "<group>"; };
 		FDE0D4319DE0D8E63AFE149E /* WorkoutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -289,6 +293,8 @@
 			isa = PBXGroup;
 			children = (
 				94A6B11C4072CB2A062858C5 /* Animations.swift */,
+				F1FDA818CC047AFFBEA47C3A /* AppearanceMode.swift */,
+				45835DA23FF5CFCA60F29707 /* AppearanceSettings.swift */,
 				D4419A45F035E74D556B60F9 /* AppTheme.swift */,
 			);
 			path = Theme;
@@ -516,6 +522,8 @@
 				D1B95E7ED1E8E607FFAEFB56 /* ActivityPhase.swift in Sources */,
 				2B295A7950587A7B9F1AC8BF /* Animations.swift in Sources */,
 				44133D2151A5848A5755C5FD /* AppTheme.swift in Sources */,
+				82BB578DAB8785E4194BD2E3 /* AppearanceMode.swift in Sources */,
+				6C985DECBCE94BF391393AE0 /* AppearanceSettings.swift in Sources */,
 				4A4D11909F49850F3F9F71C2 /* AudioEngine.swift in Sources */,
 				7EAF8396FD6903D87A0F9E59 /* AudioSettings.swift in Sources */,
 				A07905595BB0D233B12869E8 /* AuthManager.swift in Sources */,
