@@ -8,11 +8,25 @@ import os
 /// from the verbose ActivityKit API and from the ActivityAuthorizationInfo
 /// flag. If the user has Live Activities disabled or we're on a device that
 /// doesn't support them, every method is a silent no-op.
+///
+/// ## Race handling
+///
+/// Activity creation isn't truly instantaneous — `start()` first awaits
+/// `endImmediately()` to tear down any stale prior activity, which is a real
+/// ActivityKit IPC call (can take a few hundred ms). During that window the
+/// engine has already started ticking and may have advanced phases. To avoid
+/// dropping those updates, every state passed to start/update is also written
+/// to `pendingState`; once `Activity.request` returns, we publish the *latest*
+/// pending state, not whatever was queued at the start of the call.
 @MainActor
 final class LiveActivityManager {
     static let shared = LiveActivityManager()
 
     private var activity: Activity<IntervalActivityAttributes>?
+    /// Latest desired content state. Used to (1) reconcile after the async
+    /// `Activity.request` resolves, and (2) replay updates that arrived
+    /// before the activity existed.
+    private var pendingState: IntervalActivityAttributes.ContentState?
     private let log = Logger(subsystem: "com.superapp.intervalv1", category: "LiveActivity")
 
     private var isEnabled: Bool {
@@ -32,24 +46,31 @@ final class LiveActivityManager {
         end: Date
     ) async {
         guard isEnabled else { return }
-        // Await any in-flight teardown before requesting a new activity, so a
-        // rapid stop/restart can't leave two activities competing.
-        await endImmediately()
-        let attrs = IntervalActivityAttributes(
-            workoutName: workoutName,
-            totalRounds: totalRounds
-        )
-        let state = IntervalActivityAttributes.ContentState(
+        let initialState = IntervalActivityAttributes.ContentState(
             phase: phase,
             phaseStartDate: start,
             phaseEndDate: end,
             currentRound: round
         )
+        pendingState = initialState
+
+        // Await any in-flight teardown before requesting a new activity, so a
+        // rapid stop/restart can't leave two activities competing.
+        await endImmediately()
+
+        // The engine may have called updatePhase() during the await above —
+        // honour whichever state is newest.
+        let stateToPublish = pendingState ?? initialState
+        let attrs = IntervalActivityAttributes(
+            workoutName: workoutName,
+            totalRounds: totalRounds
+        )
         do {
             activity = try Activity.request(
                 attributes: attrs,
-                content: .init(state: state, staleDate: nil, relevanceScore: 100)
+                content: .init(state: stateToPublish, staleDate: nil, relevanceScore: 100)
             )
+            pendingState = nil
         } catch {
             log.error("Failed to start Live Activity: \(error.localizedDescription, privacy: .public)")
         }
@@ -66,23 +87,35 @@ final class LiveActivityManager {
     ///
     /// relevanceScore 100: high priority — iOS uses this to decide which
     /// activity stays prioritized when budgets are tight.
+    ///
+    /// If the activity hasn't finished being created yet, we stash the state
+    /// in `pendingState` so `start()` picks it up when `Activity.request`
+    /// resolves. No update is lost.
     func updatePhase(_ phase: ActivityPhase, round: Int, start: Date, end: Date) {
-        guard let activity else { return }
         let state = IntervalActivityAttributes.ContentState(
             phase: phase,
             phaseStartDate: start,
             phaseEndDate: end,
             currentRound: round
         )
-        Task {
-            await activity.update(
-                .init(state: state, staleDate: nil, relevanceScore: 100)
-            )
+        if let activity {
+            Task {
+                await activity.update(
+                    .init(state: state, staleDate: nil, relevanceScore: 100)
+                )
+            }
+        } else {
+            // Activity creation still in flight. Queue the latest state.
+            pendingState = state
         }
     }
 
     func finish(round: Int) {
         guard let activity else { return }
+        // Disown the property *before* the async dismissal so a subsequent
+        // start() sees a clean slate even if the previous activity is still
+        // mid-dismiss-after-N-seconds.
+        self.activity = nil
         let now = Date.now
         let state = IntervalActivityAttributes.ContentState(
             phase: .finished,
@@ -97,16 +130,15 @@ final class LiveActivityManager {
                 // then auto-dismiss.
                 dismissalPolicy: .after(now.addingTimeInterval(8))
             )
-            self.activity = nil
         }
     }
 
     func endImmediately() async {
         guard let activity else { return }
+        self.activity = nil
         await activity.end(
             .init(state: activity.content.state, staleDate: nil),
             dismissalPolicy: .immediate
         )
-        self.activity = nil
     }
 }

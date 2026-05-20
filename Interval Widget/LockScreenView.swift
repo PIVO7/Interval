@@ -30,7 +30,10 @@ struct LockScreenView: View {
 
                 if state.phase != .finished {
                     HStack(alignment: .firstTextBaseline, spacing: 12) {
-                        Text(timerInterval: Date.now...state.phaseEndDate,
+                        // Use the persisted phaseStartDate (canonical pattern)
+                        // so this Text and the ProgressView below share the
+                        // same interval baseline.
+                        Text(timerInterval: state.phaseStartDate...state.phaseEndDate,
                              countsDown: true,
                              showsHours: false)
                             .font(.system(size: 48, weight: .bold, design: .rounded).monospacedDigit())
@@ -48,6 +51,10 @@ struct LockScreenView: View {
                                  countsDown: true)
                         .tint(.white)
                 } else {
+                    // Trophy state has less content than the timer state;
+                    // center it vertically inside the card so it doesn't
+                    // float at the top (visible on iPad's wider lock card).
+                    Spacer(minLength: 0)
                     HStack {
                         Text("Training voltooid")
                             .font(.system(.title3, design: .rounded, weight: .bold))
@@ -57,7 +64,7 @@ struct LockScreenView: View {
                             .foregroundStyle(.white)
                             .font(.title2)
                     }
-                    .padding(.top, 4)
+                    Spacer(minLength: 0)
                 }
             }
             .padding(16)

@@ -11,22 +11,22 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>
-    <linearGradient id="creamWarmGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FBF7F2"/>
-      <stop offset="55%" stop-color="#F5EEE1"/>
-      <stop offset="100%" stop-color="#EFE5D3"/>
+    <linearGradient id="warmGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8826B"/>
+      <stop offset="55%" stop-color="#EE946F"/>
+      <stop offset="100%" stop-color="#F4B860"/>
     </linearGradient>
   </defs>
 
-  <!-- Background: warm cream gradient -->
-  <rect width="1024" height="1024" fill="url(#creamWarmGradient)"/>
+  <!-- Background: warm coral → amber gradient -->
+  <rect width="1024" height="1024" fill="url(#warmGradient)"/>
 
-  <!-- Foreground: coral stopwatch -->
-  <rect x="476" y="206" width="72" height="42" rx="14" fill="#E8826B"/>
-  <rect x="497" y="240" width="30" height="36" fill="#E8826B"/>
-  <circle cx="512" cy="568" r="290"
-          stroke="#E8826B" stroke-width="64" fill="none"/>
-  <line x1="512" y1="568" x2="653.4" y2="426.6"
-        stroke="#E8826B" stroke-width="52" stroke-linecap="round"/>
-  <circle cx="512" cy="568" r="30" fill="#E8826B"/>
+  <!-- Foreground: white stopwatch -->
+  <rect x="470" y="200" width="84" height="48" rx="16" fill="white"/>
+  <rect x="494" y="240" width="36" height="40" fill="white"/>
+  <circle cx="512" cy="572" r="290"
+          stroke="white" stroke-width="72" fill="none"/>
+  <line x1="512" y1="572" x2="653.4" y2="430.6"
+        stroke="white" stroke-width="58" stroke-linecap="round"/>
+  <circle cx="512" cy="572" r="34" fill="white"/>
 </svg>

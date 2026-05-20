@@ -87,10 +87,39 @@ struct ActiveTrainingView: View {
     }
 
     private var roundIndicator: some View {
-        Text("Ronde \(engine.currentRound) / \(engine.workout.rounds)")
-            .font(.system(.callout, design: .rounded, weight: .semibold))
-            .foregroundStyle(.white.opacity(0.9))
-            .padding(.top, 8)
+        VStack(spacing: 10) {
+            Text("Ronde \(engine.currentRound) / \(engine.workout.rounds)")
+                .font(.system(.title3, design: .rounded, weight: .heavy))
+                .foregroundStyle(.white)
+                .contentTransition(.numericText())
+            roundProgressIndicator
+        }
+        .padding(.top, 8)
+        .animation(.snappy(duration: 0.3), value: engine.currentRound)
+    }
+
+    /// Visual round progress: dots for ≤12 rounds (most common Tabata/HIIT
+    /// workouts), a progress bar above that to avoid clutter.
+    @ViewBuilder
+    private var roundProgressIndicator: some View {
+        let total = engine.workout.rounds
+        if total <= 12 {
+            HStack(spacing: 6) {
+                ForEach(1...total, id: \.self) { round in
+                    Circle()
+                        .fill(round <= engine.currentRound
+                              ? Color.white
+                              : Color.white.opacity(0.3))
+                        .frame(width: 8, height: 8)
+                }
+            }
+        } else {
+            ProgressView(value: Double(engine.currentRound),
+                         total: Double(total))
+                .progressViewStyle(.linear)
+                .tint(.white)
+                .frame(width: 180)
+        }
     }
 
     // Visual sizing for the timer ring + countdown text, scaled relative to

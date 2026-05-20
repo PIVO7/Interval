@@ -238,7 +238,6 @@
       }
     },
     "Ingelogd met Apple" : {
-      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {

@@ -8,7 +8,7 @@ import Foundation
 /// `ProgressView(timerInterval:countsDown:)` which auto-tick locally without
 /// the app having to push an update every second. The app only needs to call
 /// `Activity.update(...)` at phase boundaries (work → rest → next round).
-public struct IntervalActivityAttributes: ActivityAttributes {
+public struct IntervalActivityAttributes: ActivityAttributes, Sendable {
 
     public struct ContentState: Codable, Hashable, Sendable {
         public var phase: ActivityPhase

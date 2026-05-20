@@ -32,7 +32,7 @@ struct IntervalLiveActivity: Widget {
                     .foregroundStyle(context.state.phase.tint)
             } compactTrailing: {
                 if context.state.phase != .finished {
-                    Text(timerInterval: Date.now...context.state.phaseEndDate,
+                    Text(timerInterval: context.state.phaseStartDate...context.state.phaseEndDate,
                          countsDown: true,
                          showsHours: false)
                         .monospacedDigit()
@@ -58,7 +58,7 @@ struct IntervalLiveActivity: Widget {
         VStack(spacing: 10) {
             if state.phase != .finished {
                 HStack(alignment: .firstTextBaseline) {
-                    Text(timerInterval: Date.now...state.phaseEndDate,
+                    Text(timerInterval: state.phaseStartDate...state.phaseEndDate,
                          countsDown: true,
                          showsHours: false)
                         .font(.system(size: 44, weight: .bold, design: .rounded).monospacedDigit())

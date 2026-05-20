@@ -4,6 +4,11 @@ import UIKit
 import os
 
 /// Manages ambient audio + synthesised signal tones + haptics.
+///
+/// Signal tone design: "boxing ring" — brassy bell tones with longer ring
+/// decay for round-start moments (work / rest / finish), and a short
+/// percussive wood tock for the 3-2-1 countdown. All synthesised on the fly
+/// — no bundled audio files needed for these effects.
 final class AudioEngine {
 
     static let shared = AudioEngine()
@@ -62,51 +67,59 @@ final class AudioEngine {
         ambientPlayer?.volume = volume
     }
 
-    // MARK: - Signal tones (synthesised — additive synthesis with bell-like
-    // harmonics, sine attack, exponential decay. Tuned to musical intervals
-    // instead of octaves for a warmer, less clinical character.)
+    // MARK: - Signal tones
 
-    /// Musical note frequencies (equal-temperament, A4 = 440 Hz). All chimes
-    /// sit in the mid range (C4–G4) which is the warm zone for phone speakers
-    /// — high enough to be clearly audible, low enough to feel soft.
-    private enum Note {
-        static let c4: Double = 261.63
-        static let e4: Double = 329.63
-        static let g4: Double = 392.00
-    }
-
-    /// Start Work: C4 → E4 → G4 — rising major triad arpeggio. Longer + more
-    /// note movement gives a "ready-set-go" fanfare feel. Heavy haptic to match.
+    /// Start Work: TWO bells ascending — A4 then C#5 (440 → 550 Hz). The
+    /// rising major third reads as "Ready · GO". Each bell is ~0.55s with a
+    /// short gap, so the whole signal lands in ~1.25s total.
     func playWorkStart(settings: AudioSettings) {
         guard settings.signalTonesEnabled else { return }
         playSynth(
-            segments: [(Note.c4, 0.18), (Note.e4, 0.18), (Note.g4, 0.70)],
-            gap: 0.02
+            segments: [(440, 0.55), (550, 0.55)],
+            gap: 0.15,
+            style: .boxingBell
         )
         if settings.hapticsEnabled { haptic(.heavy) }
     }
 
-    /// Start Rest: G4 → E4 — short descending third. Half the work duration
-    /// (~0.5s vs ~1.05s) — feels like a brief breath. Soft haptic to match.
+    /// Start Rest: THREE short bells at E4 (330 Hz). Same-pitch triple
+    /// pulse — recognisably a different rhythm from work-start, lower in
+    /// pitch so it reads "wind down" rather than "go". ~1.2s total.
     func playRestStart(settings: AudioSettings) {
         guard settings.signalTonesEnabled else { return }
-        playSynth(segments: [(Note.g4, 0.14), (Note.e4, 0.32)], gap: 0.02)
-        if settings.hapticsEnabled { haptic(.soft) }
+        playSynth(
+            segments: [(330, 0.30), (330, 0.30), (330, 0.30)],
+            gap: 0.10,
+            style: .boxingBell
+        )
+        if settings.hapticsEnabled { haptic(.medium) }
     }
 
-    /// Last-3-seconds tick: short percussive E4 — soft wood-block "tap".
+    /// Last-3-seconds tick: clear pitched note at E5 (660 Hz) — high and
+    /// bright so each tick reads as a distinct warning beep above the
+    /// work-start bell range. ~0.25s duration with the bell-style ring.
     func playCountdownTick(settings: AudioSettings) {
         guard settings.signalTonesEnabled else { return }
-        playSynth(segments: [(Note.e4, 0.10)], gap: 0, style: .percussive)
+        playSynth(
+            segments: [(660, 0.25)],
+            gap: 0,
+            style: .boxingBell
+        )
         if settings.hapticsEnabled { haptic(.light) }
     }
 
-    /// Finished: C major arpeggio C4–E4–G4 with sustained final note.
+    /// Finished: classic three-bell boxing match-end signal. Three rings of
+    /// the work-start bell — the last one held longer for resolution.
     func playFinished(settings: AudioSettings) {
         guard settings.signalTonesEnabled else { return }
         playSynth(
-            segments: [(Note.c4, 0.24), (Note.e4, 0.24), (Note.g4, 0.95)],
-            gap: 0.02
+            segments: [
+                (440, 0.55),
+                (440, 0.55),
+                (440, 1.5),
+            ],
+            gap: 0.20,
+            style: .boxingBell
         )
         if settings.hapticsEnabled { haptic(.success) }
     }
@@ -115,35 +128,31 @@ final class AudioEngine {
 
     private var tonePlayer: AVAudioPlayer?
 
-    /// Envelope shape for a tone segment.
+    /// Envelope shape for a tone segment. Drives both the amplitude envelope
+    /// and the harmonic recipe (`harmonicRecipe(for:)`).
     private enum SynthStyle {
-        /// Soft sine attack (~40ms), exponential decay. Bell / chime feel.
-        case bell
-        /// Very fast attack (~5ms), fast decay. Wood-block / click feel.
+        /// Brassy bell with slightly inharmonic partials and long exponential
+        /// decay. Used for round / rest / finish signals.
+        case boxingBell
+        /// Wood-block tock — low fundamental, multi-resonance harmonics,
+        /// noise transient at attack, very fast decay. Used for countdown.
         case percussive
     }
 
     /// Render and play a sequence of musical segments. Each segment is rendered
-    /// with additive harmonics (fundamental + 2nd + 3rd + 4th) for richness.
+    /// with additive harmonics based on its style.
     private func playSynth(
         segments: [(frequency: Double, duration: Double)],
         gap: Double,
-        style: SynthStyle = .bell
+        style: SynthStyle
     ) {
         let sampleRate: Double = 44100
         let totalDuration = segments.map(\.duration).reduce(0, +) + gap * Double(segments.count)
         let totalSamples = Int(sampleRate * totalDuration)
         var buffer = [Int16](repeating: 0, count: totalSamples)
 
-        // Harmonic recipe: mostly fundamental + a touch of octave + faint 5th
-        // for warmth without brilliance. The 4th harmonic is dropped entirely
-        // — at our chime frequencies (C4–G4) it sits in the piercing 1.5kHz
-        // range, exactly what we want to avoid.
-        let harmonics: [(multiplier: Double, weight: Double)] = [
-            (1.0, 1.00),
-            (2.0, 0.22),
-            (3.0, 0.04),
-        ]
+        let harmonics = harmonicRecipe(for: style)
+        let normalisation = 1.0 / harmonics.map(\.weight).reduce(0, +)
 
         var offset = 0
         for segment in segments {
@@ -156,12 +165,24 @@ final class AudioEngine {
                 for h in harmonics {
                     sample += sin(2 * .pi * segment.frequency * h.multiplier * t) * h.weight
                 }
-                // Normalise: sum of weights ≈ 1.52, plus headroom for envelope.
-                sample *= env * 0.34
+                sample *= normalisation * env
+
+                // Wood-block character: add a broadband noise burst at the
+                // attack so the tock reads as "heavy mallet striking wood"
+                // rather than a pure tone. Stronger + slightly longer than
+                // v1 — gives the hit visible bass+grit content.
+                if style == .percussive, t < 0.012 {
+                    let noiseFade = 1.0 - (t / 0.012)
+                    sample += Double.random(in: -1...1) * 0.7 * noiseFade
+                }
+
+                // Scale to ~85% peak amplitude — leaves headroom and prevents
+                // clipping when harmonics align at the start of decay.
+                let scaled = sample * 0.85
 
                 let idx = offset + j
                 if idx < buffer.count {
-                    buffer[idx] = Int16(clamping: Int(sample * 32767))
+                    buffer[idx] = Int16(clamping: Int(scaled * 32767))
                 }
             }
             offset += sampleCount + Int(sampleRate * gap)
@@ -178,22 +199,60 @@ final class AudioEngine {
         }
     }
 
-    /// Envelope function. Bell: smooth sine attack, exponential decay.
-    /// Percussive: near-instant attack, fast exponential decay.
+    /// Harmonic spectrum. Brassy bells include a 0.5× sub-octave for body
+    /// and a slightly-inharmonic 2.76× partial for the "bronze shimmer".
+    /// Wood blocks get heavier low content (more weight on fundamental,
+    /// preserved upper resonances for the "click") plus the noise transient
+    /// added at synthesis time.
+    private func harmonicRecipe(for style: SynthStyle) -> [(multiplier: Double, weight: Double)] {
+        switch style {
+        case .boxingBell:
+            return [
+                (0.5,  0.55),   // sub-octave — adds bass body
+                (1.0,  1.00),
+                (2.0,  0.45),
+                (2.76, 0.30),   // slightly inharmonic — gives bell character
+                (4.2,  0.15),
+                (5.4,  0.06),
+            ]
+        case .percussive:
+            return [
+                (1.0,  1.00),
+                (2.8,  0.55),   // first resonant overtone of a struck wood block
+                (4.3,  0.30),   // second — adds the high "click"
+            ]
+        }
+    }
+
+    /// Envelope. Boxing bell: 1ms attack + two-stage decay (fast transient
+    /// blended with long ring) for that "punchy strike, lingering body" feel.
+    /// A 20ms quarter-sine release at the end of each segment prevents the
+    /// hard cut-off click when short segments are chained (work/rest/tick).
+    /// Percussive: instant attack, fast decay.
     private func envelope(t: Double, duration: Double, style: SynthStyle) -> Double {
         switch style {
-        case .bell:
-            let attack = 0.04
+        case .boxingBell:
+            let attack = 0.001
+            let release = 0.02
+            var env: Double
             if t < attack {
-                // Quarter-sine ramp 0 → 1 — gentle onset, no click
-                return sin(.pi * 0.5 * (t / attack))
+                env = t / attack
             } else {
-                // Exponential decay, scaled so the tone fades out by ~end-of-segment
-                let decayTime = t - attack
-                return exp(-decayTime * 3.2)
+                let tAfter = t - attack
+                // 40% fast transient (initial impact) + 60% slow body (ring).
+                let transient = exp(-tAfter * 18.0)
+                let body      = exp(-tAfter * 1.8)
+                env = 0.4 * transient + 0.6 * body
             }
+            // Smoothly fade to zero across the last `release` seconds of the
+            // segment — avoids the click when a 0.3s segment is cut mid-ring.
+            let timeRemaining = duration - t
+            if timeRemaining < release {
+                env *= sin(.pi * 0.5 * max(0, timeRemaining) / release)
+            }
+            return env
         case .percussive:
-            let attack = 0.005
+            let attack = 0.001
             if t < attack {
                 return t / attack
             } else {
