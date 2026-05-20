@@ -93,20 +93,26 @@ struct ActiveTrainingView: View {
             .padding(.top, 8)
     }
 
+    // Visual sizing for the timer ring. Tuned so the circle stays inside
+    // iPhone SE's 320pt width with breathing room (10pt margin per side),
+    // while still feeling hero-sized on bigger devices.
+    private let ringSize: CGFloat = 320
+    private let ringStroke: CGFloat = 22
+
     private var timerRing: some View {
         ZStack {
             // Track
             Circle()
-                .stroke(Color.white.opacity(0.3), lineWidth: 18)
-                .frame(width: 280, height: 280)
+                .stroke(Color.white.opacity(0.3), lineWidth: ringStroke)
+                .frame(width: ringSize, height: ringSize)
             // Progress
             Circle()
                 .trim(from: 0, to: engine.progress)
                 .stroke(
                     Color.white,
-                    style: StrokeStyle(lineWidth: 18, lineCap: .round)
+                    style: StrokeStyle(lineWidth: ringStroke, lineCap: .round)
                 )
-                .frame(width: 280, height: 280)
+                .frame(width: ringSize, height: ringSize)
                 .rotationEffect(.degrees(-90))
                 .animation(.linear(duration: 1), value: engine.progress)
 
@@ -116,7 +122,7 @@ struct ActiveTrainingView: View {
                     Duration.seconds(engine.secondsLeft),
                     format: .time(pattern: .minuteSecond)
                 )
-                .font(.system(size: 76, weight: .bold, design: .rounded).monospacedDigit())
+                .font(.system(size: 96, weight: .heavy, design: .rounded).monospacedDigit())
                 .foregroundStyle(.white)
                 .contentTransition(.numericText(countsDown: true))
                 .animation(.easeOut(duration: 0.3), value: engine.secondsLeft)
