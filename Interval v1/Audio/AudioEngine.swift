@@ -67,59 +67,54 @@ final class AudioEngine {
         ambientPlayer?.volume = volume
     }
 
-    // MARK: - Signal tones
+    // MARK: - Signal tones — Apple Watch / marimba aesthetic
 
-    /// Start Work: TWO bells ascending — A4 then C#5 (440 → 550 Hz). The
-    /// rising major third reads as "Ready · GO". Each bell is ~0.55s with a
-    /// short gap, so the whole signal lands in ~1.25s total.
+    /// Start Work: two ascending notes — E5 then G5 (659 → 784 Hz),
+    /// Apple-Watch-style transition chime. Soft mallet character, longer
+    /// ring so each note has presence.
     func playWorkStart(settings: AudioSettings) {
         guard settings.signalTonesEnabled else { return }
         playSynth(
-            segments: [(440, 0.55), (550, 0.55)],
-            gap: 0.15,
-            style: .boxingBell
-        )
-        if settings.hapticsEnabled { haptic(.heavy) }
-    }
-
-    /// Start Rest: THREE short bells at E4 (330 Hz). Same-pitch triple
-    /// pulse — recognisably a different rhythm from work-start, lower in
-    /// pitch so it reads "wind down" rather than "go". ~1.2s total.
-    func playRestStart(settings: AudioSettings) {
-        guard settings.signalTonesEnabled else { return }
-        playSynth(
-            segments: [(330, 0.30), (330, 0.30), (330, 0.30)],
+            segments: [(659, 0.45), (784, 0.70)],
             gap: 0.10,
-            style: .boxingBell
+            style: .marimba
         )
         if settings.hapticsEnabled { haptic(.medium) }
     }
 
-    /// Last-3-seconds tick: clear pitched note at E5 (660 Hz) — high and
-    /// bright so each tick reads as a distinct warning beep above the
-    /// work-start bell range. ~0.25s duration with the bell-style ring.
+    /// Start Rest: three short taps at E4 (330 Hz) — lower pitch and
+    /// triple rhythm.
+    func playRestStart(settings: AudioSettings) {
+        guard settings.signalTonesEnabled else { return }
+        playSynth(
+            segments: [(330, 0.30), (330, 0.30), (330, 0.45)],
+            gap: 0.07,
+            style: .marimba
+        )
+        if settings.hapticsEnabled { haptic(.soft) }
+    }
+
+    /// Last-3-seconds tick: single tap at A5 (880 Hz) — warmer than a
+    /// pure beep, longer-ringing so the user feels each tick land before
+    /// the next one fires.
     func playCountdownTick(settings: AudioSettings) {
         guard settings.signalTonesEnabled else { return }
         playSynth(
-            segments: [(660, 0.25)],
+            segments: [(880, 0.40)],
             gap: 0,
-            style: .boxingBell
+            style: .marimba
         )
         if settings.hapticsEnabled { haptic(.light) }
     }
 
-    /// Finished: classic three-bell boxing match-end signal. Three rings of
-    /// the work-start bell — the last one held longer for resolution.
+    /// Finished: ascending C major arpeggio (C5, E5, G5) with the final
+    /// note held longer. Apple-Watch "you closed your rings" character.
     func playFinished(settings: AudioSettings) {
         guard settings.signalTonesEnabled else { return }
         playSynth(
-            segments: [
-                (440, 0.55),
-                (440, 0.55),
-                (440, 1.5),
-            ],
-            gap: 0.20,
-            style: .boxingBell
+            segments: [(523, 0.35), (659, 0.35), (784, 1.0)],
+            gap: 0.10,
+            style: .marimba
         )
         if settings.hapticsEnabled { haptic(.success) }
     }
@@ -131,12 +126,21 @@ final class AudioEngine {
     /// Envelope shape for a tone segment. Drives both the amplitude envelope
     /// and the harmonic recipe (`harmonicRecipe(for:)`).
     private enum SynthStyle {
+        /// Marimba/struck-bar — fundamental + strong 4× partial gives the
+        /// iconic wooden-bar resonance, with a brief high inharmonic at
+        /// attack for the "knock" click. Fast 2ms attack, moderate
+        /// exponential decay. Apple Watch aesthetic. Used by all current
+        /// signal tones.
+        case marimba
         /// Brassy bell with slightly inharmonic partials and long exponential
-        /// decay. Used for round / rest / finish signals.
+        /// decay. (Currently unused — kept as an alternative palette.)
         case boxingBell
         /// Wood-block tock — low fundamental, multi-resonance harmonics,
-        /// noise transient at attack, very fast decay. Used for countdown.
+        /// noise transient at attack, very fast decay. (Currently unused.)
         case percussive
+        /// Sine pulse with a clean trapezoidal envelope. Digital UI feel.
+        /// (Currently unused — kept as an alternative palette.)
+        case purePulse
     }
 
     /// Render and play a sequence of musical segments. Each segment is rendered
@@ -206,6 +210,17 @@ final class AudioEngine {
     /// added at synthesis time.
     private func harmonicRecipe(for style: SynthStyle) -> [(multiplier: Double, weight: Double)] {
         switch style {
+        case .marimba:
+            // Toned down from a classic marimba toward a softer "hang
+            // drum / kalimba" character: less wood-bar resonance, more
+            // body, almost no high-frequency click. Reads as warm and
+            // mellow rather than struck-wood.
+            return [
+                (1.0,  1.00),
+                (2.0,  0.28),    // warmth (was 0.18)
+                (4.0,  0.28),    // bar partial (was 0.55 — half the marimba flavour)
+                (9.7,  0.03),    // very faint attack click (was 0.10)
+            ]
         case .boxingBell:
             return [
                 (0.5,  0.55),   // sub-octave — adds bass body
@@ -221,6 +236,11 @@ final class AudioEngine {
                 (2.8,  0.55),   // first resonant overtone of a struck wood block
                 (4.3,  0.30),   // second — adds the high "click"
             ]
+        case .purePulse:
+            return [
+                (1.0, 1.00),    // fundamental
+                (2.0, 0.15),    // touch of 2nd harmonic — warmer, less clinical
+            ]
         }
     }
 
@@ -231,6 +251,25 @@ final class AudioEngine {
     /// Percussive: instant attack, fast decay.
     private func envelope(t: Double, duration: Double, style: SynthStyle) -> Double {
         switch style {
+        case .marimba:
+            // 2ms attack (a struck bar) + slower exponential decay at
+            // constant 4.0 (about half the speed of the previous version
+            // — ~30% amplitude at 300ms, ~18% at 500ms, ~7% at 800ms),
+            // so each note rings noticeably longer. 25ms release tail
+            // smooths out the cut at segment end.
+            let attack = 0.002
+            let release = 0.025
+            var env: Double
+            if t < attack {
+                env = t / attack
+            } else {
+                env = exp(-(t - attack) * 4.0)
+            }
+            let timeRemaining = duration - t
+            if timeRemaining < release {
+                env *= sin(.pi * 0.5 * max(0, timeRemaining) / release)
+            }
+            return env
         case .boxingBell:
             let attack = 0.001
             let release = 0.02
@@ -257,6 +296,20 @@ final class AudioEngine {
                 return t / attack
             } else {
                 return exp(-(t - attack) * 22.0)
+            }
+        case .purePulse:
+            // Trapezoidal: short linear attack, flat sustain at full
+            // amplitude, short linear release. No decay during sustain —
+            // gives the clean "digital UI" sound.
+            let attack = 0.003
+            let release = 0.005
+            let timeRemaining = duration - t
+            if t < attack {
+                return t / attack
+            } else if timeRemaining < release {
+                return max(0, timeRemaining / release)
+            } else {
+                return 1.0
             }
         }
     }
