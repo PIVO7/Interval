@@ -50,6 +50,8 @@ struct HomeView: View {
                     Task {
                         do {
                             try await SupabaseManager.shared.upsertWorkout(saved)
+                        } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
+                            // Guest mode or unconfigured — local save is enough.
                         } catch {
                             syncErrorMessage = error.localizedDescription
                             showSyncErrorAlert = true

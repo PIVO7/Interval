@@ -46,6 +46,12 @@
         }
       }
     },
+    "Altijd donker" : {
+      "comment" : "Subtitle for dark appearance mode"
+    },
+    "Altijd licht" : {
+      "comment" : "Subtitle for light appearance mode"
+    },
     "Ambient geluiden" : {
       "comment" : "Onboarding feature title",
       "localizations" : {
@@ -90,6 +96,7 @@
       }
     },
     "Betalingen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -103,6 +110,7 @@
 
     },
     "Binnenkort" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -131,6 +139,9 @@
           }
         }
       }
+    },
+    "Donker" : {
+      "comment" : "Appearance mode: force dark"
     },
     "Doorgaan" : {
       "localizations" : {
@@ -289,6 +300,9 @@
         }
       }
     },
+    "Licht" : {
+      "comment" : "Appearance mode: force light"
+    },
     "Lo-fi beats" : {
       "localizations" : {
         "nl" : {
@@ -299,7 +313,7 @@
         }
       }
     },
-    "Log in om je trainingen te syncen tussen apparaten." : {
+    "Log in met Apple om je favorieten te bewaren op al je apparaten." : {
 
     },
     "Log out" : {
@@ -311,9 +325,6 @@
           }
         }
       }
-    },
-    "Lokale modus" : {
-
     },
     "Meld je aan met Apple voor synchronisatie." : {
       "extractionState" : "stale",
@@ -385,6 +396,7 @@
       }
     },
     "Notificaties" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -664,8 +676,14 @@
         }
       }
     },
+    "Sync je trainingen" : {
+
+    },
     "Synchroniseren mislukt" : {
 
+    },
+    "Systeem" : {
+      "comment" : "Appearance mode: follow the system setting"
     },
     "Tabata %lld/%lld" : {
       "comment" : "Auto-suggested favorite name (work seconds / rest seconds)",
@@ -766,6 +784,7 @@
     },
     "v2" : {
       "comment" : "Coming-soon version marker",
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -813,6 +832,9 @@
         }
       }
     },
+    "Volg iPad / iPhone" : {
+      "comment" : "Subtitle for system appearance mode"
+    },
     "Volgende fase overslaan" : {
       "comment" : "Skip phase accessibility label",
       "localizations" : {
@@ -823,6 +845,9 @@
           }
         }
       }
+    },
+    "Weergave" : {
+
     },
     "Werk" : {
       "comment" : "WorkoutKit step display name for work intervals"

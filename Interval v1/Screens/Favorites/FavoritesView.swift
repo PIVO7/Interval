@@ -44,6 +44,8 @@ struct FavoritesView: View {
                             Task {
                                 do {
                                     try await SupabaseManager.shared.deleteWorkout(id: id)
+                                } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
+                                    // Guest mode or unconfigured — local delete is enough.
                                 } catch {
                                     syncErrorMessage = error.localizedDescription
                                     showSyncErrorAlert = true
