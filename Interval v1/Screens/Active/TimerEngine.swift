@@ -53,7 +53,8 @@ final class TimerEngine {
                 phase: .countdown,
                 round: 1,
                 start: phaseStartedAt,
-                end: phaseEndsAt
+                end: phaseEndsAt,
+                workout: workout
             )
         }
     }
@@ -82,10 +83,12 @@ final class TimerEngine {
             tickTask?.cancel()
         }
         pushActivityUpdate()
+        reschedulePendingPushes()
     }
 
     func skip() {
         advancePhase()
+        reschedulePendingPushes()
     }
 
     func stop() {
@@ -261,5 +264,21 @@ final class TimerEngine {
             start: phaseStartedAt,
             end: phaseEndsAt
         )
+    }
+
+    /// Rebuild the remote push schedule from the current wall-clock state.
+    /// Used when pause/resume/skip shifts the timeline — without this, APNs
+    /// would still fire the *original* phase boundaries.
+    private func reschedulePendingPushes() {
+        // Estimate the start of the "current" remaining schedule. We treat
+        // the current phase's true start as the anchor and let the
+        // scheduler walk forward from there.
+        let anchor = phaseStartedAt
+        Task { [workout] in
+            await LiveActivityManager.shared.reschedulePushes(
+                workout: workout,
+                from: anchor
+            )
+        }
     }
 }

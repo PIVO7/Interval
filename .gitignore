@@ -43,3 +43,6 @@ Interval v1/Supabase/SupabaseConfig.swift
 
 # Claude Code local state
 .claude/
+
+# Supabase CLI cache
+supabase/.temp/

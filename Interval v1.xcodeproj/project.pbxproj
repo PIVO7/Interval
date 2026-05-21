@@ -25,6 +25,7 @@
 		2F0A8BD61D614E0D71522CBE /* WorkoutKitExporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D72A6C17649F62F36B8AF5 /* WorkoutKitExporterTests.swift */; };
 		35433B6F7C099D6AFAA8873F /* IntervalActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC807B88BF4535DDAA572FEE /* IntervalActivityAttributes.swift */; };
 		38EEFC93325B4CBD37269E31 /* LockScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF983C2F7F4D8E59A32C3B8F /* LockScreenView.swift */; };
+		3F549F276DD10C97BB31B204 /* LiveActivityPushScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9748B96C0FA3320A9643AAFC /* LiveActivityPushScheduler.swift */; };
 		4082D7888CEEC94C641A15C0 /* WorkoutKitExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B28FD10129B24EE41F8B2F4 /* WorkoutKitExporter.swift */; };
 		429F0DB3FEA29EE41325583B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704F09BF332567EC9ADA8289 /* OnboardingView.swift */; };
 		44133D2151A5848A5755C5FD /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4419A45F035E74D556B60F9 /* AppTheme.swift */; };
@@ -48,6 +49,7 @@
 		B13411C45D0F9280A8B0BEEC /* WorkoutEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42169C636F95173A8FAF7B27 /* WorkoutEntity.swift */; };
 		B73CFB3DC97FE2B4C9CA57F9 /* InlineTimeWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D23B0DAC25EC0787897AF5 /* InlineTimeWheel.swift */; };
 		B7C7F435EFF180F663765826 /* SupabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BBF417A11F9E0E1675E6DD /* SupabaseManager.swift */; };
+		B9FB35E951203F1B15E78836 /* ScheduledLiveActivityPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9591392BBB92C87CC8AD7431 /* ScheduledLiveActivityPush.swift */; };
 		C49601EC34E9E42C408A3835 /* IntervalWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447664BAAB78608659C2D094 /* IntervalWidgetBundle.swift */; };
 		D1B95E7ED1E8E607FFAEFB56 /* ActivityPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E348B289D1B87DDA39D0AEFB /* ActivityPhase.swift */; };
 		DA330D1731A96BD01AE29794 /* EditFavoriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F34EB6261FB8DEBF845729 /* EditFavoriteSheet.swift */; };
@@ -130,6 +132,8 @@
 		84EA4FA00A621D7D0E5FE2ED /* ActiveTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTrainingView.swift; sourceTree = "<group>"; };
 		8745C9D53DFC9BC29EEFD814 /* WorkoutEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutEntityTests.swift; sourceTree = "<group>"; };
 		94A6B11C4072CB2A062858C5 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		9591392BBB92C87CC8AD7431 /* ScheduledLiveActivityPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledLiveActivityPush.swift; sourceTree = "<group>"; };
+		9748B96C0FA3320A9643AAFC /* LiveActivityPushScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityPushScheduler.swift; sourceTree = "<group>"; };
 		9DA9A411DDAC91317A47E15E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B1AB367F33E195113E625DE1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B24BB45715541464AD162385 /* SaveFavoriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFavoriteSheet.swift; sourceTree = "<group>"; };
@@ -163,6 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				55FBF50D0D81DB9623EC3296 /* LiveActivityManager.swift */,
+				9748B96C0FA3320A9643AAFC /* LiveActivityPushScheduler.swift */,
+				9591392BBB92C87CC8AD7431 /* ScheduledLiveActivityPush.swift */,
 			);
 			path = LiveActivity;
 			sourceTree = "<group>";
@@ -540,9 +546,11 @@
 				35433B6F7C099D6AFAA8873F /* IntervalActivityAttributes.swift in Sources */,
 				1FA5DD192AAED161D8C3C6F2 /* IntervalApp.swift in Sources */,
 				1AA518B3BA6AA2A3AF447AA0 /* LiveActivityManager.swift in Sources */,
+				3F549F276DD10C97BB31B204 /* LiveActivityPushScheduler.swift in Sources */,
 				429F0DB3FEA29EE41325583B /* OnboardingView.swift in Sources */,
 				0AE515443A6E22ED5CD1752E /* RootTabView.swift in Sources */,
 				DA9FD87FB8F37F31B3A77E64 /* SaveFavoriteSheet.swift in Sources */,
+				B9FB35E951203F1B15E78836 /* ScheduledLiveActivityPush.swift in Sources */,
 				DB53AED0D32F52EC2202DEF1 /* SupabaseConfig.swift in Sources */,
 				B7C7F435EFF180F663765826 /* SupabaseManager.swift in Sources */,
 				EA9ED321DBED5A896DC20300 /* TimerEngine.swift in Sources */,
@@ -658,7 +666,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -722,7 +730,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

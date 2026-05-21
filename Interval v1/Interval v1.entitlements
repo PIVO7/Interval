@@ -6,5 +6,11 @@
     <array>
         <string>Default</string>
     </array>
+    <!-- Push Notifications for Live Activity remote updates.
+         `development` works for Xcode debug builds (cable-installed) and is
+         automatically swapped to `production` by Xcode's automatic signing
+         when archiving for TestFlight / App Store distribution. -->
+    <key>aps-environment</key>
+    <string>development</string>
 </dict>
 </plist>
