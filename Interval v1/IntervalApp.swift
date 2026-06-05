@@ -7,6 +7,16 @@ struct IntervalApp: App {
     @State private var audioSettings = AudioSettings()
     @State private var auth = AuthManager()
     @State private var appearance = AppearanceSettings()
+    @State private var cueOrchestrator: CueOrchestrator
+
+    init() {
+        // Cue stack is constructed once and shared across workouts.
+        // Lifecycle (prepareForWorkout / workoutDidEnd) is per-workout
+        // and driven by `TimerEngine`.
+        let settings = AudioSettings()
+        _audioSettings = State(initialValue: settings)
+        _cueOrchestrator = State(initialValue: .makeDefault(settings: settings))
+    }
 
     let modelContainer: ModelContainer = {
         do {
@@ -23,6 +33,7 @@ struct IntervalApp: App {
                 .environment(audioSettings)
                 .environment(auth)
                 .environment(appearance)
+                .environment(cueOrchestrator)
                 .tint(AppTheme.coral)
                 .preferredColorScheme(appearance.mode.colorScheme)
         }

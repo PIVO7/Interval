@@ -8,10 +8,26 @@ import Testing
 @MainActor
 struct TimerEngineTests {
 
+    /// Mock orchestrator that records emitted cues and lifecycle calls,
+    /// without spinning up `AVAudioEngine` or `CHHapticEngine`. Replaces
+    /// the previous `TimerEngine.isHeadlessForTesting` flag — tests now
+    /// inject this directly, so production code has no test-only branch.
+    @MainActor
+    final class MockCueOrchestrator: CueOrchestrating {
+        private(set) var emittedCues: [WorkoutCue] = []
+        private(set) var prepareCalls: Int = 0
+        private(set) var endCalls: Int = 0
+
+        func prepareForWorkout() { prepareCalls += 1 }
+        func emit(_ cue: WorkoutCue) { emittedCues.append(cue) }
+        func workoutDidEnd() { endCalls += 1 }
+    }
+
     private func makeEngine(
         workSeconds: Int = 30,
         restSeconds: Int = 15,
-        rounds: Int = 8
+        rounds: Int = 8,
+        cues: MockCueOrchestrator? = nil
     ) -> TimerEngine {
         let workout = Workout(
             name: "Test",
@@ -19,7 +35,7 @@ struct TimerEngineTests {
             restSeconds: restSeconds,
             rounds: rounds
         )
-        return TimerEngine(workout: workout, audioSettings: AudioSettings())
+        return TimerEngine(workout: workout, cues: cues ?? MockCueOrchestrator())
     }
 
     private func isCountdown(_ phase: TrainingPhase) -> Bool {
@@ -44,7 +60,7 @@ struct TimerEngineTests {
         #expect(engine.currentRound == 1)
         #expect(engine.secondsLeft == 3)
         #expect(engine.isPaused == false)
-        #expect(engine.progress == 1.0)
+        #expect(engine.progress(at: .now) > 0.99)
     }
 
     // MARK: - Skip progression — standard workout
@@ -190,5 +206,301 @@ struct TimerEngineTests {
         } else {
             Issue.record("Phase should remain unchanged after stop")
         }
+    }
+
+    // MARK: - Mid-workout adjustments
+
+    @Test("canAdjust is false during countdown")
+    func cannotAdjustDuringCountdown() {
+        let engine = makeEngine()
+        engine.togglePause()
+        #expect(engine.canAdjust == false)
+    }
+
+    @Test("canAdjust is false while running (not paused)")
+    func cannotAdjustWhileRunning() {
+        let engine = makeEngine()
+        engine.skip() // -> work
+        #expect(engine.canAdjust == false)
+    }
+
+    @Test("canAdjust is true when paused during work")
+    func canAdjustWhenPausedDuringWork() {
+        let engine = makeEngine()
+        engine.skip() // -> work
+        engine.togglePause()
+        #expect(engine.canAdjust == true)
+    }
+
+    @Test("canAdjust is false after finishing")
+    func cannotAdjustAfterFinish() {
+        let engine = makeEngine(restSeconds: 0, rounds: 1)
+        engine.skip() // -> work
+        engine.skip() // -> finished
+        engine.togglePause() // paused state doesn't matter at finish
+        #expect(engine.canAdjust == false)
+    }
+
+    @Test("Updating workSeconds while paused changes future phases only")
+    func updateWorkSecondsAppliesToNextPhase() {
+        let engine = makeEngine(workSeconds: 30, restSeconds: 15, rounds: 3)
+        engine.skip() // -> work r1 (30s)
+        let originalSecondsLeft = engine.secondsLeft
+        engine.togglePause()
+        engine.updateWorkSeconds(60)
+        #expect(engine.workout.workSeconds == 60)
+        // Current work phase is unchanged
+        #expect(engine.secondsLeft == originalSecondsLeft)
+        engine.togglePause()
+        engine.skip() // -> rest
+        engine.skip() // -> work r2 (now 60s)
+        #expect(isWork(engine.phase))
+        #expect(engine.secondsLeft == 60)
+    }
+
+    @Test("Updating restSeconds while paused changes future rest")
+    func updateRestSecondsAppliesToNextRest() {
+        let engine = makeEngine(workSeconds: 30, restSeconds: 15, rounds: 3)
+        engine.skip() // -> work r1
+        engine.togglePause()
+        engine.updateRestSeconds(45)
+        engine.togglePause()
+        engine.skip() // -> rest
+        #expect(isRest(engine.phase))
+        #expect(engine.secondsLeft == 45)
+    }
+
+    @Test("Setting restSeconds to 0 mid-workout skips rest from next round")
+    func setRestZeroSkipsFutureRest() {
+        let engine = makeEngine(workSeconds: 30, restSeconds: 15, rounds: 3)
+        engine.skip() // -> work r1
+        engine.togglePause()
+        engine.updateRestSeconds(0)
+        engine.togglePause()
+        engine.skip() // -> next: work r2 directly (no rest with rest=0)
+        #expect(isWork(engine.phase))
+        #expect(engine.currentRound == 2)
+    }
+
+    @Test("Updating rounds while paused changes total rounds")
+    func updateRoundsAppliesImmediately() {
+        let engine = makeEngine(rounds: 8)
+        engine.skip() // -> work r1
+        engine.togglePause()
+        engine.updateRounds(3)
+        #expect(engine.workout.rounds == 3)
+    }
+
+    @Test("Cannot set rounds below currentRound — clamps to currentRound")
+    func roundsClampsToCurrentRound() {
+        let engine = makeEngine(rounds: 5)
+        engine.skip() // -> work r1
+        engine.skip() // -> rest
+        engine.skip() // -> work r2
+        engine.skip() // -> rest
+        engine.skip() // -> work r3
+        engine.togglePause()
+        engine.updateRounds(1) // attempt to lower below currentRound=3
+        #expect(engine.workout.rounds == 3)
+    }
+
+    @Test("Lowering rounds to currentRound finishes after this round")
+    func loweringRoundsToCurrentFinishesNext() {
+        let engine = makeEngine(workSeconds: 30, restSeconds: 15, rounds: 5)
+        engine.skip() // -> work r1
+        engine.skip() // -> rest
+        engine.skip() // -> work r2
+        engine.togglePause()
+        engine.updateRounds(2) // make r2 the final round
+        engine.togglePause()
+        engine.skip() // work r2 (final) -> finished (no trailing rest)
+        #expect(isFinished(engine.phase))
+    }
+
+    @Test("workSeconds is clamped to minimum (5)")
+    func workSecondsClampsToMinimum() {
+        let engine = makeEngine()
+        engine.skip()
+        engine.togglePause()
+        engine.updateWorkSeconds(1)
+        #expect(engine.workout.workSeconds == TimerEngine.minWorkSeconds)
+    }
+
+    @Test("Adjustments are ignored while not paused")
+    func adjustmentsIgnoredWhenRunning() {
+        let engine = makeEngine(workSeconds: 30, restSeconds: 15, rounds: 5)
+        engine.skip() // -> work, running
+        engine.updateWorkSeconds(99)
+        engine.updateRestSeconds(99)
+        engine.updateRounds(99)
+        #expect(engine.workout.workSeconds == 30)
+        #expect(engine.workout.restSeconds == 15)
+        #expect(engine.workout.rounds == 5)
+    }
+
+    // MARK: - Cue emission
+
+    @Test("Init prepares the orchestrator + emits initial countdown tick")
+    func initEmitsCountdownThree() {
+        let cues = MockCueOrchestrator()
+        _ = makeEngine(cues: cues)
+        #expect(cues.prepareCalls == 1)
+        #expect(cues.emittedCues == [.countdownTick(secondsLeft: 3)])
+    }
+
+    @Test("Skip from countdown emits workStart cue")
+    func skipEmitsWorkStart() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(cues: cues)
+        engine.skip() // countdown -> work
+        #expect(cues.emittedCues.contains(.workStart))
+    }
+
+    @Test("Skip from work emits restStart cue")
+    func skipEmitsRestStart() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(cues: cues)
+        engine.skip() // -> work
+        engine.skip() // -> rest
+        #expect(cues.emittedCues.contains(.restStart))
+    }
+
+    @Test("Final round emits finished cue + lifecycle end")
+    func finalRoundEmitsFinished() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(restSeconds: 0, rounds: 1, cues: cues)
+        engine.skip() // -> work
+        engine.skip() // -> finished
+        #expect(cues.emittedCues.contains(.finished))
+        // Lifecycle end is NOT called when reaching finished — the audio
+        // engine has to stay alive so the celebratory cue can play out.
+        // workoutDidEnd fires later via the view's onDisappear → stop().
+        #expect(cues.endCalls == 0)
+    }
+
+    @Test("Stop calls workoutDidEnd")
+    func stopCallsWorkoutDidEnd() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(cues: cues)
+        engine.stop()
+        #expect(cues.endCalls == 1)
+    }
+
+    // MARK: - Halfway / Last round cues
+
+    /// Walk from countdown through to a target work-phase round, returning
+    /// the engine + cue log so tests can assert the cue emitted on entering
+    /// that round.
+    private func advance(toWorkRound target: Int, in engine: TimerEngine) {
+        engine.skip() // countdown -> work r1
+        while engine.currentRound < target {
+            engine.skip() // work -> rest
+            engine.skip() // rest -> work next
+        }
+    }
+
+    @Test("Round 8 of 8: emits lastRound instead of workStart")
+    func lastRoundOnFinalEightRound() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(rounds: 8, cues: cues)
+        advance(toWorkRound: 8, in: engine)
+        #expect(cues.emittedCues.contains(.lastRound))
+        // workStart still fires for rounds 1-7
+        let workStartCount = cues.emittedCues.filter { $0 == .workStart }.count
+        #expect(workStartCount == 6) // rounds 1, 2, 3, 4, 6, 7 (round 5 is halfway)
+    }
+
+    @Test("Round 5 of 8: emits halfway instead of workStart")
+    func halfwayOnEightRoundWorkout() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(rounds: 8, cues: cues)
+        advance(toWorkRound: 5, in: engine)
+        #expect(cues.emittedCues.contains(.halfway))
+    }
+
+    @Test("Round 3 of 4: emits halfway")
+    func halfwayOnFourRoundWorkout() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(rounds: 4, cues: cues)
+        advance(toWorkRound: 3, in: engine)
+        #expect(cues.emittedCues.contains(.halfway))
+    }
+
+    @Test("rounds=3: no halfway cue (workout too small)")
+    func noHalfwayForThreeRounds() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(rounds: 3, cues: cues)
+        advance(toWorkRound: 3, in: engine)
+        #expect(!cues.emittedCues.contains(.halfway))
+        // But lastRound DOES fire for round 3 of 3
+        #expect(cues.emittedCues.contains(.lastRound))
+    }
+
+    @Test("rounds=2: lastRound on round 2, no halfway")
+    func lastRoundForTwoRounds() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(rounds: 2, cues: cues)
+        advance(toWorkRound: 2, in: engine)
+        #expect(cues.emittedCues.contains(.lastRound))
+        #expect(!cues.emittedCues.contains(.halfway))
+    }
+
+    @Test("rounds=1: no lastRound, no halfway — only workStart")
+    func singleRoundEmitsWorkStartOnly() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(rounds: 1, cues: cues)
+        engine.skip() // countdown -> work r1
+        #expect(cues.emittedCues.contains(.workStart))
+        #expect(!cues.emittedCues.contains(.lastRound))
+        #expect(!cues.emittedCues.contains(.halfway))
+    }
+
+    // MARK: - Restart
+
+    @Test("Restart from finished resets to countdown(3), round 1")
+    func restartResetsToCountdown() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(restSeconds: 0, rounds: 1, cues: cues)
+        engine.skip() // -> work
+        engine.skip() // -> finished
+        #expect(isFinished(engine.phase))
+
+        engine.restart()
+        #expect(isCountdown(engine.phase))
+        #expect(engine.currentRound == 1)
+        #expect(engine.isPaused == false)
+        // Restart emits a fresh countdown(3) cue, same as initial start
+        #expect(cues.emittedCues.last == .countdownTick(secondsLeft: 3))
+    }
+
+    @Test("Restart mid-workout also resets state")
+    func restartMidWorkout() {
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(rounds: 5, cues: cues)
+        engine.skip() // -> work r1
+        engine.skip() // -> rest
+        engine.skip() // -> work r2
+        engine.togglePause()
+        #expect(engine.currentRound == 2)
+        #expect(engine.isPaused == true)
+
+        engine.restart()
+        #expect(isCountdown(engine.phase))
+        #expect(engine.currentRound == 1)
+        #expect(engine.isPaused == false)
+    }
+
+    @Test("lastRound wins when halfway and lastRound would collide")
+    func lastRoundWinsOverHalfway() {
+        // With rounds=3, halfway formula gives round 2, lastRound gives 3.
+        // No collision in this case — let's pick a contrived case where
+        // they'd collide: a workout lowered to rounds=halfway during play.
+        // Simpler: rounds=2 (lastRound=2, halfway disabled). Confirmed
+        // above. Here we sanity-check the priority logic on a larger case.
+        let cues = MockCueOrchestrator()
+        let engine = makeEngine(rounds: 4, cues: cues)
+        advance(toWorkRound: 4, in: engine) // final round
+        // lastRound, not halfway, for round 4 of 4
+        #expect(cues.emittedCues.last(where: { $0 == .lastRound || $0 == .halfway }) == .lastRound)
     }
 }

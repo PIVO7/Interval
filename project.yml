@@ -14,7 +14,7 @@ settings:
     # and test bundle don't collide on the same swiftmodule output.
     SWIFT_VERSION: 5.0
     MARKETING_VERSION: 1.0
-    CURRENT_PROJECT_VERSION: 4
+    CURRENT_PROJECT_VERSION: 6
     SUPPORTED_PLATFORMS: iphoneos iphonesimulator
     TARGETED_DEVICE_FAMILY: '1,2'
     SUPPORTS_MACCATALYST: NO
@@ -38,14 +38,11 @@ targets:
       properties:
         com.apple.developer.applesignin:
           - Default
-        aps-environment: development
     dependencies:
       - package: Supabase
         product: Supabase
-      - target: Interval Widget
     sources:
       - path: Interval v1
-      - path: Shared
     info:
       path: Interval v1/Info.plist
       properties:
@@ -61,10 +58,13 @@ targets:
         CFBundleIconName: AppIcon
         ITSAppUsesNonExemptEncryption: false
         LSRequiresIPhoneOS: true
-        NSSupportsLiveActivities: true
         UIApplicationSupportsIndirectInputEvents: true
-        UIBackgroundModes:
-          - audio
+        # No UIBackgroundModes — the timer runs foreground-only in 1.0.
+        # If the user backgrounds the app the OS suspends us within a few
+        # seconds; recomputeFromWallClock fast-forwards through the missed
+        # phases when the user returns. Live Activity / ambient audio /
+        # any other reason to keep the app alive in background were all
+        # removed for the 1.0 ship.
         UILaunchStoryboardName: LaunchScreen
         UIRequiredDeviceCapabilities: [ arm64 ]
         UIRequiresFullScreen: true
@@ -75,19 +75,6 @@ targets:
           - UIInterfaceOrientationPortraitUpsideDown
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
-
-  Interval Widget:
-    type: app-extension
-    platform: iOS
-    deploymentTarget: '18.0'
-    sources:
-      - path: Interval Widget
-      - path: Shared
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.superapp.intervalv1.widget
-        INFOPLIST_FILE: Interval Widget/Info.plist
-        SKIP_INSTALL: YES
 
   Interval v1 Tests:
     type: bundle.unit-test

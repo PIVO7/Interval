@@ -31,7 +31,11 @@ struct SaveFavoriteSheet: View {
                     Spacer()
                     Button {
                         var saved = workout
-                        saved.name = name.isEmpty ? autoSuggestion : name
+                        // Trim whitespace so " " typed by accident doesn't
+                        // produce a blank-looking favorite. Falls back to
+                        // the autosuggestion if the user trimmed to empty.
+                        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+                        saved.name = trimmed.isEmpty ? autoSuggestion : trimmed
                         onSave(saved)
                         dismiss()
                     } label: {

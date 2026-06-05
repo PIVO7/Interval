@@ -3,39 +3,58 @@ import SwiftUI
 /// Inline min/sec wheel picker that slides in below a `ValuePickerRow` when
 /// expanded. Live binding — changes apply immediately. Mirrors Apple's
 /// Calendar accordion pattern (tap row → wheel reveals, tap again → collapses).
+///
+/// Both wheels derive directly from the `seconds` binding via computed
+/// bindings rather than caching into local `@State`. That keeps a single
+/// source of truth — external writes (preset selection, defaults) reflect
+/// instantly, and there's no mirror state to keep in sync or oscillate.
 struct InlineTimeWheel: View {
     @Binding var seconds: Int
     let minSeconds: Int
     let maxSeconds: Int
 
-    @State private var minutes: Int
-    @State private var secs: Int
+    /// The stored value, clamped into the representable range so it always
+    /// decomposes to a valid wheel position.
+    private var clamped: Int { min(max(seconds, minSeconds), maxSeconds) }
 
-    init(seconds: Binding<Int>, minSeconds: Int, maxSeconds: Int) {
-        self._seconds = seconds
-        self.minSeconds = minSeconds
-        self.maxSeconds = maxSeconds
-        self._minutes = State(initialValue: seconds.wrappedValue / 60)
-        self._secs = State(initialValue: seconds.wrappedValue % 60)
+    /// Largest minute value the user can pick — derived from `maxSeconds`
+    /// rather than hard-coded so callers can constrain the range.
+    private var maxMinutes: Int { maxSeconds / 60 }
+
+    /// Seconds wheel collapses to "0" once minutes is at the cap.
+    /// Without this, picking `maxMinutes:59` (e.g. 60:59 against 3600)
+    /// would silently clamp back to maxSeconds — confusing because the
+    /// wheel position doesn't snap visibly.
+    private var availableSecondsRange: ClosedRange<Int> {
+        clamped / 60 >= maxMinutes ? 0...0 : 0...59
+    }
+
+    private var minutesBinding: Binding<Int> {
+        Binding { clamped / 60 } set: { write(minutes: $0, secs: clamped % 60) }
+    }
+
+    private var secsBinding: Binding<Int> {
+        Binding { clamped % 60 } set: { write(minutes: clamped / 60, secs: $0) }
     }
 
     var body: some View {
         HStack(spacing: 0) {
-            wheel(label: "min", range: 0...60, selection: $minutes)
-            wheel(label: "sec", range: 0...59, selection: $secs)
+            wheel(label: "min", range: 0...maxMinutes, selection: minutesBinding)
+            wheel(label: "sec", range: availableSecondsRange, selection: secsBinding)
         }
         .frame(height: 160)
         .padding(.horizontal, 16)
         .padding(.bottom, 8)
-        .onChange(of: minutes) { _, _ in writeBack() }
-        .onChange(of: secs) { _, _ in writeBack() }
-        .onChange(of: seconds) { _, new in
-            // External writes (e.g. preset selection) should sync the wheels.
-            let nextMin = new / 60
-            let nextSec = new % 60
-            if minutes != nextMin { minutes = nextMin }
-            if secs != nextSec   { secs = nextSec }
-        }
+    }
+
+    /// Recompose minutes + seconds into the stored value, clamped into
+    /// range. When minutes hits the cap, force seconds to 0 so the value
+    /// doesn't silently clamp against maxSeconds while the wheel shows a
+    /// non-zero position.
+    private func write(minutes: Int, secs: Int) {
+        let effectiveSecs = minutes >= maxMinutes ? 0 : secs
+        let raw = minutes * 60 + effectiveSecs
+        seconds = min(max(raw, minSeconds), maxSeconds)
     }
 
     private func wheel(label: LocalizedStringKey, range: ClosedRange<Int>, selection: Binding<Int>) -> some View {
@@ -53,9 +72,5 @@ struct InlineTimeWheel: View {
                 .font(.system(.callout, design: .rounded))
                 .foregroundStyle(AppTheme.secondaryText)
         }
-    }
-
-    private func writeBack() {
-        seconds = min(max(minutes * 60 + secs, minSeconds), maxSeconds)
     }
 }

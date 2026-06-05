@@ -18,9 +18,7 @@ struct EditFavoriteSheet: View {
     @State private var workSeconds: Int
     @State private var restSeconds: Int
     @State private var rounds: Int
-    @State private var expandedField: EditField?
-
-    private enum EditField { case work, rest, rounds }
+    @State private var expandedField: IntervalsListView.Field?
 
     init(entity: WorkoutEntity, onSave: @escaping () -> Void = {}) {
         self.entity = entity
@@ -38,7 +36,12 @@ struct EditFavoriteSheet: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         nameField
-                        intervalsList
+                        IntervalsListView(
+                            workSeconds: $workSeconds,
+                            restSeconds: $restSeconds,
+                            rounds: $rounds,
+                            expandedField: $expandedField
+                        )
                     }
                     .padding(20)
                     .frame(maxWidth: 720)
@@ -54,15 +57,24 @@ struct EditFavoriteSheet: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Bewaar", action: save)
                         .fontWeight(.semibold)
+                        // Disable rather than silently dropping an empty
+                        // rename — the previous behaviour kept the old
+                        // name with no user feedback, which felt like a
+                        // bug ("I typed and it didn't save").
+                        .disabled(trimmedName.isEmpty)
                 }
             }
         }
-        .presentationDetents([.large])
+        .presentationDetents([.medium, .large])
+    }
+
+    private var trimmedName: String {
+        name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func save() {
-        let trimmed = name.trimmingCharacters(in: .whitespaces)
-        if !trimmed.isEmpty { entity.name = trimmed }
+        // Bewaar button is disabled when trimmed is empty so this is safe.
+        entity.name = trimmedName
         entity.workSeconds = workSeconds
         entity.restSeconds = restSeconds
         entity.rounds = rounds
@@ -87,70 +99,4 @@ struct EditFavoriteSheet: View {
         }
     }
 
-    // MARK: - Intervals accordion (same UX as HomeView)
-
-    private var intervalsList: some View {
-        VStack(spacing: 0) {
-            ValuePickerRow(
-                title: "Work",
-                systemImage: "flame.fill",
-                tint: AppTheme.coral,
-                value: formatTime(workSeconds),
-                isSelected: expandedField == .work
-            ) { toggle(.work) }
-
-            if expandedField == .work {
-                InlineTimeWheel(
-                    seconds: $workSeconds,
-                    minSeconds: 5,
-                    maxSeconds: 3600
-                )
-                .transition(.accordion)
-            }
-
-            Divider().padding(.leading, 68)
-
-            ValuePickerRow(
-                title: "Rest",
-                systemImage: "leaf.fill",
-                tint: AppTheme.sage,
-                value: formatTime(restSeconds),
-                isSelected: expandedField == .rest
-            ) { toggle(.rest) }
-
-            if expandedField == .rest {
-                InlineTimeWheel(
-                    seconds: $restSeconds,
-                    minSeconds: 0,
-                    maxSeconds: 3600
-                )
-                .transition(.accordion)
-            }
-
-            Divider().padding(.leading, 68)
-
-            ValuePickerRow(
-                title: "Rounds",
-                systemImage: "repeat",
-                tint: AppTheme.amber,
-                value: "\(rounds)",
-                isSelected: expandedField == .rounds
-            ) { toggle(.rounds) }
-
-            if expandedField == .rounds {
-                InlineRoundsWheel(rounds: $rounds)
-                    .transition(.accordion)
-            }
-        }
-        .softCard()
-        .animation(.snappy(duration: 0.32, extraBounce: 0.02), value: expandedField)
-    }
-
-    private func toggle(_ field: EditField) {
-        expandedField = (expandedField == field) ? nil : field
-    }
-
-    private func formatTime(_ seconds: Int) -> String {
-        Duration.seconds(seconds).formatted(.time(pattern: .minuteSecond))
-    }
 }

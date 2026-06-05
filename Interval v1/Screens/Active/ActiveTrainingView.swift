@@ -3,19 +3,19 @@ import SwiftData
 
 struct ActiveTrainingView: View {
     @State private var engine: TimerEngine
-    @Environment(AudioSettings.self) private var audioSettings
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
 
     @State private var showStopAlert = false
     @State private var showSaveSheet = false
+    @State private var showAdjustSheet = false
     @State private var savedTrigger = 0
     @State private var syncErrorMessage: String?
     @State private var showSyncErrorAlert = false
 
-    init(workout: Workout, audioSettings: AudioSettings) {
-        _engine = State(wrappedValue: TimerEngine(workout: workout, audioSettings: audioSettings))
+    init(workout: Workout, cues: CueOrchestrating) {
+        _engine = State(wrappedValue: TimerEngine(workout: workout, cues: cues))
     }
 
     var body: some View {
@@ -29,14 +29,26 @@ struct ActiveTrainingView: View {
                 activeContent
                     .transition(.opacity)
             case .finished:
-                FinishedView(workout: engine.workout, onHome: { dismiss() })
-                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                FinishedView(
+                    workout: engine.workout,
+                    onHome: { dismiss() },
+                    onRestart: { engine.restart() }
+                )
+                .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
         }
         .animation(.easeInOut(duration: 0.45), value: phaseKey)
         .statusBarHidden()
         .onAppear { UIApplication.shared.isIdleTimerDisabled = true }
-        .onDisappear { UIApplication.shared.isIdleTimerDisabled = false }
+        .onDisappear {
+            UIApplication.shared.isIdleTimerDisabled = false
+            // Cancel the tick Task on any dismissal path — back-nav,
+            // programmatic dismiss, memory pressure — so the engine
+            // doesn't keep ticking after the view is gone. stop() is
+            // idempotent, so the double call from the explicit Stop button
+            // is harmless.
+            engine.stop()
+        }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active { engine.recomputeFromWallClock() }
         }
@@ -47,25 +59,43 @@ struct ActiveTrainingView: View {
             Text("Je huidige voortgang gaat verloren.")
         }
         .sheet(isPresented: $showSaveSheet) {
-            SaveFavoriteSheet(workout: engine.workout) { saved in
-                modelContext.insert(WorkoutEntity(from: saved))
-                savedTrigger &+= 1
-                Task {
-                    do {
-                        try await SupabaseManager.shared.upsertWorkout(saved)
-                    } catch {
-                        syncErrorMessage = error.localizedDescription
-                        showSyncErrorAlert = true
-                    }
-                }
-            }
-            .presentationDetents([.medium])
+            SaveFavoriteSheet(workout: engine.workout, onSave: saveFavorite)
+                .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $showAdjustSheet) {
+            AdjustWorkoutSheet(engine: engine)
         }
         .sensoryFeedback(.success, trigger: savedTrigger)
         .alert("Synchroniseren mislukt", isPresented: $showSyncErrorAlert) {
             Button("OK", role: .cancel) {}
         } message: {
             Text(syncErrorMessage ?? "")
+        }
+    }
+
+    // MARK: - Persistence
+    /// Persist the (possibly mid-workout-adjusted) workout as a favorite,
+    /// then sync it to Supabase. Mirrors `FinishedView.saveFavorite` —
+    /// guest mode / unconfigured backends are not surfaced as errors.
+    private func saveFavorite(_ saved: Workout) {
+        modelContext.insert(WorkoutEntity(from: saved))
+        do {
+            try modelContext.save()
+        } catch {
+            syncErrorMessage = error.localizedDescription
+            showSyncErrorAlert = true
+            return
+        }
+        savedTrigger &+= 1
+        Task {
+            do {
+                try await SupabaseManager.shared.upsertWorkout(saved)
+            } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
+                // Guest mode or unconfigured — local save is enough.
+            } catch {
+                syncErrorMessage = error.localizedDescription
+                showSyncErrorAlert = true
+            }
         }
     }
 
@@ -78,12 +108,44 @@ struct ActiveTrainingView: View {
             Spacer()
             phaseLabel
             Spacer()
-            ambientControl
-                .padding(.bottom, 16)
-            controlButtons
-                .padding(.bottom, 48)
+            VStack(spacing: 18) {
+                adjustPill
+                controlButtons
+            }
+            .animation(.snappy(duration: 0.32, extraBounce: 0.02), value: engine.canAdjust)
+            .padding(.bottom, 48)
         }
         .padding(.top, 52)
+    }
+
+    /// Subtle "Aanpassen" pill that fades in only when the engine accepts
+    /// edits (paused, mid-workout). Keeps the primary control row tidy
+    /// during active phases while signalling discoverability the moment
+    /// the user pauses.
+    @ViewBuilder
+    private var adjustPill: some View {
+        if engine.canAdjust {
+            Button {
+                showAdjustSheet = true
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "slider.horizontal.3")
+                        .font(.system(.subheadline, weight: .semibold))
+                    Text("Workout aanpassen")
+                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                }
+                .foregroundStyle(.white)
+                .padding(.horizontal, 18)
+                .padding(.vertical, 10)
+                .background(
+                    Capsule().fill(Color.white.opacity(0.18))
+                )
+            }
+            .transition(
+                .opacity.combined(with: .move(edge: .bottom))
+            )
+            .accessibilityLabel(Text("Workout aanpassen"))
+        }
     }
 
     private var roundIndicator: some View {
@@ -124,11 +186,16 @@ struct ActiveTrainingView: View {
 
     // Visual sizing for the timer ring + countdown text, scaled relative to
     // Dynamic Type so users with accessibility text sizes see a proportionally
-    // larger hero element. Base values tuned for the default size class:
-    // ring stays inside iPhone SE's 320pt width with ~10pt breathing room.
-    @ScaledMetric(relativeTo: .largeTitle) private var ringSize: CGFloat = 320
+    // larger hero element. Base values fit within iPhone SE's 375pt width.
+    @ScaledMetric(relativeTo: .largeTitle) private var ringSize: CGFloat = 340
     @ScaledMetric(relativeTo: .largeTitle) private var ringStroke: CGFloat = 22
-    @ScaledMetric(relativeTo: .largeTitle) private var timeFontSize: CGFloat = 96
+    @ScaledMetric(relativeTo: .largeTitle) private var timeFontSize: CGFloat = 108
+
+    // Control button dimensions also scale with Dynamic Type so they stay
+    // proportional to the ring/text on accessibility sizes and don't dwarf
+    // the hero on iPad landscape with default sizing.
+    @ScaledMetric(relativeTo: .body) private var primaryButtonSize: CGFloat = 72
+    @ScaledMetric(relativeTo: .body) private var secondaryButtonSize: CGFloat = 52
 
     private var timerRing: some View {
         ZStack {
@@ -136,16 +203,19 @@ struct ActiveTrainingView: View {
             Circle()
                 .stroke(Color.white.opacity(0.3), lineWidth: ringStroke)
                 .frame(width: ringSize, height: ringSize)
-            // Progress
-            Circle()
-                .trim(from: 0, to: engine.progress)
-                .stroke(
-                    Color.white,
-                    style: StrokeStyle(lineWidth: ringStroke, lineCap: .round)
-                )
-                .frame(width: ringSize, height: ringSize)
-                .rotationEffect(.degrees(-90))
-                .animation(.linear(duration: 1), value: engine.progress)
+            // Progress — driven by wall clock via TimelineView so the ring
+            // stays exactly in sync with the underlying timer (closes fully
+            // at phase end, snaps cleanly to full at phase start).
+            TimelineView(.animation) { context in
+                Circle()
+                    .trim(from: 0, to: engine.progress(at: context.date))
+                    .stroke(
+                        Color.white,
+                        style: StrokeStyle(lineWidth: ringStroke, lineCap: .round)
+                    )
+                    .frame(width: ringSize, height: ringSize)
+                    .rotationEffect(.degrees(-90))
+            }
 
             // Timer text
             VStack(spacing: 6) {
@@ -155,9 +225,12 @@ struct ActiveTrainingView: View {
                 )
                 .font(.system(size: timeFontSize, weight: .heavy, design: .rounded).monospacedDigit())
                 .foregroundStyle(.white)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
                 .contentTransition(.numericText(countsDown: true))
                 .animation(.easeOut(duration: 0.3), value: engine.secondsLeft)
             }
+            .frame(maxWidth: ringSize - ringStroke * 2)
         }
     }
 
@@ -174,58 +247,24 @@ struct ActiveTrainingView: View {
         .tracking(4)
     }
 
-    // MARK: - Ambient volume mini-control
-    @ViewBuilder
-    private var ambientControl: some View {
-        if audioSettings.ambientSound == .none {
-            EmptyView()
-        } else {
-            // `@Bindable` projects the @Observable audio settings into a Binding.
-            @Bindable var audioSettings = audioSettings
-            HStack(spacing: 10) {
-                Image(systemName: "speaker.wave.2.fill")
-                    .foregroundStyle(.white)
-                    .font(.caption.weight(.semibold))
-                Slider(value: $audioSettings.ambientVolume, in: 0...1)
-                    .tint(.white)
-                    .frame(maxWidth: 160)
-                    .onChange(of: audioSettings.ambientVolume) { _, new in
-                        engine.updateVolume(new)
-                    }
-                Text(audioSettings.ambientSound.displayName)
-                    .font(.system(.caption, design: .rounded, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.9))
-                    .lineLimit(1)
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 8)
-            .background(
-                Capsule().fill(.ultraThinMaterial)
-            )
-            .overlay(
-                Capsule().stroke(Color.white.opacity(0.18), lineWidth: 0.5)
-            )
-        }
-    }
-
     // MARK: - Control buttons
     private var controlButtons: some View {
         HStack(alignment: .bottom, spacing: 28) {
             controlItem(
-                icon: "xmark", size: 52, bgOpacity: 0.18,
+                icon: "xmark", size: secondaryButtonSize, bgOpacity: 0.18,
                 label: "Stop",
                 accessibility: Text("Stop training")
             ) { showStopAlert = true }
 
             controlItem(
                 icon: engine.isPaused ? "play.fill" : "pause.fill",
-                size: 72, bgOpacity: 0.28,
+                size: primaryButtonSize, bgOpacity: 0.28,
                 label: engine.isPaused ? "Hervat" : "Pauze",
                 accessibility: engine.isPaused ? Text("Hervatten") : Text("Pauzeren")
             ) { engine.togglePause() }
 
             controlItem(
-                icon: "forward.end.fill", size: 52, bgOpacity: 0.18,
+                icon: "forward.end.fill", size: secondaryButtonSize, bgOpacity: 0.18,
                 label: "Skip",
                 accessibility: Text("Volgende fase overslaan")
             ) { engine.skip() }
@@ -279,10 +318,10 @@ struct ActiveTrainingView: View {
 
     private var phaseKey: String {
         switch engine.phase {
-        case .countdown: return "countdown"
-        case .work: return "work"
-        case .rest: return "rest"
-        case .finished: return "finished"
+        case .countdown: "countdown"
+        case .work: "work"
+        case .rest: "rest"
+        case .finished: "finished"
         }
     }
 }

@@ -12,6 +12,12 @@
         }
       }
     },
+    "%lld" : {
+
+    },
+    "Aanpassen" : {
+
+    },
     "Aantal ronden" : {
       "comment" : "Subtitle for the rounds card",
       "extractionState" : "stale",
@@ -37,6 +43,7 @@
     },
     "Achtergrondgeluid" : {
       "comment" : "Section header in Account settings",
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -54,6 +61,7 @@
     },
     "Ambient geluiden" : {
       "comment" : "Onboarding feature title",
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -124,6 +132,7 @@
       }
     },
     "Bos / vogels" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -134,6 +143,7 @@
       }
     },
     "Brown noise" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -182,6 +192,7 @@
       }
     },
     "Geen geluid" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -202,6 +213,9 @@
         }
       }
     },
+    "Goed gedaan" : {
+
+    },
     "Goed gedaan! 🎉" : {
       "comment" : "Workout finished celebration",
       "localizations" : {
@@ -213,6 +227,9 @@
         }
       }
     },
+    "Halverwege" : {
+
+    },
     "Haptic feedback" : {
       "localizations" : {
         "nl" : {
@@ -222,6 +239,9 @@
           }
         }
       }
+    },
+    "Herhaal" : {
+
     },
     "Hervat" : {
 
@@ -283,6 +303,9 @@
         }
       }
     },
+    "Klaar" : {
+
+    },
     "Klaar voor de start?" : {
       "comment" : "Pre-workout countdown header",
       "localizations" : {
@@ -305,10 +328,14 @@
         }
       }
     },
+    "Laatste ronde" : {
+
+    },
     "Licht" : {
       "comment" : "Appearance mode: force light"
     },
     "Lo-fi beats" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -364,9 +391,6 @@
         }
       }
     },
-    "niet beschikbaar" : {
-
-    },
     "Niet ingelogd" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -412,6 +436,7 @@
       }
     },
     "Oceaangolven" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -487,6 +512,7 @@
 
     },
     "Regen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -498,6 +524,7 @@
     },
     "Regen, oceaan, bos — loopt door op slot" : {
       "comment" : "Onboarding feature description",
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -632,6 +659,9 @@
         }
       }
     },
+    "Start" : {
+
+    },
     "Start %@" : {
 
     },
@@ -710,6 +740,9 @@
           }
         }
       }
+    },
+    "Three, two, one — GO bij elke ronde" : {
+
     },
     "Toon bij start work/rest en laatste 3s" : {
       "localizations" : {
@@ -826,6 +859,9 @@
         }
       }
     },
+    "Verwijder %@" : {
+
+    },
     "Verwijderen" : {
       "comment" : "Swipe-to-delete action label",
       "localizations" : {
@@ -836,6 +872,9 @@
           }
         }
       }
+    },
+    "Voice cues" : {
+
     },
     "Volg iPad / iPhone" : {
       "comment" : "Subtitle for system appearance mode"
@@ -858,6 +897,7 @@
       "comment" : "WorkoutKit step display name for work intervals"
     },
     "White noise" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
@@ -899,6 +939,12 @@
           }
         }
       }
+    },
+    "Workout aanpassen" : {
+
+    },
+    "Workout voltooid" : {
+
     }
   },
   "version" : "1.0"

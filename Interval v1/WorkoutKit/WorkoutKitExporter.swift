@@ -2,6 +2,21 @@ import Foundation
 import WorkoutKit
 import HealthKit
 
+// ⚠️ DEFERRED FEATURE — not shipped in 1.0
+// =========================================
+// This file is fully implemented and compiles, but `WorkoutKitExporter` is
+// not referenced from any UI surface — no "Stuur naar Apple Watch" button
+// exists yet. The conversion + WorkoutScheduler hand-off is ready to go;
+// activating it requires the steps in the doc-comment below (HealthKit
+// capability, Info.plist usage descriptions, and a tap target somewhere
+// like FavoritesView or HomeView).
+//
+// We're keeping the code in tree so the WorkoutKit conversion stays unit-
+// tested (WorkoutKitExporterTests) and so the next iteration can wire it
+// up without reimplementing. If a future release decides not to ship the
+// watch hand-off at all, delete this file + its tests + the WorkoutKit
+// import to reduce review surface and avoid carrying a half-feature.
+
 /// Converts our `Workout` into a WorkoutKit `CustomWorkout` and pushes it to
 /// the user's paired Apple Watch via `WorkoutScheduler`. The watch's built-in
 /// Workout app then handles timing, heart-rate, calories, and Fitness rings —

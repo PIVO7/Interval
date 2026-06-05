@@ -4,11 +4,12 @@ import SwiftData
 struct HomeView: View {
     @Environment(WorkoutStore.self) private var store
     @Environment(AudioSettings.self) private var audioSettings
+    @Environment(CueOrchestrator.self) private var cueOrchestrator
     @Environment(\.modelContext) private var modelContext
 
     @State private var showSaveSheet = false
     @State private var showActive = false
-    @State private var expandedField: EditField?
+    @State private var expandedField: IntervalsListView.Field?
     @State private var justSaved = false
     @State private var savedTrigger = 0
     @State private var syncErrorMessage: String?
@@ -19,19 +20,22 @@ struct HomeView: View {
     @AppStorage("hasSeenIntervalsNudge") private var hasSeenIntervalsNudge = false
     @State private var nudgeWork = false
 
-    enum EditField: Hashable {
-        case work, rest, rounds
-    }
-
     var body: some View {
-        NavigationStack {
+        @Bindable var store = store
+        return NavigationStack {
             ZStack {
                 AppTheme.background.ignoresSafeArea()
                 ScrollView {
                     VStack(spacing: 20) {
                         header
                         summaryCard
-                        intervalsList
+                        IntervalsListView(
+                            workSeconds: $store.current.workSeconds,
+                            restSeconds: $store.current.restSeconds,
+                            rounds: $store.current.rounds,
+                            expandedField: $expandedField,
+                            nudgeWork: nudgeWork
+                        )
                         actionButtons
                         Spacer(minLength: 24)
                     }
@@ -44,35 +48,18 @@ struct HomeView: View {
             .navigationTitle("Interval")
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $showSaveSheet) {
-                SaveFavoriteSheet(workout: store.current) { saved in
-                    modelContext.insert(WorkoutEntity(from: saved))
-                    savedTrigger &+= 1
-                    Task {
-                        do {
-                            try await SupabaseManager.shared.upsertWorkout(saved)
-                        } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
-                            // Guest mode or unconfigured — local save is enough.
-                        } catch {
-                            syncErrorMessage = error.localizedDescription
-                            showSyncErrorAlert = true
-                        }
-                    }
-                    withAnimation(.appSmooth) { justSaved = true }
-                    Task {
-                        try? await Task.sleep(for: .seconds(1.6))
-                        withAnimation(.appSmooth) { justSaved = false }
-                    }
-                }
-                .presentationDetents([.medium])
+                SaveFavoriteSheet(workout: store.current, onSave: saveFavorite)
+                    .presentationDetents([.medium])
             }
             .fullScreenCover(isPresented: $showActive) {
-                ActiveTrainingView(workout: store.current, audioSettings: audioSettings)
+                ActiveTrainingView(workout: store.current, cues: cueOrchestrator)
                     .environment(store)
                     .environment(audioSettings)
             }
             .sensoryFeedback(.success, trigger: savedTrigger)
+            // Single-button "OK" alert — SwiftUI provides the default OK
+            // when no actions are declared (navigation.md guidance).
             .alert("Synchroniseren mislukt", isPresented: $showSyncErrorAlert) {
-                Button("OK", role: .cancel) {}
             } message: {
                 Text(syncErrorMessage ?? "")
             }
@@ -82,6 +69,39 @@ struct HomeView: View {
                 showActive = true
                 store.pendingStart = nil
             }
+        }
+    }
+
+    /// Persist the current workout as a favorite, sync it to Supabase, and
+    /// flash the "Opgeslagen" confirmation. Guest mode / unconfigured
+    /// backends are not surfaced as errors — the local save is enough.
+    private func saveFavorite(_ saved: Workout) {
+        modelContext.insert(WorkoutEntity(from: saved))
+        // Force-persist now — SwiftData's autosave can lag, and showing
+        // the success toast while the row isn't yet on disk risks losing
+        // the save if the app dies.
+        do {
+            try modelContext.save()
+        } catch {
+            syncErrorMessage = error.localizedDescription
+            showSyncErrorAlert = true
+            return
+        }
+        savedTrigger &+= 1
+        Task {
+            do {
+                try await SupabaseManager.shared.upsertWorkout(saved)
+            } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
+                // Guest mode or unconfigured — local save is enough.
+            } catch {
+                syncErrorMessage = error.localizedDescription
+                showSyncErrorAlert = true
+            }
+        }
+        withAnimation(.appSmooth) { justSaved = true }
+        Task {
+            try? await Task.sleep(for: .seconds(1.6))
+            withAnimation(.appSmooth) { justSaved = false }
         }
     }
 
@@ -125,93 +145,20 @@ struct HomeView: View {
                 Text("Totale duur")
                     .font(.system(.caption, design: .rounded))
                     .foregroundStyle(AppTheme.secondaryText)
-                Text(
-                    Duration.seconds(store.current.totalSeconds),
-                    format: .units(allowed: [.minutes, .seconds], width: .narrow)
-                )
-                .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                .foregroundStyle(AppTheme.primaryText)
-                Text(verbatim: store.current.summary)
-                    .font(.system(.footnote, design: .rounded))
-                    .foregroundStyle(AppTheme.secondaryText)
+                Text(verbatim: store.current.totalSeconds.asCompactDuration)
+                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    .foregroundStyle(AppTheme.primaryText)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                // Summary subline removed — duplicated the work/rest/rounds
+                // info that already lives in the IntervalsListView right
+                // below this card, and the middle-dot separators read
+                // visually noisy at small footnote size.
             }
             Spacer()
         }
         .padding(22)
         .softCard()
-    }
-
-    // MARK: - Intervals list (Calendar-style accordion in one card)
-    private var intervalsList: some View {
-        // `@Bindable` projects the @Observable store into a Binding context so
-        // we can pass `$store.current.workSeconds` etc. into the wheel pickers.
-        @Bindable var store = store
-        return VStack(spacing: 0) {
-            ValuePickerRow(
-                title: "Work",
-                systemImage: "flame.fill",
-                tint: AppTheme.coral,
-                value: formatTime(store.current.workSeconds),
-                isSelected: expandedField == .work,
-                isNudging: nudgeWork
-            ) { toggle(.work) }
-
-            if expandedField == .work {
-                InlineTimeWheel(
-                    seconds: $store.current.workSeconds,
-                    minSeconds: 5,
-                    maxSeconds: 3600
-                )
-                .transition(.accordion)
-            }
-
-            Divider().padding(.leading, 68)
-
-            ValuePickerRow(
-                title: "Rest",
-                systemImage: "leaf.fill",
-                tint: AppTheme.sage,
-                value: formatTime(store.current.restSeconds),
-                isSelected: expandedField == .rest
-            ) { toggle(.rest) }
-
-            if expandedField == .rest {
-                InlineTimeWheel(
-                    seconds: $store.current.restSeconds,
-                    minSeconds: 0,
-                    maxSeconds: 3600
-                )
-                .transition(.accordion)
-            }
-
-            Divider().padding(.leading, 68)
-
-            ValuePickerRow(
-                title: "Rounds",
-                systemImage: "repeat",
-                tint: AppTheme.amber,
-                value: "\(store.current.rounds)",
-                isSelected: expandedField == .rounds
-            ) { toggle(.rounds) }
-
-            if expandedField == .rounds {
-                InlineRoundsWheel(rounds: $store.current.rounds)
-                    .transition(.accordion)
-            }
-        }
-        .softCard()
-        // Snappier than `.appSmooth`: ~0.32s settle, almost no overshoot.
-        // Tuned so the chip background, row tint, and wheel all finish
-        // together for a single coordinated feel.
-        .animation(.snappy(duration: 0.32, extraBounce: 0.02), value: expandedField)
-    }
-
-    private func toggle(_ field: EditField) {
-        expandedField = (expandedField == field) ? nil : field
-    }
-
-    private func formatTime(_ seconds: Int) -> String {
-        Duration.seconds(seconds).formatted(.time(pattern: .minuteSecond))
     }
 
     // MARK: - Action buttons

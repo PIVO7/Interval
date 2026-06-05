@@ -5,6 +5,7 @@ struct AccountView: View {
     @Environment(AudioSettings.self) private var audioSettings
     @Environment(AuthManager.self) private var auth
     @Environment(AppearanceSettings.self) private var appearance
+    @Environment(\.modelContext) private var modelContext
 
     @State private var showAuthErrorAlert = false
 
@@ -15,7 +16,6 @@ struct AccountView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         profileCard
-                        audioSection
                         signalSection
                         appearanceSection
                         logoutButton
@@ -26,8 +26,10 @@ struct AccountView: View {
                 }
             }
             .navigationTitle("Account")
-            .onChange(of: auth.errorMessage) { _, new in
-                showAuthErrorAlert = new != nil
+            // Observe errorVersion (monotonic counter) instead of errorMessage
+            // so an identical error string thrown twice still re-presents.
+            .onChange(of: auth.errorVersion) { _, _ in
+                if auth.errorMessage != nil { showAuthErrorAlert = true }
             }
             .alert("Inloggen mislukt", isPresented: $showAuthErrorAlert) {
                 Button("OK", role: .cancel) { auth.errorMessage = nil }
@@ -114,89 +116,6 @@ struct AccountView: View {
         return initials.isEmpty ? nil : initials
     }
 
-    // MARK: - Ambient audio
-    private var audioSection: some View {
-        // `@Bindable` projects the @Observable audio settings into a Binding
-        // context so we can write `$audioSettings.ambientVolume`.
-        @Bindable var audioSettings = audioSettings
-        return VStack(alignment: .leading, spacing: 10) {
-            sectionHeader("Achtergrondgeluid")
-            VStack(spacing: 0) {
-                // Sound picker
-                ForEach(Array(AmbientSound.allCases.enumerated()), id: \.element.id) { idx, sound in
-                    let available = AudioEngine.isAvailable(sound)
-                    Button {
-                        guard available else { return }
-                        audioSettings.ambientSound = sound
-                        if sound != .none {
-                            AudioEngine.shared.playAmbient(sound, volume: audioSettings.ambientVolume)
-                        } else {
-                            AudioEngine.shared.stopAmbient()
-                        }
-                    } label: {
-                        HStack(spacing: 14) {
-                            ZStack {
-                                Circle()
-                                    .fill(AppTheme.coral.opacity(available ? 0.15 : 0.06))
-                                    .frame(width: 30, height: 30)
-                                Image(systemName: sound.icon)
-                                    .foregroundStyle(available ? AppTheme.coral : AppTheme.secondaryText)
-                                    .font(.caption)
-                            }
-                            Text(sound.displayName)
-                                .font(.system(.body, design: .rounded))
-                                .foregroundStyle(available ? AppTheme.primaryText : AppTheme.secondaryText)
-                            if !available {
-                                Text("niet beschikbaar")
-                                    .font(.system(.caption, design: .rounded))
-                                    .foregroundStyle(AppTheme.secondaryText)
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 2)
-                                    .background(
-                                        Capsule().fill(AppTheme.secondaryText.opacity(0.12))
-                                    )
-                            }
-                            Spacer()
-                            if audioSettings.ambientSound == sound && available {
-                                Image(systemName: "checkmark")
-                                    .foregroundStyle(AppTheme.coral)
-                                    .font(.callout.weight(.semibold))
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 12)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityAddTraits(audioSettings.ambientSound == sound ? .isSelected : [])
-                    .disabled(!available)
-                    if idx < AmbientSound.allCases.count - 1 {
-                        Divider().padding(.leading, 60)
-                    }
-                }
-
-                if audioSettings.ambientSound != .none {
-                    Divider().padding(.leading, 60)
-                    HStack(spacing: 12) {
-                        Image(systemName: "speaker.fill")
-                            .foregroundStyle(AppTheme.secondaryText)
-                            .font(.callout)
-                        Slider(value: $audioSettings.ambientVolume, in: 0...1)
-                            .tint(AppTheme.coral)
-                            .onChange(of: audioSettings.ambientVolume) { _, new in
-                                AudioEngine.shared.setAmbientVolume(new)
-                            }
-                        Image(systemName: "speaker.wave.3.fill")
-                            .foregroundStyle(AppTheme.secondaryText)
-                            .font(.callout)
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
-                }
-            }
-            .softCard()
-        }
-    }
-
     // MARK: - Signal tones & haptics
     private var signalSection: some View {
         @Bindable var audioSettings = audioSettings
@@ -228,6 +147,9 @@ struct AccountView: View {
         VStack(alignment: .leading, spacing: 10) {
             sectionHeader("Weergave")
             VStack(spacing: 0) {
+                // Array(enumerated()) wrap is required for ForEach until
+                // iOS 26 — EnumeratedSequence only conforms to
+                // RandomAccessCollection on iOS 26+, and we deploy to 18.
                 ForEach(Array(AppearanceMode.allCases.enumerated()), id: \.element.id) { idx, mode in
                     Button {
                         appearance.mode = mode
@@ -281,7 +203,7 @@ struct AccountView: View {
         Group {
             if auth.isSignedIn {
                 Button(role: .destructive) {
-                    auth.signOut()
+                    auth.signOut(modelContext: modelContext)
                 } label: {
                     Text("Log out")
                         .font(.system(.headline, design: .rounded, weight: .semibold))

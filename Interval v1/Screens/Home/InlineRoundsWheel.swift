@@ -8,7 +8,7 @@ struct InlineRoundsWheel: View {
     var body: some View {
         Picker("Rounds", selection: $rounds) {
             ForEach(1...99, id: \.self) { v in
-                Text(verbatim: "\(v)")
+                Text(v, format: .number)
                     .font(.system(.title3, design: .rounded, weight: .medium))
                     .tag(v)
             }

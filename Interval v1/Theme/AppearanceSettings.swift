@@ -6,6 +6,7 @@ import Observation
 /// Stored in `UserDefaults` under `appearanceMode`. Read once at init,
 /// written through on every change via `didSet` so SwiftUI views observe
 /// the change immediately and the next launch restores the choice.
+@MainActor
 @Observable
 final class AppearanceSettings {
     var mode: AppearanceMode {

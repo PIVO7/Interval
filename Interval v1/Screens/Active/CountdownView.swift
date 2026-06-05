@@ -3,6 +3,10 @@ import SwiftUI
 struct CountdownView: View {
     let count: Int
 
+    /// Massive "3 / 2 / 1 / GO" text scales with Dynamic Type so users on
+    /// larger accessibility sizes still get the hero treatment.
+    @ScaledMetric(relativeTo: .largeTitle) private var countdownSize: CGFloat = 96
+
     var body: some View {
         VStack(spacing: 20) {
             Text("Klaar voor de start?")
@@ -20,13 +24,20 @@ struct CountdownView: View {
                         Text("GO!")
                     }
                 }
-                .font(.system(size: 96, weight: .black, design: .rounded))
+                .font(.system(size: countdownSize, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
                 .contentTransition(.numericText(countsDown: true))
                 .animation(.appSmooth, value: count)
             }
             .scaleEffect(count > 0 ? 1 : 1.1)
             .animation(.appBounce, value: count)
+            // VoiceOver: ensure each tick is announced even though the
+            // change is purely visual (numericText transition). Without
+            // `updatesFrequently` + a stable label the assistive layer
+            // falls silent during the 3-2-1 countdown.
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(count > 0 ? Text("\(count)") : Text("Start"))
+            .accessibilityAddTraits(.updatesFrequently)
 
             Text("Begin...")
                 .font(.system(.callout, design: .rounded))

@@ -3,7 +3,10 @@ import SwiftData
 
 @Model
 final class WorkoutEntity {
-    var id: UUID
+    /// `.unique` so an import path that re-inserts a Workout already in
+    /// the store (e.g. fetching from Supabase after a local save round
+    /// trip) updates in place instead of producing a duplicate row.
+    @Attribute(.unique) var id: UUID
     var name: String
     var workSeconds: Int
     var restSeconds: Int

@@ -6,6 +6,10 @@ struct OnboardingView: View {
     @State private var appeared = false
     @State private var showAuthErrorAlert = false
 
+    /// Hero title size scales with the user's preferred text size so
+    /// "Interval" stays readable at accessibility text sizes.
+    @ScaledMetric(relativeTo: .largeTitle) private var heroTitleSize: CGFloat = 46
+
     var body: some View {
         ZStack {
             background.ignoresSafeArea()
@@ -22,8 +26,10 @@ struct OnboardingView: View {
             .frame(maxWidth: 560)
             .frame(maxWidth: .infinity)
         }
-        .onChange(of: auth.errorMessage) { _, new in
-            showAuthErrorAlert = new != nil
+        // Observe errorVersion (monotonic) so identical errors thrown
+        // back-to-back still re-present.
+        .onChange(of: auth.errorVersion) { _, _ in
+            if auth.errorMessage != nil { showAuthErrorAlert = true }
         }
         .alert("Inloggen mislukt", isPresented: $showAuthErrorAlert) {
             Button("OK", role: .cancel) { auth.errorMessage = nil }
@@ -51,7 +57,7 @@ struct OnboardingView: View {
 
             VStack(spacing: 10) {
                 Text("Interval")
-                    .font(.system(size: 46, weight: .black, design: .rounded))
+                    .font(.system(size: heroTitleSize, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
                     .opacity(appeared ? 1 : 0)
                     .offset(y: appeared ? 0 : 12)
@@ -78,9 +84,9 @@ struct OnboardingView: View {
                 sub: "Work, rest en ronden in één oogopslag"
             )
             featureRow(
-                icon: "waveform.circle.fill",
-                title: "Ambient geluiden",
-                sub: "Regen, oceaan, bos — loopt door op slot"
+                icon: "speaker.wave.2.fill",
+                title: "Voice cues",
+                sub: "Three, two, one — GO bij elke ronde"
             )
             featureRow(
                 icon: "heart.fill",
@@ -95,12 +101,12 @@ struct OnboardingView: View {
     private func featureRow(icon: String, title: LocalizedStringKey, sub: LocalizedStringKey) -> some View {
         HStack(spacing: 16) {
             ZStack {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: 12)
                     .fill(Color.white.opacity(0.2))
                     .frame(width: 44, height: 44)
                 Image(systemName: icon)
                     .foregroundStyle(.white)
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.headline.weight(.semibold))
             }
             VStack(alignment: .leading, spacing: 3) {
                 Text(title)
@@ -114,7 +120,7 @@ struct OnboardingView: View {
         }
         .padding(16)
         .background(Color.white.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .clipShape(.rect(cornerRadius: 18))
     }
 
     // MARK: - Buttons

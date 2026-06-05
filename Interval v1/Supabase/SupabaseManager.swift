@@ -70,12 +70,12 @@ final class SupabaseManager {
         }
         let row = WorkoutRow(
             id: workout.id,
-            user_id: userId,
+            userId: userId,
             name: workout.name,
-            work_seconds: workout.workSeconds,
-            rest_seconds: workout.restSeconds,
+            workSeconds: workout.workSeconds,
+            restSeconds: workout.restSeconds,
             rounds: workout.rounds,
-            created_at: workout.createdAt
+            createdAt: workout.createdAt
         )
         try await client.from("workouts").upsert(row).execute()
     }
@@ -146,33 +146,54 @@ enum SupabaseError: LocalizedError {
 }
 
 // MARK: - Row DTOs
+//
+// Supabase columns are snake_case; Swift convention is camelCase. We keep
+// Swift naming and bridge via `CodingKeys` rather than carrying snake_case
+// through the rest of the codebase.
 
 private struct WorkoutRow: Codable {
     let id: UUID
-    let user_id: UUID
+    let userId: UUID
     let name: String
-    let work_seconds: Int
-    let rest_seconds: Int
+    let workSeconds: Int
+    let restSeconds: Int
     let rounds: Int
-    let created_at: Date
+    let createdAt: Date
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, rounds
+        case userId = "user_id"
+        case workSeconds = "work_seconds"
+        case restSeconds = "rest_seconds"
+        case createdAt = "created_at"
+    }
 
     func toWorkout() -> Workout {
         Workout(
             id: id,
             name: name,
-            workSeconds: work_seconds,
-            restSeconds: rest_seconds,
+            workSeconds: workSeconds,
+            restSeconds: restSeconds,
             rounds: rounds,
-            createdAt: created_at
+            createdAt: createdAt
         )
     }
 }
 
 struct UserPreferencesRow: Codable {
-    let user_id: UUID
-    var default_sound: String
-    var sound_volume: Double
-    var signal_tones_enabled: Bool
-    var haptics_enabled: Bool
-    var language_override: String?
+    let userId: UUID
+    var defaultSound: String
+    var soundVolume: Double
+    var signalTonesEnabled: Bool
+    var hapticsEnabled: Bool
+    var languageOverride: String?
+
+    enum CodingKeys: String, CodingKey {
+        case userId = "user_id"
+        case defaultSound = "default_sound"
+        case soundVolume = "sound_volume"
+        case signalTonesEnabled = "signal_tones_enabled"
+        case hapticsEnabled = "haptics_enabled"
+        case languageOverride = "language_override"
+    }
 }
