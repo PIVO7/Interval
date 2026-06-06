@@ -15,6 +15,12 @@
     "%lld" : {
 
     },
+    "Aankoop in behandeling" : {
+
+    },
+    "Aankoop niet gelukt" : {
+
+    },
     "Aanpassen" : {
 
     },
@@ -41,6 +47,12 @@
         }
       }
     },
+    "Account verwijderen" : {
+
+    },
+    "Account verwijderen?" : {
+
+    },
     "Achtergrondgeluid" : {
       "comment" : "Section header in Account settings",
       "extractionState" : "stale",
@@ -55,6 +67,9 @@
     },
     "Altijd donker" : {
       "comment" : "Subtitle for dark appearance mode"
+    },
+    "Altijd herbruikbaar" : {
+
     },
     "Altijd licht" : {
       "comment" : "Subtitle for light appearance mode"
@@ -93,6 +108,9 @@
         }
       }
     },
+    "Bedankt! Je kunt onbeperkt favorieten opslaan." : {
+
+    },
     "Begin..." : {
       "localizations" : {
         "nl" : {
@@ -115,6 +133,12 @@
       }
     },
     "Bewaar" : {
+
+    },
+    "Bewaar al je workouts met een eigen naam." : {
+
+    },
+    "Bewaar je favorieten" : {
 
     },
     "Bewerk %@" : {
@@ -153,6 +177,9 @@
         }
       }
     },
+    "Dit verwijdert je account en al je gesynchroniseerde favorieten definitief. Dit kan niet ongedaan worden gemaakt." : {
+
+    },
     "Donker" : {
       "comment" : "Appearance mode: force dark"
     },
@@ -165,6 +192,18 @@
           }
         }
       }
+    },
+    "Eenmalig kopen. Geen abonnement. Voor altijd van jou." : {
+
+    },
+    "Eenmalig ontgrendelen om workouts te bewaren." : {
+
+    },
+    "Eenmalige aankoop · geen abonnement" : {
+
+    },
+    "Er is niets in rekening gebracht. Probeer het later opnieuw." : {
+
     },
     "Favoriet bewerken" : {
 
@@ -243,6 +282,12 @@
     "Herhaal" : {
 
     },
+    "Herstel" : {
+
+    },
+    "Herstel aankopen" : {
+
+    },
     "Hervat" : {
 
     },
@@ -267,6 +312,9 @@
         }
       }
     },
+    "Inloggen is optioneel. De app werkt volledig zonder account — log alleen in met Apple als je je favorieten tussen apparaten wilt synchroniseren." : {
+
+    },
     "Inloggen mislukt" : {
 
     },
@@ -281,6 +329,12 @@
         }
       }
     },
+    "Interval Pro" : {
+
+    },
+    "Interval Pro actief" : {
+
+    },
     "Intervaltimer voor coaches\nen kinesitherapeuten" : {
       "comment" : "Onboarding tagline",
       "localizations" : {
@@ -291,6 +345,12 @@
           }
         }
       }
+    },
+    "Je aankoop wacht op goedkeuring. Zodra die rond is, wordt Interval Pro automatisch ontgrendeld." : {
+
+    },
+    "Je favorieten staan op al je apparaten." : {
+
     },
     "Je huidige voortgang gaat verloren." : {
       "comment" : "Stop training alert message",
@@ -344,9 +404,6 @@
           }
         }
       }
-    },
-    "Log in met Apple om je favorieten te bewaren op al je apparaten." : {
-
     },
     "Log out" : {
       "localizations" : {
@@ -449,6 +506,9 @@
     "OK" : {
 
     },
+    "Onbeperkt opslaan" : {
+
+    },
     "Onboarding overslaan" : {
       "comment" : "Skip onboarding accessibility label",
       "extractionState" : "stale",
@@ -460,6 +520,15 @@
           }
         }
       }
+    },
+    "Ontgrendel" : {
+
+    },
+    "Ontgrendel Interval Pro" : {
+
+    },
+    "Ontgrendel voor %@" : {
+
     },
     "Opgeslagen" : {
 
@@ -648,6 +717,9 @@
         }
       }
     },
+    "Sluit" : {
+
+    },
     "Snel instellen" : {
       "comment" : "Onboarding feature title",
       "localizations" : {
@@ -663,6 +735,9 @@
 
     },
     "Start %@" : {
+
+    },
+    "Start je opgeslagen favorieten zo vaak je wilt." : {
 
     },
     "Start training" : {
@@ -715,6 +790,9 @@
 
     },
     "Synchroniseren mislukt" : {
+
+    },
+    "Synct overal" : {
 
     },
     "Systeem" : {
@@ -859,6 +937,9 @@
         }
       }
     },
+    "Verwijder" : {
+
+    },
     "Verwijder %@" : {
 
     },
@@ -872,6 +953,9 @@
           }
         }
       }
+    },
+    "Verwijderen mislukt" : {
+
     },
     "Voice cues" : {
 
