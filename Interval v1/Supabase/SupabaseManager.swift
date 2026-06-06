@@ -63,9 +63,15 @@ final class SupabaseManager {
     /// client doesn't have directly. Signs out locally afterwards since the
     /// session is now invalid.
     func deleteAccount() async throws {
-        guard SupabaseConfig.isConfigured, currentUserId != nil else {
+        guard SupabaseConfig.isConfigured else {
             throw SupabaseError.notSignedIn
         }
+        // Ensure the request carries a valid (refreshed) access token. The
+        // delete_user() function relies on auth.uid() from the JWT — with a
+        // stale/expired session that's null and the delete fails with "Not
+        // authenticated". `client.auth.session` refreshes when needed (and
+        // throws if there's genuinely no session, i.e. not signed in).
+        _ = try await client.auth.session
         try await client.rpc("delete_user").execute()
         try? await client.auth.signOut()
     }

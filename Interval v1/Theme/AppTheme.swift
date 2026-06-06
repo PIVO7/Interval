@@ -7,9 +7,13 @@ enum AppTheme {
     static let sage = Color(hex: 0xA8B89C)
     static let cream = Color(hex: 0xFAF6F1)
 
-    // Deeper variants for full-screen workout backgrounds (white-text contrast)
-    static let coralDeep = Color(hex: 0xC76A48)   // ≈ 4.75:1 white-text contrast
-    static let sageDeep  = Color(hex: 0x5B8071)   // ≈ 4.27:1 white-text contrast
+    // Deeper variants = the bottom stop of the full-screen workout gradients.
+    // White text sits over the gradient; these deep stops (≈3.8:1 / ≈4.0:1
+    // white contrast) carry the lower half, while the large, heavy timer
+    // numerals stay legible over the lighter top stops. Not WCAG-AA against
+    // the base stops — see PhaseTheme for the trade-off.
+    static let coralDeep = Color(hex: 0xC76A48)
+    static let sageDeep  = Color(hex: 0x5B8071)
     static let forestDeep = Color(hex: 0x3D6353)  // accent for finished/celebration
 
     // Dark

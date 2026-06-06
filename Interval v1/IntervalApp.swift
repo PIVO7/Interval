@@ -4,7 +4,9 @@ import SwiftData
 @main
 struct IntervalApp: App {
     @State private var workoutStore = WorkoutStore()
-    @State private var audioSettings = AudioSettings()
+    // No default here — built once in init() and shared with the cue stack,
+    // so there's no throwaway instance.
+    @State private var audioSettings: AudioSettings
     @State private var auth = AuthManager()
     @State private var appearance = AppearanceSettings()
     @State private var store = StoreManager()

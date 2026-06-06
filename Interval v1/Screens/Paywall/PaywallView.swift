@@ -182,7 +182,12 @@ struct PaywallView: View {
     }
 
     private func restore() async {
-        await store.restore()
+        do {
+            try await store.restore()
+        } catch {
+            showError = true
+            return
+        }
         if store.isUnlocked {
             onUnlocked()
             dismiss()

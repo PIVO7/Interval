@@ -41,7 +41,7 @@ struct AccountView: View {
                 if auth.errorMessage != nil { showAuthErrorAlert = true }
             }
             .alert("Inloggen mislukt", isPresented: $showAuthErrorAlert) {
-                Button("OK", role: .cancel) { auth.errorMessage = nil }
+                Button("OK", role: .cancel) { auth.clearError() }
             } message: {
                 Text(auth.errorMessage ?? "")
             }
@@ -117,8 +117,8 @@ struct AccountView: View {
 
     private func restorePurchases() async {
         restoreInFlight = true
-        await pro.restore()
-        restoreInFlight = false
+        defer { restoreInFlight = false }
+        try? await pro.restore()
     }
 
     // MARK: - Profile
@@ -296,7 +296,7 @@ struct AccountView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
 
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(selected ? AppTheme.primaryText : Color.black.opacity(0.06),
+                        .stroke(selected ? AppTheme.primaryText : AppTheme.secondaryText.opacity(0.25),
                                 lineWidth: selected ? 3 : 1)
                         .frame(width: 76, height: 76)
 
@@ -321,9 +321,13 @@ struct AccountView: View {
             }
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(Text(theme.name))
+        .accessibilityLabel(pro.isUnlocked
+                            ? Text(theme.name)
+                            : Text("\(theme.name), Pro-functie, vergrendeld"))
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
-        .accessibilityHint(pro.isUnlocked ? Text("") : Text("Pro-functie"))
+        .accessibilityHint(pro.isUnlocked
+                           ? Text("Selecteer kleurenthema")
+                           : Text("Ontgrendel met Interval Pro"))
     }
 
     /// Pro gate: free users tapping any theme get the paywall; Pro users select.

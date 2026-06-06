@@ -109,6 +109,12 @@ final class AuthManager {
         errorVersion &+= 1
     }
 
+    /// Clear a surfaced error after the user dismisses it. Paired with
+    /// `reportError` so views don't poke `errorMessage` directly.
+    func clearError() {
+        errorMessage = nil
+    }
+
     /// Sign out and clear all per-user device state.
     ///
     /// `modelContext` is passed in so caller can wipe SwiftData favorites

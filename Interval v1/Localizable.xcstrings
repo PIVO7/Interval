@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "nl",
   "strings" : {
+    "" : {
+
+    },
     "%@ werk · %@ rust · %lld ronden" : {
       "comment" : "Workout summary line (work duration, rest duration, rounds)",
       "localizations" : {
@@ -580,6 +583,12 @@
     "Per ronde" : {
 
     },
+    "Pro" : {
+
+    },
+    "Pro-functie" : {
+
+    },
     "Regen" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -886,6 +895,9 @@
       }
     },
     "Trainingen worden gesyncd" : {
+
+    },
+    "Trainingskleuren" : {
 
     },
     "Trillen bij elke fase-overgang" : {

@@ -104,13 +104,18 @@ final class StoreManager {
             let result = try await product.purchase()
             switch result {
             case .success(let verification):
-                guard case .verified(let transaction) = verification else {
-                    log.error("Purchase succeeded but failed verification")
+                switch verification {
+                case .verified(let transaction):
+                    await transaction.finish()
+                    isUnlocked = true
+                    return .success
+                case .unverified(let transaction, let error):
+                    // Don't unlock on an unverified result, but DO finish it so
+                    // StoreKit stops redelivering it on the updates stream.
+                    log.error("Purchase failed verification: \(error.localizedDescription, privacy: .public)")
+                    await transaction.finish()
                     return .failed
                 }
-                await transaction.finish()
-                isUnlocked = true
-                return .success
             case .userCancelled:
                 return .cancelled
             case .pending:
@@ -126,25 +131,24 @@ final class StoreManager {
     }
 
     /// Apple-required restore path. `AppStore.sync()` forces a refresh against
-    /// the App Store, after which we re-read entitlements.
-    func restore() async {
-        do {
-            try await AppStore.sync()
-        } catch {
-            log.error("Restore (AppStore.sync) failed: \(error.localizedDescription, privacy: .public)")
-        }
+    /// the App Store, after which we re-read entitlements. Throws on a sync
+    /// failure (e.g. no network) so callers can surface feedback.
+    func restore() async throws {
+        try await AppStore.sync()
         await refreshEntitlements()
     }
 
     private func handle(_ result: VerificationResult<Transaction>) async {
-        guard case .verified(let transaction) = result else { return }
-        if transaction.productID == Self.unlockProductID,
-           transaction.revocationDate == nil {
-            isUnlocked = true
-        } else if transaction.productID == Self.unlockProductID {
-            // Revoked (refund / family-sharing removal) — re-lock.
-            isUnlocked = false
+        switch result {
+        case .verified(let transaction):
+            if transaction.productID == Self.unlockProductID {
+                // nil revocationDate = active; non-nil = refunded / removed.
+                isUnlocked = transaction.revocationDate == nil
+            }
+            await transaction.finish()
+        case .unverified(let transaction, _):
+            // Finish so it doesn't redeliver indefinitely; never unlock on it.
+            await transaction.finish()
         }
-        await transaction.finish()
     }
 }

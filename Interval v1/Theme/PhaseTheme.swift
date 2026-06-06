@@ -1,14 +1,19 @@
 import SwiftUI
 
 /// A curated work/rest colour pairing for the active workout screen — a Pro
-/// feature. Each phase renders a two-stop gradient (`base → deep`); the deep
-/// stop is tuned for white-text contrast at the bottom of the screen, matching
-/// the original Coral/Sage treatment (~4.3:1+).
+/// feature. Each phase renders a two-stop gradient (`base → deep`).
 ///
-/// Presets only — no free colour picker — so every combination keeps the white
-/// timer text and controls legible and stays on-brand. Most pairs follow the
-/// "warm = work, cool = rest" exercise convention; `indigo` inverts it for
-/// variety.
+/// Contrast note: white text/controls sit over these gradients. The deep
+/// (bottom) stops land ≈3–4:1; the lighter base (top) stops are below WCAG AA
+/// and rely on the large, heavy timer numerals for legibility — the same
+/// trade-off the app's original hardcoded Coral/Sage made. Presets are tuned
+/// to stay within that established range (no theme is meaningfully worse than
+/// the default). If strict AA is ever needed, add a dark scrim behind the text
+/// rather than darkening the palettes.
+///
+/// Presets only — no free colour picker — so every combination stays on-brand
+/// and within the contrast envelope above. Most pairs follow the "warm = work,
+/// cool = rest" exercise convention; `indigo` inverts it for variety.
 struct PhaseTheme: Identifiable, Hashable, Sendable {
     let id: String
     /// Short display name shown in the picker (proper noun, not localised).
