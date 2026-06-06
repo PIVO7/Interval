@@ -1,0 +1,39 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [ ]
+  },
+  "identifier" : "B7E1F0A2-PRO-UNLOCK-0001",
+  "nonRenewingSubscriptions" : [ ],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "100000001",
+      "localizations" : [
+        {
+          "description" : "Bewaar en hergebruik onbeperkt benoemde favoriete workouts.",
+          "displayName" : "Interval Pro",
+          "locale" : "nl"
+        },
+        {
+          "description" : "Save and reuse unlimited named favorite workouts.",
+          "displayName" : "Interval Pro",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.superapp.intervalv1.pro_unlock",
+      "referenceName" : "Interval Pro Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrorsEnabled" : false
+  },
+  "subscriptionGroups" : [ ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

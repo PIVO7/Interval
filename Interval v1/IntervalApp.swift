@@ -7,6 +7,7 @@ struct IntervalApp: App {
     @State private var audioSettings = AudioSettings()
     @State private var auth = AuthManager()
     @State private var appearance = AppearanceSettings()
+    @State private var store = StoreManager()
     @State private var cueOrchestrator: CueOrchestrator
 
     init() {
@@ -34,8 +35,13 @@ struct IntervalApp: App {
                 .environment(auth)
                 .environment(appearance)
                 .environment(cueOrchestrator)
+                .environment(store)
                 .tint(AppTheme.coral)
                 .preferredColorScheme(appearance.mode.colorScheme)
+                .task {
+                    // Load the Pro product and reconcile entitlements at launch.
+                    await store.start()
+                }
         }
         .modelContainer(modelContainer)
     }

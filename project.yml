@@ -100,5 +100,9 @@ schemes:
         - Interval v1 Tests
     run:
       config: Debug
+      # Local StoreKit testing — lets the Pro unlock purchase/restore flow run
+      # in the simulator without App Store Connect. Replace/remove once the
+      # product is live in App Store Connect for sandbox testing.
+      storeKitConfiguration: ProUnlock.storekit
     archive:
       config: Release

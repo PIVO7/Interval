@@ -8,8 +8,11 @@ struct FinishedView: View {
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(StoreManager.self) private var pro
     @Query private var favorites: [WorkoutEntity]
     @State private var showSaveSheet = false
+    @State private var showPaywall = false
+    @State private var continueToSaveAfterUnlock = false
     @State private var savedTrigger = 0
     @State private var syncErrorMessage: String?
     @State private var showSyncErrorAlert = false
@@ -89,7 +92,7 @@ struct FinishedView: View {
             VStack(spacing: 14) {
                 if !alreadySaved {
                     Button {
-                        showSaveSheet = true
+                        requestSaveFavorite()
                     } label: {
                         Label("Opslaan als favoriet", systemImage: "heart.fill")
                             .font(.system(.headline, design: .rounded, weight: .semibold))
@@ -140,11 +143,29 @@ struct FinishedView: View {
             SaveFavoriteSheet(workout: workout, onSave: saveFavorite)
                 .presentationDetents([.medium])
         }
+        .sheet(isPresented: $showPaywall, onDismiss: {
+            if continueToSaveAfterUnlock {
+                continueToSaveAfterUnlock = false
+                showSaveSheet = true
+            }
+        }) {
+            PaywallView { continueToSaveAfterUnlock = true }
+        }
         .sensoryFeedback(.success, trigger: savedTrigger)
         .alert("Synchroniseren mislukt", isPresented: $showSyncErrorAlert) {
             Button("OK", role: .cancel) {}
         } message: {
             Text(syncErrorMessage ?? "")
+        }
+    }
+
+    /// Gate the save action behind the Pro paywall; continue to the save
+    /// sheet once unlocked.
+    private func requestSaveFavorite() {
+        if pro.isUnlocked {
+            showSaveSheet = true
+        } else {
+            showPaywall = true
         }
     }
 
@@ -204,6 +225,7 @@ struct FinishedView: View {
         LinearGradient(colors: [AppTheme.sageDeep, AppTheme.forestDeep],
                        startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
         FinishedView(workout: .placeholder, onHome: {}, onRestart: {})
+            .environment(StoreManager())
             .modelContainer(for: WorkoutEntity.self, inMemory: true)
     }
 }

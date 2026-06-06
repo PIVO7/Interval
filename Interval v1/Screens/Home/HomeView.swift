@@ -5,9 +5,12 @@ struct HomeView: View {
     @Environment(WorkoutStore.self) private var store
     @Environment(AudioSettings.self) private var audioSettings
     @Environment(CueOrchestrator.self) private var cueOrchestrator
+    @Environment(StoreManager.self) private var pro
     @Environment(\.modelContext) private var modelContext
 
     @State private var showSaveSheet = false
+    @State private var showPaywall = false
+    @State private var continueToSaveAfterUnlock = false
     @State private var showActive = false
     @State private var expandedField: IntervalsListView.Field?
     @State private var justSaved = false
@@ -51,10 +54,21 @@ struct HomeView: View {
                 SaveFavoriteSheet(workout: store.current, onSave: saveFavorite)
                     .presentationDetents([.medium])
             }
+            .sheet(isPresented: $showPaywall, onDismiss: {
+                // Continue to the save sheet only after the paywall has fully
+                // dismissed, avoiding a present-while-dismissing race.
+                if continueToSaveAfterUnlock {
+                    continueToSaveAfterUnlock = false
+                    showSaveSheet = true
+                }
+            }) {
+                PaywallView { continueToSaveAfterUnlock = true }
+            }
             .fullScreenCover(isPresented: $showActive) {
                 ActiveTrainingView(workout: store.current, cues: cueOrchestrator)
                     .environment(store)
                     .environment(audioSettings)
+                    .environment(pro)
             }
             .sensoryFeedback(.success, trigger: savedTrigger)
             // Single-button "OK" alert — SwiftUI provides the default OK
@@ -69,6 +83,17 @@ struct HomeView: View {
                 showActive = true
                 store.pendingStart = nil
             }
+        }
+    }
+
+    /// Entry point for the "Opslaan als favoriet" button. Saving named
+    /// favorites is the Pro feature — gate behind the paywall, then continue
+    /// to the save sheet once unlocked.
+    private func requestSaveFavorite() {
+        if pro.isUnlocked {
+            showSaveSheet = true
+        } else {
+            showPaywall = true
         }
     }
 
@@ -184,7 +209,7 @@ struct HomeView: View {
 
             // Secondary: subtle text-only save action
             Button {
-                showSaveSheet = true
+                requestSaveFavorite()
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: justSaved ? "checkmark.circle.fill" : "heart")
@@ -208,5 +233,6 @@ struct HomeView: View {
     HomeView()
         .environment(WorkoutStore())
         .environment(AudioSettings())
+        .environment(StoreManager())
         .modelContainer(for: WorkoutEntity.self, inMemory: true)
 }

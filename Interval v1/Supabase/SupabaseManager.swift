@@ -57,6 +57,19 @@ final class SupabaseManager {
         }
     }
 
+    /// Permanently delete the current user's account and all their server-side
+    /// data (App Store Review Guideline 5.1.1(v)). Invokes the SECURITY DEFINER
+    /// `delete_user` function — deleting `auth.users` requires privileges the
+    /// client doesn't have directly. Signs out locally afterwards since the
+    /// session is now invalid.
+    func deleteAccount() async throws {
+        guard SupabaseConfig.isConfigured, currentUserId != nil else {
+            throw SupabaseError.notSignedIn
+        }
+        try await client.rpc("delete_user").execute()
+        try? await client.auth.signOut()
+    }
+
     var currentUserId: UUID? {
         client.auth.currentUser?.id
     }

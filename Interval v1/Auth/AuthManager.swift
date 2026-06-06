@@ -138,6 +138,30 @@ final class AuthManager {
         Task { await SupabaseManager.shared.signOut() }
     }
 
+    /// Permanently delete the user's account: server-side data + auth record
+    /// first, then all local device state. Throws if the remote delete fails
+    /// so the caller can surface an error and *not* pretend the account is
+    /// gone — local state is only cleared once the server confirms.
+    func deleteAccount(modelContext: ModelContext? = nil) async throws {
+        try await SupabaseManager.shared.deleteAccount()
+
+        // Remote delete succeeded — now wipe local state (mirrors signOut, but
+        // the remote signOut already happened inside deleteAccount()).
+        inFlightAuthorizationId = nil
+        user = nil
+        UserDefaults.standard.removeObject(forKey: userKey)
+        hasSeenOnboarding = false
+
+        if let modelContext {
+            do {
+                try modelContext.delete(model: WorkoutEntity.self)
+                try modelContext.save()
+            } catch {
+                log.error("Failed to wipe local workouts on deleteAccount: \(error.localizedDescription, privacy: .public)")
+            }
+        }
+    }
+
     func skipOnboarding() {
         hasSeenOnboarding = true
     }

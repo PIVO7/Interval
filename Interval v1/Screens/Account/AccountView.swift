@@ -5,9 +5,16 @@ struct AccountView: View {
     @Environment(AudioSettings.self) private var audioSettings
     @Environment(AuthManager.self) private var auth
     @Environment(AppearanceSettings.self) private var appearance
+    @Environment(StoreManager.self) private var pro
     @Environment(\.modelContext) private var modelContext
 
     @State private var showAuthErrorAlert = false
+    @State private var showPaywall = false
+    @State private var restoreInFlight = false
+    @State private var showDeleteConfirm = false
+    @State private var deleteInFlight = false
+    @State private var showDeleteError = false
+    @State private var deleteErrorMessage: String?
 
     var body: some View {
         NavigationStack {
@@ -16,6 +23,7 @@ struct AccountView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         profileCard
+                        proSection
                         signalSection
                         appearanceSection
                         logoutButton
@@ -36,7 +44,80 @@ struct AccountView: View {
             } message: {
                 Text(auth.errorMessage ?? "")
             }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
+            }
         }
+    }
+
+    // MARK: - Pro
+    private var proSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            sectionHeader("Interval Pro")
+            VStack(spacing: 0) {
+                HStack(spacing: 14) {
+                    ZStack {
+                        Circle().fill(AppTheme.coral.opacity(0.18)).frame(width: 36, height: 36)
+                        Image(systemName: pro.isUnlocked ? "checkmark.seal.fill" : "heart.fill")
+                            .foregroundStyle(AppTheme.coral)
+                            .font(.callout)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(pro.isUnlocked ? "Interval Pro actief" : "Bewaar je favorieten")
+                            .font(.system(.body, design: .rounded, weight: .semibold))
+                            .foregroundStyle(AppTheme.primaryText)
+                        Text(pro.isUnlocked
+                             ? "Bedankt! Je kunt onbeperkt favorieten opslaan."
+                             : "Eenmalig ontgrendelen om workouts te bewaren.")
+                            .font(.system(.caption, design: .rounded))
+                            .foregroundStyle(AppTheme.secondaryText)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer()
+                    if !pro.isUnlocked {
+                        Button("Ontgrendel") { showPaywall = true }
+                            .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                            .foregroundStyle(AppTheme.coral)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+
+                if !pro.isUnlocked {
+                    Divider().padding(.leading, 60)
+                    Button {
+                        Task { await restorePurchases() }
+                    } label: {
+                        HStack(spacing: 14) {
+                            ZStack {
+                                Circle().fill(AppTheme.sage.opacity(0.18)).frame(width: 30, height: 30)
+                                Image(systemName: "arrow.clockwise").foregroundStyle(AppTheme.sage).font(.caption)
+                            }
+                            Text("Herstel aankopen")
+                                .font(.system(.body, design: .rounded))
+                                .foregroundStyle(AppTheme.primaryText)
+                            Spacer()
+                            if restoreInFlight {
+                                ProgressView()
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(restoreInFlight)
+                }
+            }
+            .softCard()
+        }
+        .animation(.appSmooth, value: pro.isUnlocked)
+    }
+
+    private func restorePurchases() async {
+        restoreInFlight = true
+        await pro.restore()
+        restoreInFlight = false
     }
 
     // MARK: - Profile
@@ -80,7 +161,7 @@ struct AccountView: View {
                         Text("Sync je trainingen")
                             .font(.system(.title3, design: .rounded, weight: .bold))
                             .foregroundStyle(AppTheme.primaryText)
-                        Text("Log in met Apple om je favorieten te bewaren op al je apparaten.")
+                        Text("Inloggen is optioneel. De app werkt volledig zonder account — log alleen in met Apple als je je favorieten tussen apparaten wilt synchroniseren.")
                             .font(.system(.footnote, design: .rounded))
                             .foregroundStyle(AppTheme.secondaryText)
                             .fixedSize(horizontal: false, vertical: true)
@@ -198,22 +279,65 @@ struct AccountView: View {
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
-    // MARK: - Logout
+    // MARK: - Logout & account deletion
     private var logoutButton: some View {
         Group {
             if auth.isSignedIn {
-                Button(role: .destructive) {
-                    auth.signOut(modelContext: modelContext)
-                } label: {
-                    Text("Log out")
-                        .font(.system(.headline, design: .rounded, weight: .semibold))
+                VStack(spacing: 14) {
+                    Button(role: .destructive) {
+                        auth.signOut(modelContext: modelContext)
+                    } label: {
+                        Text("Log out")
+                            .font(.system(.headline, design: .rounded, weight: .semibold))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(Capsule().stroke(AppTheme.error.opacity(0.4), lineWidth: 1))
+                            .foregroundStyle(AppTheme.error)
+                    }
+
+                    // Required by App Store Review Guideline 5.1.1(v): a user
+                    // who can create an account must be able to delete it
+                    // in-app. Double-confirmed because it's irreversible.
+                    Button {
+                        showDeleteConfirm = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            if deleteInFlight { ProgressView().tint(AppTheme.error) }
+                            Text("Account verwijderen")
+                                .font(.system(.subheadline, design: .rounded, weight: .medium))
+                        }
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
-                        .background(Capsule().stroke(AppTheme.error.opacity(0.4), lineWidth: 1))
+                        .padding(.vertical, 8)
                         .foregroundStyle(AppTheme.error)
+                    }
+                    .disabled(deleteInFlight)
                 }
                 .padding(.top, 4)
+                .alert("Account verwijderen?", isPresented: $showDeleteConfirm) {
+                    Button("Verwijder", role: .destructive) {
+                        Task { await deleteAccount() }
+                    }
+                    Button("Annuleer", role: .cancel) {}
+                } message: {
+                    Text("Dit verwijdert je account en al je gesynchroniseerde favorieten definitief. Dit kan niet ongedaan worden gemaakt.")
+                }
+                .alert("Verwijderen mislukt", isPresented: $showDeleteError) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text(deleteErrorMessage ?? "Probeer het later opnieuw.")
+                }
             }
+        }
+    }
+
+    private func deleteAccount() async {
+        deleteInFlight = true
+        defer { deleteInFlight = false }
+        do {
+            try await auth.deleteAccount(modelContext: modelContext)
+        } catch {
+            deleteErrorMessage = error.localizedDescription
+            showDeleteError = true
         }
     }
 
@@ -249,4 +373,5 @@ struct AccountView: View {
         .environment(AudioSettings())
         .environment(AuthManager())
         .environment(AppearanceSettings())
+        .environment(StoreManager())
 }
