@@ -22,6 +22,7 @@ struct ActiveTrainingView: View {
     var body: some View {
         ZStack {
             phaseBackground.ignoresSafeArea()
+            legibilityScrim
             switch engine.phase {
             case .countdown(let n):
                 CountdownView(count: n)
@@ -98,6 +99,26 @@ struct ActiveTrainingView: View {
                 showSyncErrorAlert = true
             }
         }
+    }
+
+    /// Darkens the top and bottom edges — where the smaller white text lives
+    /// (round indicator, phase label, control captions) — so legibility clears
+    /// WCAG AA regardless of the chosen colour theme, while leaving the vibrant
+    /// mid-screen (timer ring / countdown) untouched. Purely decorative, so it
+    /// never intercepts touches.
+    private var legibilityScrim: some View {
+        LinearGradient(
+            stops: [
+                .init(color: .black.opacity(0.30), location: 0.0),
+                .init(color: .clear, location: 0.30),
+                .init(color: .clear, location: 0.70),
+                .init(color: .black.opacity(0.30), location: 1.0),
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        .ignoresSafeArea()
+        .allowsHitTesting(false)
     }
 
     // MARK: - Active layout
