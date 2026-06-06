@@ -13,11 +13,24 @@ final class AppearanceSettings {
         didSet { UserDefaults.standard.set(mode.rawValue, forKey: Self.storageKey) }
     }
 
+    /// Selected work/rest colour theme for the active workout screen (a Pro
+    /// feature). Stored by id so unknown values gracefully fall back to the
+    /// default. Defaults to `coral` — the app's original look.
+    var phaseThemeID: String {
+        didSet { UserDefaults.standard.set(phaseThemeID, forKey: Self.themeKey) }
+    }
+
     private static let storageKey = "appearanceMode"
+    private static let themeKey = "phaseThemeID"
 
     init() {
         let raw = UserDefaults.standard.string(forKey: Self.storageKey)
             ?? AppearanceMode.system.rawValue
         self.mode = AppearanceMode(rawValue: raw) ?? .system
+        self.phaseThemeID = UserDefaults.standard.string(forKey: Self.themeKey)
+            ?? PhaseTheme.default.id
     }
+
+    /// Resolved theme for the current selection.
+    var phaseTheme: PhaseTheme { PhaseTheme.theme(id: phaseThemeID) }
 }

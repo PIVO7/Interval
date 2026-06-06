@@ -49,6 +49,7 @@
 		A07905595BB0D233B12869E8 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA0056F71F6F39178E7598B /* AuthManager.swift */; };
 		A3B457F9D874C1992D1FFAB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 085C6AF7C7A136B0B66D856B /* Assets.xcassets */; };
 		A4DD6716BB8588A3EC0FFAD2 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E07EF02E4D97B31FEEC6EEA /* Workout.swift */; };
+		A4E5B48D71AC34DF1A14DFFE /* PhaseTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7028643DFFCCD0D92CF883D8 /* PhaseTheme.swift */; };
 		AA4AC20FDF5D3D2948775B2E /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6023D19BCADE63E53359C0A0 /* PaywallView.swift */; };
 		ABACFBA651CF8E11DD06C335 /* ActiveTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA4FA00A621D7D0E5FE2ED /* ActiveTrainingView.swift */; };
 		AD3AD2AA7D37FFBDAD532471 /* WorkoutEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8745C9D53DFC9BC29EEFD814 /* WorkoutEntityTests.swift */; };
@@ -114,6 +115,7 @@
 		66A6CDA41091D54124338210 /* schema.sql */ = {isa = PBXFileReference; path = schema.sql; sourceTree = "<group>"; };
 		676BD8E018B4ABA82C1A4B33 /* WorkoutCue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCue.swift; sourceTree = "<group>"; };
 		6F6F3597ABBC67B9F9419D29 /* cue_halfway.m4a */ = {isa = PBXFileReference; path = cue_halfway.m4a; sourceTree = "<group>"; };
+		7028643DFFCCD0D92CF883D8 /* PhaseTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseTheme.swift; sourceTree = "<group>"; };
 		704F09BF332567EC9ADA8289 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		72031F1E7D3A722E75F130B3 /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
 		743D6B0A7D3ADB86B2ADD246 /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				F1FDA818CC047AFFBEA47C3A /* AppearanceMode.swift */,
 				45835DA23FF5CFCA60F29707 /* AppearanceSettings.swift */,
 				D4419A45F035E74D556B60F9 /* AppTheme.swift */,
+				7028643DFFCCD0D92CF883D8 /* PhaseTheme.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 				32EA3E53388108D21F4EDE1E /* IntervalsListView.swift in Sources */,
 				429F0DB3FEA29EE41325583B /* OnboardingView.swift in Sources */,
 				AA4AC20FDF5D3D2948775B2E /* PaywallView.swift in Sources */,
+				A4E5B48D71AC34DF1A14DFFE /* PhaseTheme.swift in Sources */,
 				0AE515443A6E22ED5CD1752E /* RootTabView.swift in Sources */,
 				DA9FD87FB8F37F31B3A77E64 /* SaveFavoriteSheet.swift in Sources */,
 				7DEA50CD53D96C4021E10405 /* StoreManager.swift in Sources */,

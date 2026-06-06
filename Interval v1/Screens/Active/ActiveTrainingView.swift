@@ -6,6 +6,7 @@ struct ActiveTrainingView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(AppearanceSettings.self) private var appearance
 
     @State private var showStopAlert = false
     @State private var showSaveSheet = false
@@ -297,23 +298,17 @@ struct ActiveTrainingView: View {
 
     // MARK: - Helpers
     private var phaseBackground: LinearGradient {
+        let theme = appearance.phaseTheme
+        let colors: [Color]
         switch engine.phase {
-        case .countdown, .work:
-            return LinearGradient(
-                colors: [AppTheme.coral, AppTheme.coralDeep],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-        case .rest:
-            return LinearGradient(
-                colors: [AppTheme.sage, AppTheme.sageDeep],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-        case .finished:
-            return LinearGradient(
-                colors: [AppTheme.sageDeep, AppTheme.forestDeep],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
+        case .countdown, .work: colors = theme.workColors
+        case .rest:             colors = theme.restColors
+        case .finished:         colors = theme.finishedColors
         }
+        return LinearGradient(
+            colors: colors,
+            startPoint: .topLeading, endPoint: .bottomTrailing
+        )
     }
 
     private var phaseKey: String {

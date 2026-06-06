@@ -26,6 +26,7 @@ struct AccountView: View {
                         proSection
                         signalSection
                         appearanceSection
+                        themeSection
                         logoutButton
                     }
                     .padding(20)
@@ -246,6 +247,92 @@ struct AccountView: View {
             .softCard()
         }
         .animation(.appSmooth, value: appearance.mode)
+    }
+
+    // MARK: - Workout colours (Pro)
+    private var themeSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                sectionHeader("Trainingskleuren")
+                if !pro.isUnlocked { proBadge }
+                Spacer()
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 14) {
+                    ForEach(PhaseTheme.all) { theme in
+                        themeChip(theme)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
+            }
+            .softCard()
+        }
+        .animation(.appSmooth, value: appearance.phaseThemeID)
+    }
+
+    private var proBadge: some View {
+        Text("Pro")
+            .font(.system(.caption2, design: .rounded, weight: .bold))
+            .padding(.horizontal, 8)
+            .padding(.vertical, 2)
+            .background(Capsule().fill(AppTheme.coral.opacity(0.18)))
+            .foregroundStyle(AppTheme.coral)
+    }
+
+    private func themeChip(_ theme: PhaseTheme) -> some View {
+        let selected = appearance.phaseThemeID == theme.id
+        return Button {
+            selectTheme(theme)
+        } label: {
+            VStack(spacing: 8) {
+                ZStack {
+                    // Work / rest gradients split down the middle.
+                    HStack(spacing: 0) {
+                        Rectangle().fill(theme.workSwatch)
+                        Rectangle().fill(theme.restSwatch)
+                    }
+                    .frame(width: 76, height: 76)
+                    .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .stroke(selected ? AppTheme.primaryText : Color.black.opacity(0.06),
+                                lineWidth: selected ? 3 : 1)
+                        .frame(width: 76, height: 76)
+
+                    if selected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(.white)
+                            .shadow(color: .black.opacity(0.25), radius: 2)
+                    } else if !pro.isUnlocked {
+                        Image(systemName: "lock.fill")
+                            .font(.caption)
+                            .foregroundStyle(.white)
+                            .padding(5)
+                            .background(Circle().fill(.black.opacity(0.28)))
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                            .padding(6)
+                    }
+                }
+                Text(theme.name)
+                    .font(.system(.caption, design: .rounded, weight: selected ? .semibold : .regular))
+                    .foregroundStyle(selected ? AppTheme.primaryText : AppTheme.secondaryText)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text(theme.name))
+        .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+        .accessibilityHint(pro.isUnlocked ? Text("") : Text("Pro-functie"))
+    }
+
+    /// Pro gate: free users tapping any theme get the paywall; Pro users select.
+    private func selectTheme(_ theme: PhaseTheme) {
+        if pro.isUnlocked {
+            appearance.phaseThemeID = theme.id
+        } else {
+            showPaywall = true
+        }
     }
 
     private func appearanceRow(mode: AppearanceMode, selected: Bool) -> some View {

@@ -6,6 +6,7 @@ struct HomeView: View {
     @Environment(AudioSettings.self) private var audioSettings
     @Environment(CueOrchestrator.self) private var cueOrchestrator
     @Environment(StoreManager.self) private var pro
+    @Environment(AppearanceSettings.self) private var appearance
     @Environment(\.modelContext) private var modelContext
 
     @State private var showSaveSheet = false
@@ -69,6 +70,7 @@ struct HomeView: View {
                     .environment(store)
                     .environment(audioSettings)
                     .environment(pro)
+                    .environment(appearance)
             }
             .sensoryFeedback(.success, trigger: savedTrigger)
             // Single-button "OK" alert — SwiftUI provides the default OK
