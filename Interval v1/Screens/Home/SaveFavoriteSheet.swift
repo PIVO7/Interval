@@ -31,6 +31,15 @@ struct SaveFavoriteSheet: View {
                     Spacer()
                     Button {
                         var saved = workout
+                        // A save always creates a NEW favorite. The incoming
+                        // workout may carry the id of an existing favorite
+                        // (started from FavoritesView, or saved earlier from
+                        // Home) — and WorkoutEntity.id is unique, so keeping
+                        // it would silently overwrite that favorite both
+                        // locally and in Supabase. Fresh id + timestamp also
+                        // keeps the createdAt-sorted list honest.
+                        saved.id = UUID()
+                        saved.createdAt = .now
                         // Trim whitespace so " " typed by accident doesn't
                         // produce a blank-looking favorite. Falls back to
                         // the autosuggestion if the user trimmed to empty.

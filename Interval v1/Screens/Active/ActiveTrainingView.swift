@@ -1,19 +1,13 @@
 import SwiftUI
-import SwiftData
 
 struct ActiveTrainingView: View {
     @State private var engine: TimerEngine
-    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
     @Environment(AppearanceSettings.self) private var appearance
 
     @State private var showStopAlert = false
-    @State private var showSaveSheet = false
     @State private var showAdjustSheet = false
-    @State private var savedTrigger = 0
-    @State private var syncErrorMessage: String?
-    @State private var showSyncErrorAlert = false
 
     init(workout: Workout, cues: CueOrchestrating) {
         _engine = State(wrappedValue: TimerEngine(workout: workout, cues: cues))
@@ -60,44 +54,8 @@ struct ActiveTrainingView: View {
         } message: {
             Text("Je huidige voortgang gaat verloren.")
         }
-        .sheet(isPresented: $showSaveSheet) {
-            SaveFavoriteSheet(workout: engine.workout, onSave: saveFavorite)
-                .presentationDetents([.medium])
-        }
         .sheet(isPresented: $showAdjustSheet) {
             AdjustWorkoutSheet(engine: engine)
-        }
-        .sensoryFeedback(.success, trigger: savedTrigger)
-        .alert("Synchroniseren mislukt", isPresented: $showSyncErrorAlert) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(syncErrorMessage ?? "")
-        }
-    }
-
-    // MARK: - Persistence
-    /// Persist the (possibly mid-workout-adjusted) workout as a favorite,
-    /// then sync it to Supabase. Mirrors `FinishedView.saveFavorite` —
-    /// guest mode / unconfigured backends are not surfaced as errors.
-    private func saveFavorite(_ saved: Workout) {
-        modelContext.insert(WorkoutEntity(from: saved))
-        do {
-            try modelContext.save()
-        } catch {
-            syncErrorMessage = error.localizedDescription
-            showSyncErrorAlert = true
-            return
-        }
-        savedTrigger &+= 1
-        Task {
-            do {
-                try await SupabaseManager.shared.upsertWorkout(saved)
-            } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
-                // Guest mode or unconfigured — local save is enough.
-            } catch {
-                syncErrorMessage = error.localizedDescription
-                showSyncErrorAlert = true
-            }
         }
     }
 
@@ -227,8 +185,10 @@ struct ActiveTrainingView: View {
                 .frame(width: ringSize, height: ringSize)
             // Progress — driven by wall clock via TimelineView so the ring
             // stays exactly in sync with the underlying timer (closes fully
-            // at phase end, snaps cleanly to full at phase start).
-            TimelineView(.animation) { context in
+            // at phase end, snaps cleanly to full at phase start). Paused
+            // with the engine: the ring is static then, so per-frame
+            // redraws would only burn battery.
+            TimelineView(.animation(minimumInterval: nil, paused: engine.isPaused)) { context in
                 Circle()
                     .trim(from: 0, to: engine.progress(at: context.date))
                     .stroke(

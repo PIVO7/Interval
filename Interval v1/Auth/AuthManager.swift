@@ -9,7 +9,6 @@ import os
 @Observable
 final class AuthManager {
     var user: AppleUser?
-    var isLoading: Bool = false
     /// Latest auth error message (nil when no error pending). Use
     /// `errorVersion` to detect new errors — `.onChange(of: errorMessage)`
     /// misses an identical message thrown twice in succession.
@@ -44,7 +43,6 @@ final class AuthManager {
 
     // MARK: - Sign in with Apple
     func handleAuthorization(_ result: Result<ASAuthorization, Error>) {
-        isLoading = false
         switch result {
         case .success(let auth):
             guard let cred = auth.credential as? ASAuthorizationAppleIDCredential else { return }

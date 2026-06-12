@@ -381,7 +381,7 @@ struct AccountView: View {
                     Button(role: .destructive) {
                         auth.signOut(modelContext: modelContext)
                     } label: {
-                        Text("Log out")
+                        Text("Log uit")
                             .font(.system(.headline, design: .rounded, weight: .semibold))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 14)
@@ -430,7 +430,11 @@ struct AccountView: View {
         do {
             try await auth.deleteAccount(modelContext: modelContext)
         } catch {
-            deleteErrorMessage = error.localizedDescription
+            // Raw SDK errors are technical English strings — give the user
+            // an actionable Dutch message instead. The most common real
+            // cause is a missing/expired Supabase session (e.g. signed in
+            // with Apple while offline), fixed by signing in again.
+            deleteErrorMessage = String(localized: "Verwijderen is niet gelukt. Controleer je internetverbinding, log zo nodig opnieuw in met Apple en probeer het dan nog eens.")
             showDeleteError = true
         }
     }
@@ -468,4 +472,5 @@ struct AccountView: View {
         .environment(AuthManager())
         .environment(AppearanceSettings())
         .environment(StoreManager())
+        .modelContainer(for: WorkoutEntity.self, inMemory: true)
 }

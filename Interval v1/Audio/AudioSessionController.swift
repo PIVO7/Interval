@@ -16,11 +16,14 @@ final class AudioSessionController {
     func activate() {
         do {
             let session = AVAudioSession.sharedInstance()
-            // `.duckOthers` drops background music to ~50 % during
-            // each cue and restores it after, the Apple Fitness
-            // pattern. `.interruptSpokenAudioAndMixWithOthers`
-            // pauses podcasts (where ducking would be confusing
-            // mid-sentence) and mixes with music.
+            // `.duckOthers` lowers background music for as long as this
+            // session is ACTIVE — i.e. for the entire workout, not just
+            // during cues (per-cue activate/deactivate would add latency
+            // and volume flicker). `.interruptSpokenAudioAndMixWithOthers`
+            // pauses podcasts/audiobooks for the session (mid-sentence
+            // ducking would be worse) and mixes with music. Deliberate
+            // trade-off: music plays quieter during training, restored
+            // by `deactivate()` the moment the workout ends.
             try session.setCategory(
                 .playback,
                 mode: .default,

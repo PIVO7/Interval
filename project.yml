@@ -47,10 +47,14 @@ targets:
       path: Interval v1/Info.plist
       properties:
         CFBundleDevelopmentRegion: $(DEVELOPMENT_LANGUAGE)
-        CFBundleDisplayName: $(PRODUCT_NAME)
+        # Home-screen name — NOT the target name ("Interval v1").
+        CFBundleDisplayName: Interval
         CFBundleExecutable: $(EXECUTABLE_NAME)
         CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
-        CFBundleInfoDictionaryVersion: 6.0
+        # Quoted: unquoted 6.0 parses as a YAML float and XcodeGen emits
+        # <real>6</real>, which App Store upload validation rejects — this
+        # key must be the string "6.0".
+        CFBundleInfoDictionaryVersion: "6.0"
         CFBundleName: $(PRODUCT_NAME)
         CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
         CFBundleShortVersionString: $(MARKETING_VERSION)

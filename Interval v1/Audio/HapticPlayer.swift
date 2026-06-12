@@ -39,8 +39,12 @@ final class HapticPlayer: CueChannel {
             let engine = try CHHapticEngine()
             // Recover automatically if the engine is reset by the
             // system (audio session interruption, app backgrounding).
+            // CHHapticEngine invokes this on an internal queue, so hop
+            // back to the main actor before touching isolated state.
             engine.resetHandler = { [weak self] in
-                try? self?.engine?.start()
+                Task { @MainActor in
+                    try? self?.engine?.start()
+                }
             }
             try engine.start()
             self.engine = engine

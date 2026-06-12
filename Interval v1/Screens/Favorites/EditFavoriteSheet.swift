@@ -13,6 +13,7 @@ struct EditFavoriteSheet: View {
     var onSave: () -> Void = {}
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
 
     @State private var name: String
     @State private var workSeconds: Int
@@ -78,6 +79,10 @@ struct EditFavoriteSheet: View {
         entity.workSeconds = workSeconds
         entity.restSeconds = restSeconds
         entity.rounds = rounds
+        // Persist now rather than relying on autosave — onSave() pushes to
+        // Supabase immediately, and remote-newer-than-local after a crash
+        // would be a confusing state.
+        try? modelContext.save()
         onSave()
         dismiss()
     }

@@ -16,11 +16,22 @@
 -- ====================================================================
 
 -- Stop pg_cron from invoking the (about-to-be-dropped) dispatcher.
-SELECT cron.unschedule('live-activity-push-dispatcher')
-    WHERE EXISTS (SELECT 1 FROM cron.job WHERE jobname = 'live-activity-push-dispatcher');
-
-SELECT cron.unschedule('live-activity-push-prune')
-    WHERE EXISTS (SELECT 1 FROM cron.job WHERE jobname = 'live-activity-push-prune');
+-- Wrapped in dynamic SQL guarded by a pg_extension check: bare
+-- cron.unschedule calls fail at parse time on a fresh database where
+-- pg_cron isn't installed (db reset / preview branches), even with a
+-- WHERE EXISTS guard.
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_cron') THEN
+        IF EXISTS (SELECT 1 FROM cron.job WHERE jobname = 'live-activity-push-dispatcher') THEN
+            PERFORM cron.unschedule('live-activity-push-dispatcher');
+        END IF;
+        IF EXISTS (SELECT 1 FROM cron.job WHERE jobname = 'live-activity-push-prune') THEN
+            PERFORM cron.unschedule('live-activity-push-prune');
+        END IF;
+    END IF;
+END
+$$;
 
 -- Drop the SQL helpers.
 DROP FUNCTION IF EXISTS public.dispatch_due_live_activity_pushes();

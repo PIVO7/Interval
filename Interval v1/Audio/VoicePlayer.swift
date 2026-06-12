@@ -90,6 +90,11 @@ final class VoicePlayer: CueChannel {
 
     func emit(_ cue: WorkoutCue) {
         guard let buffer = buffers[bufferKey(for: cue)] else { return }
+        // Self-heal: the engine can be stopped by interruption paths that
+        // never deliver a recoverable `.ended` (hard session takeover, media
+        // services reset). Restarting here means the worst case is one
+        // missed cue, never a silently dead rest-of-workout.
+        if !engine.isRunning { startEngine() }
         // `.interrupts` makes back-to-back cues (e.g. 3→2→1→GO)
         // replace the previous playback instead of queueing — the
         // older one would otherwise tail into the new cue.
@@ -161,6 +166,15 @@ final class VoicePlayer: CueChannel {
         }
         do {
             let file = try AVAudioFile(forReading: url)
+            // Enforce the documented degrade-gracefully contract: a clip
+            // whose format doesn't match the node's fixed connection format
+            // would raise an NSException (hard crash) at scheduleBuffer.
+            // Reject it at load time instead — the cue then no-ops.
+            guard file.processingFormat.sampleRate == Self.voiceFormat.sampleRate,
+                  file.processingFormat.channelCount == Self.voiceFormat.channelCount else {
+                log.error("Rejected \(name, privacy: .public): format \(file.processingFormat, privacy: .public) ≠ 44.1 kHz stereo")
+                return nil
+            }
             guard let buffer = AVAudioPCMBuffer(
                 pcmFormat: file.processingFormat,
                 frameCapacity: AVAudioFrameCount(file.length)

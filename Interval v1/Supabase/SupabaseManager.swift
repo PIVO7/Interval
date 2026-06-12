@@ -64,7 +64,7 @@ final class SupabaseManager {
     /// session is now invalid.
     func deleteAccount() async throws {
         guard SupabaseConfig.isConfigured else {
-            throw SupabaseError.notSignedIn
+            throw SupabaseError.notConfigured
         }
         // Ensure the request carries a valid (refreshed) access token. The
         // delete_user() function relies on auth.uid() from the JWT — with a

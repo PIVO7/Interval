@@ -17,26 +17,21 @@ struct CountdownView: View {
                 Circle()
                     .fill(Color.white.opacity(0.18))
                     .frame(width: 200, height: 200)
-                Group {
-                    if count > 0 {
-                        Text(verbatim: "\(count)")
-                    } else {
-                        Text("GO!")
-                    }
-                }
-                .font(.system(size: countdownSize, weight: .black, design: .rounded))
-                .foregroundStyle(.white)
-                .contentTransition(.numericText(countsDown: true))
-                .animation(.appSmooth, value: count)
+                // No "GO!" state: the engine advances to .work in the same
+                // update that the count would reach 0, so 0 never renders —
+                // the workStart voice cue marks the start instead.
+                Text(verbatim: "\(count)")
+                    .font(.system(size: countdownSize, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+                    .contentTransition(.numericText(countsDown: true))
+                    .animation(.appSmooth, value: count)
             }
-            .scaleEffect(count > 0 ? 1 : 1.1)
-            .animation(.appBounce, value: count)
             // VoiceOver: ensure each tick is announced even though the
             // change is purely visual (numericText transition). Without
             // `updatesFrequently` + a stable label the assistive layer
-            // falls silent during the 3-2-1 countdown.
+            // falls silent during the countdown.
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(count > 0 ? Text("\(count)") : Text("Start"))
+            .accessibilityLabel(Text("\(count)"))
             .accessibilityAddTraits(.updatesFrequently)
 
             Text("Begin...")

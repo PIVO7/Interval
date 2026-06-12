@@ -43,7 +43,7 @@ final class TimerEngine {
     // nonisolated under Swift 6 strict concurrency) call `cancel()` without
     // crossing the actor boundary. `Task.cancel()` itself is thread-safe.
     @ObservationIgnored private nonisolated(unsafe) var tickTask: Task<Void, Never>?
-    @ObservationIgnored private var phaseTotal: Int = 3
+    @ObservationIgnored private var phaseTotal: Int = TimerEngine.countdownSeconds
     @ObservationIgnored private var phaseStartedAt: Date = .now
     @ObservationIgnored private var phaseEndsAt: Date = .now
     @ObservationIgnored private var pausedAt: Date?

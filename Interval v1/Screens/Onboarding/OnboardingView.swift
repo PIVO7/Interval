@@ -3,6 +3,7 @@ import AuthenticationServices
 
 struct OnboardingView: View {
     @Environment(AuthManager.self) private var auth
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var appeared = false
     @State private var showAuthErrorAlert = false
 
@@ -42,16 +43,20 @@ struct OnboardingView: View {
     private var heroSection: some View {
         VStack(spacing: 20) {
             ZStack {
+                // Respect Reduce Motion: skip the scale pops, keep the fade
+                // (same pattern as FinishedView's trophy entrance).
                 Circle()
                     .fill(Color.white.opacity(0.18))
                     .frame(width: 120, height: 120)
-                    .scaleEffect(appeared ? 1 : 0.4)
+                    .scaleEffect(reduceMotion ? 1 : (appeared ? 1 : 0.4))
+                    .opacity(appeared ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.65).delay(0.1), value: appeared)
 
                 Image(systemName: "timer")
                     .font(.system(size: 54, weight: .semibold))
                     .foregroundStyle(.white)
-                    .scaleEffect(appeared ? 1 : 0.3)
+                    .scaleEffect(reduceMotion ? 1 : (appeared ? 1 : 0.3))
+                    .opacity(appeared ? 1 : 0)
                     .animation(.spring(response: 0.55, dampingFraction: 0.6).delay(0.2), value: appeared)
             }
 
