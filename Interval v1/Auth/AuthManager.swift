@@ -1,5 +1,6 @@
 import Foundation
 import AuthenticationServices
+import CryptoKit
 import SwiftUI
 import SwiftData
 import Observation
@@ -33,6 +34,11 @@ final class AuthManager {
     /// second sign-in) between authorization and Supabase resolution can
     /// invalidate the now-stale write-back.
     @ObservationIgnored private var inFlightAuthorizationId: UUID?
+    /// Raw nonce for the in-flight Sign in with Apple request. Its SHA-256
+    /// goes into the Apple request; the raw value goes to Supabase, which
+    /// hashes and compares it against the ID token's nonce claim — binding
+    /// the token to this one sign-in attempt (replay protection).
+    @ObservationIgnored private var currentNonce: String?
 
     init() {
         self.hasSeenOnboarding = UserDefaults.standard.bool(forKey: Self.onboardingKey)
@@ -42,6 +48,30 @@ final class AuthManager {
     var isSignedIn: Bool { user != nil }
 
     // MARK: - Sign in with Apple
+
+    /// Configure the Sign in with Apple request: scopes + a fresh hashed
+    /// nonce. Call from every `SignInWithAppleButton`'s `onRequest`.
+    func configureSignInRequest(_ request: ASAuthorizationAppleIDRequest) {
+        request.requestedScopes = [.fullName, .email]
+        let nonce = Self.randomNonceString()
+        currentNonce = nonce
+        request.nonce = Self.sha256(nonce)
+    }
+
+    private static func randomNonceString(length: Int = 32) -> String {
+        var bytes = [UInt8](repeating: 0, count: length)
+        let status = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+        precondition(status == errSecSuccess, "Unable to generate nonce")
+        let charset = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-._")
+        return String(bytes.map { charset[Int($0) % charset.count] })
+    }
+
+    private static func sha256(_ input: String) -> String {
+        SHA256.hash(data: Data(input.utf8))
+            .map { String(format: "%02x", $0) }
+            .joined()
+    }
+
     func handleAuthorization(_ result: Result<ASAuthorization, Error>) {
         switch result {
         case .success(let auth):
@@ -67,10 +97,13 @@ final class AuthManager {
             let authorizationId = UUID()
             inFlightAuthorizationId = authorizationId
             let signedInUserId = cred.user
+            // Consume the nonce — it's single-use by design.
+            let nonce = currentNonce
+            currentNonce = nil
 
             Task { [weak self] in
                 do {
-                    let supabaseId = try await SupabaseManager.shared.signInWithApple(cred)
+                    let supabaseId = try await SupabaseManager.shared.signInWithApple(cred, nonce: nonce)
                     guard let self else { return }
                     // Reject the write if (a) the user signed out, (b) a
                     // newer authorization superseded this one, or (c) the

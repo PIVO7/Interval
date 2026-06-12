@@ -32,8 +32,13 @@ final class SupabaseManager {
 
     /// Sign in to Supabase using an Apple Sign In credential.
     /// Returns the Supabase user id (uuid) on success.
+    ///
+    /// `nonce` is the RAW nonce whose SHA-256 was set on the Apple request —
+    /// Supabase hashes it and compares against the ID token's nonce claim,
+    /// binding the token to this sign-in attempt (replay protection).
     @discardableResult
-    func signInWithApple(_ credential: ASAuthorizationAppleIDCredential) async throws -> UUID {
+    func signInWithApple(_ credential: ASAuthorizationAppleIDCredential,
+                         nonce: String? = nil) async throws -> UUID {
         guard SupabaseConfig.isConfigured else {
             throw SupabaseError.notConfigured
         }
@@ -43,7 +48,7 @@ final class SupabaseManager {
         }
 
         let session = try await client.auth.signInWithIdToken(
-            credentials: .init(provider: .apple, idToken: idToken)
+            credentials: .init(provider: .apple, idToken: idToken, nonce: nonce)
         )
         return session.user.id
     }

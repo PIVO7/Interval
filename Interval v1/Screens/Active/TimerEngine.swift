@@ -90,6 +90,13 @@ final class TimerEngine {
 
     func skip() {
         advancePhase()
+        // Skipping while paused: the new phase was just anchored at .now,
+        // but the pause started earlier. Without re-anchoring, resume would
+        // shift the schedule by the FULL pause duration (including the time
+        // before the skip), inflating the new phase — pause 60s, skip,
+        // resume → up to 60s extra. Re-anchor the pause at the skip moment
+        // so resume only compensates for time paused after it.
+        if isPaused { pausedAt = .now }
     }
 
     /// Reset the engine for a fresh run of the same workout, called

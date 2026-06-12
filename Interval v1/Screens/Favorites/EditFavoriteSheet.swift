@@ -20,6 +20,7 @@ struct EditFavoriteSheet: View {
     @State private var restSeconds: Int
     @State private var rounds: Int
     @State private var expandedField: IntervalsListView.Field?
+    @State private var showSaveError = false
 
     init(entity: WorkoutEntity, onSave: @escaping () -> Void = {}) {
         self.entity = entity
@@ -67,6 +68,11 @@ struct EditFavoriteSheet: View {
             }
         }
         .presentationDetents([.medium, .large])
+        .alert("Opslaan mislukt", isPresented: $showSaveError) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Je wijzigingen konden niet worden bewaard. Probeer het opnieuw.")
+        }
     }
 
     private var trimmedName: String {
@@ -74,6 +80,10 @@ struct EditFavoriteSheet: View {
     }
 
     private func save() {
+        // Snapshot so a failed persist can roll the entity back — it's
+        // already mutated below, and leaving it half-saved would show
+        // edited values in the list that never reached disk.
+        let original = (entity.name, entity.workSeconds, entity.restSeconds, entity.rounds)
         // Bewaar button is disabled when trimmed is empty so this is safe.
         entity.name = trimmedName
         entity.workSeconds = workSeconds
@@ -81,8 +91,14 @@ struct EditFavoriteSheet: View {
         entity.rounds = rounds
         // Persist now rather than relying on autosave — onSave() pushes to
         // Supabase immediately, and remote-newer-than-local after a crash
-        // would be a confusing state.
-        try? modelContext.save()
+        // would be a confusing state. Only sync once the local save stuck.
+        do {
+            try modelContext.save()
+        } catch {
+            (entity.name, entity.workSeconds, entity.restSeconds, entity.rounds) = original
+            showSaveError = true
+            return
+        }
         onSave()
         dismiss()
     }

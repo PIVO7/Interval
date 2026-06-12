@@ -178,7 +178,7 @@ struct AccountView: View {
                 SignInWithAppleButton(
                     .signIn,
                     onRequest: { request in
-                        request.requestedScopes = [.fullName, .email]
+                        auth.configureSignInRequest(request)
                     },
                     onCompletion: { result in
                         auth.handleAuthorization(result)

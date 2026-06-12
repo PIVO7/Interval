@@ -189,6 +189,24 @@ struct TimerEngineTests {
         #expect(isRest(engine.phase))
     }
 
+    @Test("Pause → skip → resume does not inflate the next phase")
+    func skipWhilePausedReAnchorsPause() async throws {
+        let engine = makeEngine(workSeconds: 30, restSeconds: 15)
+        engine.skip() // countdown -> work
+        engine.togglePause()
+        // Let real time pass while paused — this is the duration that, before
+        // the fix, leaked into the next phase on resume (skip re-anchors the
+        // phase at .now, but resume shifted it by the FULL pause duration).
+        try await Task.sleep(for: .milliseconds(400))
+        engine.skip() // work -> rest, while paused
+        engine.togglePause() // resume immediately after the skip
+
+        // Buggy behaviour: secondsLeft == 16 (15 + ~0.4s rounded up) and
+        // progress overshoots 1.0. Correct: the rest phase is exactly 15s.
+        #expect(engine.secondsLeft <= 15)
+        #expect(engine.progress(at: .now) <= 1.0)
+    }
+
     // MARK: - Stop
 
     @Test("Stop preserves current phase but cancels the timer")

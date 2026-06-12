@@ -53,6 +53,10 @@ final class CueOrchestrator: CueOrchestrating {
     }
 
     func workoutDidEnd() {
+        // Idempotent: stop() reaches here via multiple routes (Stop button +
+        // onDisappear). The second call would redundantly re-stop channels
+        // and deactivate an already-inactive session.
+        guard isActive else { return }
         isActive = false
         if let interruptionObserver {
             NotificationCenter.default.removeObserver(interruptionObserver)
