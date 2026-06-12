@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "nl",
   "strings" : {
-    "" : {
-
-    },
     "%@ werk · %@ rust · %lld ronden" : {
       "comment" : "Workout summary line (work duration, rest duration, rounds)",
       "localizations" : {
@@ -14,6 +11,9 @@
           }
         }
       }
+    },
+    "%@, Pro-functie, vergrendeld" : {
+
     },
     "%lld" : {
 
@@ -530,6 +530,9 @@
     "Ontgrendel Interval Pro" : {
 
     },
+    "Ontgrendel met Interval Pro" : {
+
+    },
     "Ontgrendel voor %@" : {
 
     },
@@ -584,9 +587,6 @@
 
     },
     "Pro" : {
-
-    },
-    "Pro-functie" : {
 
     },
     "Regen" : {
@@ -680,6 +680,9 @@
           }
         }
       }
+    },
+    "Selecteer kleurenthema" : {
+
     },
     "Signaaltonen" : {
       "localizations" : {

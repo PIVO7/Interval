@@ -1,17 +1,6 @@
 import StoreKit
 import os
 
-/// Owns the app's single non-consumable "Pro unlock" purchase via StoreKit 2.
-///
-/// The app is free to build and run any workout; saving/reusing named
-/// favorites is the premium feature gated behind `isUnlocked`. This mirrors
-/// the proven Seconds model: the user experiences the full app, and the
-/// paywall only appears at the high-intent moment of saving.
-///
-/// StoreKit 2 gives us transaction verification for free (`VerificationResult`),
-/// a live `Transaction.updates` stream for purchases made elsewhere (e.g.
-/// Ask-to-Buy approvals, another device), and `Transaction.currentEntitlements`
-/// as the authoritative source of truth at launch.
 /// Outcome of a purchase attempt, so the paywall can react precisely —
 /// a user cancel must not look like a failure.
 enum PurchaseOutcome {
@@ -21,14 +10,36 @@ enum PurchaseOutcome {
     case failed
 }
 
+/// Owns the app's single non-consumable "Pro unlock" purchase via StoreKit 2.
+///
+/// **The app currently ships fully free:** `freeForEveryone` is `true`, so
+/// `isUnlocked` is always `true`, the paywall is never shown, and every former
+/// "Pro" feature (saved favorites, colour themes) is available to everyone.
+/// The StoreKit machinery below stays fully intact and dormant — flip
+/// `freeForEveryone` to `false` (and re-show the Pro UI in AccountView) to
+/// start charging again, e.g. in a future paid version.
+///
+/// StoreKit 2 gives us transaction verification for free (`VerificationResult`),
+/// a live `Transaction.updates` stream for purchases made elsewhere (e.g.
+/// Ask-to-Buy approvals, another device), and `Transaction.currentEntitlements`
+/// as the authoritative source of truth at launch.
 @MainActor
 @Observable
 final class StoreManager {
+    /// Master switch. While `true` the whole app is free and the paywall is
+    /// suppressed — the single place to flip to monetize again.
+    static let freeForEveryone = true
+
     /// Must match the product ID in App Store Connect and `ProUnlock.storekit`.
     static let unlockProductID = "com.superapp.intervalv1.pro_unlock"
 
-    /// True when the user owns the Pro unlock. Drives every paywall gate.
-    private(set) var isUnlocked = false
+    /// Real StoreKit entitlement state. Read ownership through `isUnlocked`,
+    /// which also honours `freeForEveryone`.
+    private(set) var entitlementUnlocked = false
+
+    /// Whether Pro features are unlocked. Always `true` while the app is free;
+    /// otherwise reflects the actual purchase. Drives every gate.
+    var isUnlocked: Bool { Self.freeForEveryone || entitlementUnlocked }
 
     /// The loaded product (nil until `Product.products(for:)` resolves, or if
     /// the store is unreachable). Used for the localized price in the paywall.
@@ -88,7 +99,7 @@ final class StoreManager {
                 unlocked = true
             }
         }
-        isUnlocked = unlocked
+        entitlementUnlocked = unlocked
     }
 
     /// Start the purchase flow. The returned `PurchaseOutcome` lets the paywall
@@ -107,7 +118,7 @@ final class StoreManager {
                 switch verification {
                 case .verified(let transaction):
                     await transaction.finish()
-                    isUnlocked = true
+                    entitlementUnlocked = true
                     return .success
                 case .unverified(let transaction, let error):
                     // Don't unlock on an unverified result, but DO finish it so
@@ -143,7 +154,7 @@ final class StoreManager {
         case .verified(let transaction):
             if transaction.productID == Self.unlockProductID {
                 // nil revocationDate = active; non-nil = refunded / removed.
-                isUnlocked = transaction.revocationDate == nil
+                entitlementUnlocked = transaction.revocationDate == nil
             }
             await transaction.finish()
         case .unverified(let transaction, _):
