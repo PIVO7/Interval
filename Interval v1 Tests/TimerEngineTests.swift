@@ -53,12 +53,12 @@ struct TimerEngineTests {
 
     // MARK: - Initial state
 
-    @Test("Starts in countdown(3) at round 1")
+    @Test("Starts in countdown(5) at round 1")
     func initialState() {
         let engine = makeEngine()
         #expect(isCountdown(engine.phase))
         #expect(engine.currentRound == 1)
-        #expect(engine.secondsLeft == 3)
+        #expect(engine.secondsLeft == TimerEngine.countdownSeconds)
         #expect(engine.isPaused == false)
         #expect(engine.progress(at: .now) > 0.99)
     }
@@ -340,12 +340,14 @@ struct TimerEngineTests {
 
     // MARK: - Cue emission
 
-    @Test("Init prepares the orchestrator + emits initial countdown tick")
-    func initEmitsCountdownThree() {
+    @Test("Init prepares the orchestrator without a premature countdown cue")
+    func initPreparesWithoutCue() {
         let cues = MockCueOrchestrator()
         _ = makeEngine(cues: cues)
         #expect(cues.prepareCalls == 1)
-        #expect(cues.emittedCues == [.countdownTick(secondsLeft: 3)])
+        // The 5s countdown is silent until the tick loop reaches the final
+        // 3 seconds, so nothing is emitted at init.
+        #expect(cues.emittedCues.isEmpty)
     }
 
     @Test("Skip from countdown emits workStart cue")
@@ -457,7 +459,7 @@ struct TimerEngineTests {
 
     // MARK: - Restart
 
-    @Test("Restart from finished resets to countdown(3), round 1")
+    @Test("Restart from finished resets to countdown, round 1")
     func restartResetsToCountdown() {
         let cues = MockCueOrchestrator()
         let engine = makeEngine(restSeconds: 0, rounds: 1, cues: cues)
@@ -468,9 +470,8 @@ struct TimerEngineTests {
         engine.restart()
         #expect(isCountdown(engine.phase))
         #expect(engine.currentRound == 1)
+        #expect(engine.secondsLeft == TimerEngine.countdownSeconds)
         #expect(engine.isPaused == false)
-        // Restart emits a fresh countdown(3) cue, same as initial start
-        #expect(cues.emittedCues.last == .countdownTick(secondsLeft: 3))
     }
 
     @Test("Restart mid-workout also resets state")

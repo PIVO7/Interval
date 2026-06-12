@@ -12,7 +12,7 @@ enum TrainingPhase {
 @Observable
 final class TimerEngine {
     // MARK: - Published state
-    var phase: TrainingPhase = .countdown(3)
+    var phase: TrainingPhase = .countdown(TimerEngine.countdownSeconds)
     var secondsLeft: Int = 0
     var currentRound: Int = 1
     var isPaused: Bool = false
@@ -25,6 +25,11 @@ final class TimerEngine {
     // from the next phase transition onward.
     var workout: Workout
     private let cues: CueOrchestrating
+
+    /// Length of the "get ready" countdown before the first work block.
+    /// Voice clips only exist for 3/2/1, so any value ≥3 counts down silently
+    /// until the final three seconds, where the tick loop speaks 3-2-1.
+    static let countdownSeconds = 5
 
     // MARK: - Adjustment limits
     static let minWorkSeconds = 5
@@ -219,17 +224,17 @@ final class TimerEngine {
     }
 
     private func startCountdown() {
-        phase = .countdown(3)
-        phaseTotal = 3
+        let total = Self.countdownSeconds
+        phase = .countdown(total)
+        phaseTotal = total
         phaseStartedAt = .now
-        phaseEndsAt = phaseStartedAt.addingTimeInterval(3)
-        secondsLeft = 3
-        lastEmittedSecond = 3
+        phaseEndsAt = phaseStartedAt.addingTimeInterval(TimeInterval(total))
+        secondsLeft = total
+        lastEmittedSecond = total
         scheduleTimer()
-        // "Three" — fired explicitly because secondsLeft starts at 3 and
-        // the tick loop only emits on boundary crossings (it never sees a
-        // 4→3 transition for the countdown phase).
-        cues.emit(.countdownTick(secondsLeft: 3))
+        // No explicit start cue: the countdown is silent until the tick loop
+        // crosses into the final three seconds, where it speaks 3-2-1 (there
+        // are no voice clips for 5/4). See tick().
     }
 
     private func scheduleTimer() {
