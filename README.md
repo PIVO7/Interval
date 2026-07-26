@@ -3,6 +3,9 @@
 Simpele, betrouwbare interval-timer voor iOS (work/rest/rounds) met stem-cues,
 haptics, favorieten en optionele sync via Sign in with Apple + Supabase.
 
+> **Nieuw:** er staat een apart Yahtzee SwiftUI-project in [`Yahtzee/`](Yahtzee/)
+> (zie [`Yahtzee/README.md`](Yahtzee/README.md) en [`Yahtzee/PLAN.md`](Yahtzee/PLAN.md)).
+
 ## Project opzetten (verse clone)
 
 1. **Vereisten:** Xcode 16+, [XcodeGen](https://github.com/yonaskolb/XcodeGen)

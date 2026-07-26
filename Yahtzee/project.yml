@@ -1,0 +1,65 @@
+name: Yahtzee
+options:
+  bundleIdPrefix: com.superapp
+  developmentLanguage: nl
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: 5.0
+    MARKETING_VERSION: 1.0
+    CURRENT_PROJECT_VERSION: 1
+    SUPPORTED_PLATFORMS: iphoneos iphonesimulator
+    TARGETED_DEVICE_FAMILY: '1,2'
+    SUPPORTS_MACCATALYST: NO
+    ALWAYS_SEARCH_USER_PATHS: NO
+    ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    SWIFT_EMIT_LOC_STRINGS: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+
+targets:
+  Yahtzee:
+    type: application
+    platform: iOS
+    deploymentTarget: '17.0'
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.superapp.yahtzee
+        PRODUCT_NAME: Yahtzee
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Yahtzee
+        INFOPLIST_KEY_LSRequiresIPhoneOS: YES
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: 'UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight'
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+    sources:
+      - path: Yahtzee
+
+  Yahtzee Tests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: '17.0'
+    sources:
+      - path: Yahtzee Tests
+    dependencies:
+      - target: Yahtzee
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.superapp.yahtzee.tests
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  Yahtzee:
+    build:
+      targets:
+        Yahtzee: all
+        Yahtzee Tests: [test]
+    test:
+      targets:
+        - Yahtzee Tests
+    run:
+      config: Debug
+    archive:
+      config: Release
