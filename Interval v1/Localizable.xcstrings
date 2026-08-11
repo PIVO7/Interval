@@ -1,31 +1,108 @@
 {
   "sourceLanguage" : "nl",
   "strings" : {
-    "%@ werk · %@ rust · %lld ronden" : {
+    "%@ inspanning · %@ rust · %lld ronden" : {
       "comment" : "Workout summary line (work duration, rest duration, rounds)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ work · %@ rest · %lld rounds"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ effort · %@ repos · %lld rounds"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ werk · %@ rust · %lld ronden"
+            "value" : "%@ inspanning · %@ rust · %lld ronden"
           }
         }
       }
     },
     "%@, Pro-functie, vergrendeld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, Pro feature, locked"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, fonctionnalité Pro, verrouillée"
+          }
+        }
+      }
     },
     "%lld" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "Aankoop in behandeling" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchase pending"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achat en attente"
+          }
+        }
+      }
     },
     "Aankoop niet gelukt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purchase failed"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec de l'achat"
+          }
+        }
+      }
     },
     "Aanpassen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjust"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajuster"
+          }
+        }
+      }
     },
     "Aantal ronden" : {
       "comment" : "Subtitle for the rounds card",
@@ -42,6 +119,18 @@
     "Account" : {
       "comment" : "Account tab navigation title",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compte"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51,10 +140,36 @@
       }
     },
     "Account verwijderen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete account"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer le compte"
+          }
+        }
+      }
     },
     "Account verwijderen?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete account?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer le compte ?"
+          }
+        }
+      }
     },
     "Achtergrondgeluid" : {
       "comment" : "Section header in Account settings",
@@ -69,13 +184,54 @@
       }
     },
     "Altijd donker" : {
-      "comment" : "Subtitle for dark appearance mode"
+      "comment" : "Subtitle for dark appearance mode",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always dark"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toujours sombre"
+          }
+        }
+      }
     },
     "Altijd herbruikbaar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always reusable"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toujours réutilisable"
+          }
+        }
+      }
     },
     "Altijd licht" : {
-      "comment" : "Subtitle for light appearance mode"
+      "comment" : "Subtitle for light appearance mode",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always light"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toujours clair"
+          }
+        }
+      }
     },
     "Ambient geluiden" : {
       "comment" : "Onboarding feature title",
@@ -91,6 +247,18 @@
     },
     "Annuleer" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -112,10 +280,35 @@
       }
     },
     "Bedankt! Je kunt onbeperkt favorieten opslaan." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you! You can now save unlimited favorites."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Merci ! Vous pouvez désormais enregistrer un nombre illimité de favoris."
+          }
+        }
+      }
     },
     "Begin..." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get ready..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Préparez-vous..."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -136,16 +329,68 @@
       }
     },
     "Bewaar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer"
+          }
+        }
+      }
     },
     "Bewaar al je workouts met een eigen naam." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save all your workouts with a custom name."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrez tous vos entraînements avec un nom personnalisé."
+          }
+        }
+      }
     },
     "Bewaar je favorieten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save your favorites"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrez vos favoris"
+          }
+        }
+      }
     },
     "Bewerk %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier %@"
+          }
+        }
+      }
     },
     "Binnenkort" : {
       "extractionState" : "stale",
@@ -181,13 +426,52 @@
       }
     },
     "Dit verwijdert je account en al je gesynchroniseerde favorieten definitief. Dit kan niet ongedaan worden gemaakt." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This permanently deletes your account and all your synced favorites. This cannot be undone."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette action supprime définitivement votre compte et tous vos favoris synchronisés. Elle est irréversible."
+          }
+        }
+      }
     },
     "Donker" : {
-      "comment" : "Appearance mode: force dark"
+      "comment" : "Appearance mode: force dark",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sombre"
+          }
+        }
+      }
     },
     "Doorgaan" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuer"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -197,23 +481,100 @@
       }
     },
     "Eenmalig kopen. Geen abonnement. Voor altijd van jou." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buy once. No subscription. Yours forever."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un seul achat. Sans abonnement. À vous pour toujours."
+          }
+        }
+      }
     },
     "Eenmalig ontgrendelen om workouts te bewaren." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock once to save workouts."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déverrouillez une fois pour enregistrer vos entraînements."
+          }
+        }
+      }
     },
     "Eenmalige aankoop · geen abonnement" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One-time purchase · no subscription"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achat unique · sans abonnement"
+          }
+        }
+      }
     },
     "Er is niets in rekening gebracht. Probeer het later opnieuw." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have not been charged. Please try again later."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun montant n'a été débité. Veuillez réessayer plus tard."
+          }
+        }
+      }
     },
     "Favoriet bewerken" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit favorite"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier le favori"
+          }
+        }
+      }
     },
     "Favoriet opslaan" : {
       "comment" : "Save favorite sheet navigation title",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save favorite"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer le favori"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -225,10 +586,34 @@
     "Favorieten" : {
       "comment" : "Favorites tab title",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favorites"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favoris"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Favorieten"
+          }
+        }
+      }
+    },
+    "GO!" : {
+      "comment" : "Countdown go indicator",
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GO!"
           }
         }
       }
@@ -244,23 +629,37 @@
         }
       }
     },
-    "GO!" : {
-      "comment" : "Countdown go indicator",
+    "Goed gedaan" : {
       "localizations" : {
-        "nl" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GO!"
+            "value" : "Well done"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bien joué"
           }
         }
       }
     },
-    "Goed gedaan" : {
-
-    },
     "Goed gedaan! 🎉" : {
       "comment" : "Workout finished celebration",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Well done! 🎉"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bien joué ! 🎉"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -270,10 +669,35 @@
       }
     },
     "Halverwege" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Halfway"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mi-parcours"
+          }
+        }
+      }
     },
     "Haptic feedback" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haptic feedback"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retour haptique"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -283,20 +707,84 @@
       }
     },
     "Herhaal" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeat"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommencer"
+          }
+        }
+      }
     },
     "Herstel" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurer"
+          }
+        }
+      }
     },
     "Herstel aankopen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore purchases"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurer les achats"
+          }
+        }
+      }
     },
     "Hervat" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reprendre"
+          }
+        }
+      }
     },
     "Hervatten" : {
       "comment" : "Resume training accessibility label",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resume"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reprendre"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -307,6 +795,18 @@
     },
     "Ingelogd met Apple" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signed in with Apple"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connecté avec Apple"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -316,14 +816,69 @@
       }
     },
     "Inloggen is optioneel. De app werkt volledig zonder account — log alleen in met Apple als je je favorieten tussen apparaten wilt synchroniseren." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signing in is optional. The app works fully without an account — only sign in with Apple if you want to sync your favorites across devices."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La connexion est facultative. L'app fonctionne entièrement sans compte — connectez-vous avec Apple uniquement si vous souhaitez synchroniser vos favoris entre vos appareils."
+          }
+        }
+      }
     },
     "Inloggen mislukt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign-in failed"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec de la connexion"
+          }
+        }
+      }
+    },
+    "Inspanning" : {
+      "comment" : "WorkoutKit step display name for work intervals",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Work"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effort"
+          }
+        }
+      }
     },
     "Interval" : {
       "comment" : "App name — typically not translated",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -333,14 +888,52 @@
       }
     },
     "Interval Pro" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval Pro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval Pro"
+          }
+        }
+      }
     },
     "Interval Pro actief" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval Pro active"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval Pro actif"
+          }
+        }
+      }
     },
     "Intervaltimer voor coaches\nen kinesitherapeuten" : {
       "comment" : "Onboarding tagline",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval timer for coaches\nand physical therapists"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minuteur d'intervalles pour coachs\net kinésithérapeutes"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -350,14 +943,52 @@
       }
     },
     "Je aankoop wacht op goedkeuring. Zodra die rond is, wordt Interval Pro automatisch ontgrendeld." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your purchase is awaiting approval. Once it clears, Interval Pro unlocks automatically."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre achat est en attente d'approbation. Dès qu'il sera validé, Interval Pro se déverrouillera automatiquement."
+          }
+        }
+      }
     },
     "Je favorieten staan op al je apparaten." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your favorites are on all your devices."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos favoris sont disponibles sur tous vos appareils."
+          }
+        }
+      }
     },
     "Je huidige voortgang gaat verloren." : {
       "comment" : "Stop training alert message",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your current progress will be lost."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre progression actuelle sera perdue."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -366,12 +997,53 @@
         }
       }
     },
+    "Je wijzigingen konden niet worden bewaard. Probeer het opnieuw." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your changes could not be saved. Please try again."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos modifications n'ont pas pu être enregistrées. Veuillez réessayer."
+          }
+        }
+      }
+    },
     "Klaar" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
     },
     "Klaar voor de start?" : {
       "comment" : "Pre-workout countdown header",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready to go?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prêt à commencer ?"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -383,6 +1055,18 @@
     "Klaar voor je sessie" : {
       "comment" : "Home screen header",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready for your session"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prêt pour votre séance"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -392,10 +1076,37 @@
       }
     },
     "Laatste ronde" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last round"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dernier round"
+          }
+        }
+      }
     },
     "Licht" : {
-      "comment" : "Appearance mode: force light"
+      "comment" : "Appearance mode: force light",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clair"
+          }
+        }
+      }
     },
     "Lo-fi beats" : {
       "extractionState" : "stale",
@@ -409,11 +1120,28 @@
       }
     },
     "Log out" : {
+      "extractionState" : "stale",
       "localizations" : {
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Log out"
+          }
+        }
+      }
+    },
+    "Log uit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log out"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se déconnecter"
           }
         }
       }
@@ -429,20 +1157,21 @@
         }
       }
     },
-    "min" : {
-      "comment" : "Minutes wheel picker label",
-      "localizations" : {
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "min"
-          }
-        }
-      }
-    },
     "Naam" : {
       "comment" : "Name field label in save favorite sheet",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -465,6 +1194,18 @@
     "Nieuwe training" : {
       "comment" : "Default name for an unsaved workout draft",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New workout"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvel entraînement"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -476,6 +1217,18 @@
     "Nog geen favorieten" : {
       "comment" : "Empty state title",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No favorites yet"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun favori pour l'instant"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -495,6 +1248,22 @@
         }
       }
     },
+    "OK" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
     "Oceaangolven" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -506,11 +1275,21 @@
         }
       }
     },
-    "OK" : {
-
-    },
     "Onbeperkt opslaan" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited saves"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrement illimité"
+          }
+        }
+      }
     },
     "Onboarding overslaan" : {
       "comment" : "Skip onboarding accessibility label",
@@ -525,22 +1304,99 @@
       }
     },
     "Ontgrendel" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déverrouiller"
+          }
+        }
+      }
     },
     "Ontgrendel Interval Pro" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock Interval Pro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déverrouiller Interval Pro"
+          }
+        }
+      }
     },
     "Ontgrendel met Interval Pro" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock with Interval Pro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déverrouiller avec Interval Pro"
+          }
+        }
+      }
     },
     "Ontgrendel voor %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock for %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déverrouiller pour %@"
+          }
+        }
+      }
     },
     "Opgeslagen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistré"
+          }
+        }
+      }
     },
     "Opslaan" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -551,10 +1407,38 @@
     },
     "Opslaan als favoriet" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save as favorite"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer comme favori"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opslaan als favoriet"
+          }
+        }
+      }
+    },
+    "Opslaan mislukt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save failed"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec de l'enregistrement"
           }
         }
       }
@@ -571,10 +1455,35 @@
       }
     },
     "Pauze" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        }
+      }
     },
     "Pauzeren" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre en pause"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -584,10 +1493,59 @@
       }
     },
     "Per ronde" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per round"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par round"
+          }
+        }
+      }
     },
     "Pro" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro"
+          }
+        }
+      }
+    },
+    "REST" : {
+      "comment" : "Active workout phase label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REST"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REPOS"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RUST"
+          }
+        }
+      }
     },
     "Regen" : {
       "extractionState" : "stale",
@@ -615,6 +1573,18 @@
     "Rest" : {
       "comment" : "Rest interval label",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rest"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repos"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -623,20 +1593,21 @@
         }
       }
     },
-    "REST" : {
-      "comment" : "Active workout phase label",
-      "localizations" : {
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "RUST"
-          }
-        }
-      }
-    },
     "Ronde %lld / %lld" : {
       "comment" : "Round indicator during active workout (current / total)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round %lld / %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Round %lld / %lld"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -648,6 +1619,18 @@
     "Ronden" : {
       "comment" : "Stat label on finished screen",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -659,6 +1642,18 @@
     "Rounds" : {
       "comment" : "Rounds card title",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -668,24 +1663,52 @@
       }
     },
     "Rust" : {
-      "comment" : "WorkoutKit step display name for rest intervals"
-    },
-    "sec" : {
-      "comment" : "Seconds wheel picker label",
+      "comment" : "WorkoutKit step display name for rest intervals",
       "localizations" : {
-        "nl" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sec"
+            "value" : "Rest"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repos"
           }
         }
       }
     },
     "Selecteer kleurenthema" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select color theme"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisir le thème de couleurs"
+          }
+        }
+      }
     },
     "Signaaltonen" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signal tones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signaux sonores"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -696,6 +1719,18 @@
     },
     "Signalen" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signals"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signaux"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -705,11 +1740,36 @@
       }
     },
     "Skip" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passer"
+          }
+        }
+      }
     },
     "Sla je schema's op voor hergebruik" : {
       "comment" : "Onboarding feature description",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save your routines to reuse them"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrez vos routines pour les réutiliser"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -721,6 +1781,18 @@
     "Sla je veelgebruikte intervallen op vanaf het trainingsscherm." : {
       "comment" : "Favorites empty state subtitle",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save your go-to intervals from the workout screen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrez vos intervalles favoris depuis l'écran d'entraînement."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -730,11 +1802,36 @@
       }
     },
     "Sluit" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fermer"
+          }
+        }
+      }
     },
     "Snel instellen" : {
       "comment" : "Onboarding feature title",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick setup"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réglage rapide"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -743,17 +1840,52 @@
         }
       }
     },
-    "Start" : {
-
-    },
     "Start %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer %@"
+          }
+        }
+      }
     },
     "Start je opgeslagen favorieten zo vaak je wilt." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start your saved favorites as often as you like."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lancez vos favoris enregistrés aussi souvent que vous le souhaitez."
+          }
+        }
+      }
     },
     "Start training" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start workout"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer l'entraînement"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -765,6 +1897,18 @@
     "Stel je intervallen in en begin wanneer je klaar bent." : {
       "comment" : "Home screen subtitle",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set your intervals and start when you're ready."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réglez vos intervalles et commencez quand vous êtes prêt."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -774,11 +1918,36 @@
       }
     },
     "Stop" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter"
+          }
+        }
+      }
     },
     "Stop training" : {
       "comment" : "Stop training accessibility label",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop workout"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter l'entraînement"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -790,6 +1959,18 @@
     "Stoppen" : {
       "comment" : "Stop training alert confirm button",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -799,20 +1980,85 @@
       }
     },
     "Sync je trainingen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sync your workouts"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Synchronisez vos entraînements"
+          }
+        }
+      }
     },
     "Synchroniseren mislukt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sync failed"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec de la synchronisation"
+          }
+        }
+      }
     },
     "Synct overal" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Syncs everywhere"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Synchronisation partout"
+          }
+        }
+      }
     },
     "Systeem" : {
-      "comment" : "Appearance mode: follow the system setting"
+      "comment" : "Appearance mode: follow the system setting",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Système"
+          }
+        }
+      }
     },
     "Tabata %lld/%lld" : {
       "comment" : "Auto-suggested favorite name (work seconds / rest seconds)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tabata %lld/%lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tabata %lld/%lld"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -823,6 +2069,18 @@
     },
     "Terug naar home" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back to home"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retour à l'accueil"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -832,20 +2090,57 @@
       }
     },
     "Three, two, one — GO bij elke ronde" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Three, two, one — GO every round"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trois, deux, un — GO à chaque round"
+          }
+        }
+      }
     },
     "Toon bij start work/rest en laatste 3s" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tone at work/rest start and the last 3s"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Son au début de l'effort/du repos et les 3 dernières secondes"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toon bij start werk/rust en laatste 3s"
+            "value" : "Toon bij start inspanning/rust en laatste 3s"
           }
         }
       }
     },
     "Totaal" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -856,6 +2151,18 @@
     },
     "Totale duur" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total duration"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durée totale"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -867,6 +2174,18 @@
     "Training" : {
       "comment" : "Training tab title",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workout"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entraînement"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -878,6 +2197,18 @@
     "Training stoppen?" : {
       "comment" : "Stop training alert title",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop workout?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter l'entraînement ?"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -889,6 +2220,18 @@
     "Training voltooid" : {
       "comment" : "Finished screen subtitle",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workout complete"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entraînement terminé"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -898,13 +2241,51 @@
       }
     },
     "Trainingen worden gesyncd" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workouts are synced"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entraînements synchronisés"
+          }
+        }
+      }
     },
     "Trainingskleuren" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workout colors"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couleurs d'entraînement"
+          }
+        }
+      }
     },
     "Trillen bij elke fase-overgang" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibrate at every phase change"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibration à chaque changement de phase"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -913,20 +2294,21 @@
         }
       }
     },
-    "v2" : {
-      "comment" : "Coming-soon version marker",
-      "extractionState" : "stale",
+    "Verder zonder account" : {
       "localizations" : {
-        "nl" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "v2"
+            "value" : "Continue without an account"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuer sans compte"
           }
         }
       }
-    },
-    "Verder zonder account" : {
-
     },
     "Verhoog ronden" : {
       "comment" : "Increase rounds accessibility label",
@@ -953,14 +2335,52 @@
       }
     },
     "Verwijder" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer"
+          }
+        }
+      }
     },
     "Verwijder %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer %@"
+          }
+        }
+      }
     },
     "Verwijderen" : {
       "comment" : "Swipe-to-delete action label",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -969,18 +2389,86 @@
         }
       }
     },
+    "Verwijderen is niet gelukt. Controleer je internetverbinding, log zo nodig opnieuw in met Apple en probeer het dan nog eens." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deletion failed. Check your internet connection, sign in with Apple again if needed, and try again."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La suppression a échoué. Vérifiez votre connexion Internet, reconnectez-vous avec Apple si nécessaire, puis réessayez."
+          }
+        }
+      }
+    },
     "Verwijderen mislukt" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deletion failed"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec de la suppression"
+          }
+        }
+      }
     },
     "Voice cues" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voice cues"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annonces vocales"
+          }
+        }
+      }
     },
     "Volg iPad / iPhone" : {
-      "comment" : "Subtitle for system appearance mode"
+      "comment" : "Subtitle for system appearance mode",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Match iPad / iPhone"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivre iPad / iPhone"
+          }
+        }
+      }
     },
     "Volgende fase overslaan" : {
       "comment" : "Skip phase accessibility label",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip to next phase"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passer à la phase suivante"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -989,11 +2477,44 @@
         }
       }
     },
-    "Weergave" : {
-
+    "WORK" : {
+      "comment" : "Active workout phase label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WORK"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EFFORT"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "INSPANNING"
+          }
+        }
+      }
     },
-    "Werk" : {
-      "comment" : "WorkoutKit step display name for work intervals"
+    "Weergave" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apparence"
+          }
+        }
+      }
     },
     "White noise" : {
       "extractionState" : "stale",
@@ -1009,21 +2530,22 @@
     "Work" : {
       "comment" : "Work interval label",
       "localizations" : {
-        "nl" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Werk"
+            "value" : "Work"
           }
-        }
-      }
-    },
-    "WORK" : {
-      "comment" : "Active workout phase label",
-      "localizations" : {
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effort"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WERK"
+            "value" : "Inspanning"
           }
         }
       }
@@ -1031,19 +2553,115 @@
     "Work, rest en ronden in één oogopslag" : {
       "comment" : "Onboarding feature description",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Work, rest and rounds at a glance"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effort, repos et rounds en un coup d'œil"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Werk, rust en ronden in één oogopslag"
+            "value" : "Inspanning, rust en ronden in één oogopslag"
           }
         }
       }
     },
     "Workout aanpassen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjust workout"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajuster l'entraînement"
+          }
+        }
+      }
     },
     "Workout voltooid" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workout complete"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entraînement terminé"
+          }
+        }
+      }
+    },
+    "min" : {
+      "comment" : "Minutes wheel picker label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min"
+          }
+        }
+      }
+    },
+    "sec" : {
+      "comment" : "Seconds wheel picker label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sec"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sec"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sec"
+          }
+        }
+      }
+    },
+    "v2" : {
+      "comment" : "Coming-soon version marker",
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "v2"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

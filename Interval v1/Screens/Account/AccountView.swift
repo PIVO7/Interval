@@ -23,9 +23,8 @@ struct AccountView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         profileCard
-                        // Pro upgrade/restore card is hidden while the app
-                        // ships free (StoreManager.freeForEveryone). Colour
-                        // themes below are simply a free feature now.
+                        // Pro upgrade/restore card; hidden only when the app
+                        // ships free (StoreManager.freeForEveryone).
                         if !StoreManager.freeForEveryone { proSection }
                         signalSection
                         appearanceSection

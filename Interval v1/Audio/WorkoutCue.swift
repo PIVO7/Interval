@@ -49,7 +49,7 @@ extension WorkoutCue {
         case .countdownTick(let n):
             return String(localized: "\(n)")
         case .workStart:
-            return String(localized: "Werk")
+            return String(localized: "Inspanning")
         case .halfway:
             return String(localized: "Halverwege")
         case .lastRound:

@@ -86,7 +86,7 @@
 		085C6AF7C7A136B0B66D856B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1484355F434C44F806731F9B /* IntervalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalApp.swift; sourceTree = "<group>"; };
 		17D72A6C17649F62F36B8AF5 /* WorkoutKitExporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutKitExporterTests.swift; sourceTree = "<group>"; };
-		1A2F7B264343971CF9115085 /* cue_finished.m4a */ = {isa = PBXFileReference; path = cue_finished.m4a; sourceTree = "<group>"; };
+		1A2F7B264343971CF9115085 /* cue_finished.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = cue_finished.m4a; sourceTree = "<group>"; };
 		1A7BD7BFCDDE362BBFA7BFD3 /* Duration+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Duration+Formatting.swift"; sourceTree = "<group>"; };
 		1DB75F0A90029B86D853EC86 /* CueOrchestrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CueOrchestrator.swift; sourceTree = "<group>"; };
 		20627C98A4C8D512E2BCDE3A /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
@@ -106,15 +106,15 @@
 		549A53017D7ECA154DD398BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5AF13BEF710D25B79C1E7AC8 /* HapticPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPlayer.swift; sourceTree = "<group>"; };
 		6023D19BCADE63E53359C0A0 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
-		61316C40612B2ACF09C11DF5 /* cue_two.m4a */ = {isa = PBXFileReference; path = cue_two.m4a; sourceTree = "<group>"; };
+		61316C40612B2ACF09C11DF5 /* cue_two.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = cue_two.m4a; sourceTree = "<group>"; };
 		61318F0E0B965A3A803B7F56 /* FinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedView.swift; sourceTree = "<group>"; };
 		617B63B1239017F526BBCDCF /* VoicePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoicePlayer.swift; sourceTree = "<group>"; };
 		61A69C1F8DEA73FDE65ADF28 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		6586D624BDAFF6FA50079E07 /* cue_rest_start.m4a */ = {isa = PBXFileReference; path = cue_rest_start.m4a; sourceTree = "<group>"; };
+		6586D624BDAFF6FA50079E07 /* cue_rest_start.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = cue_rest_start.m4a; sourceTree = "<group>"; };
 		65DD95E02FD9925EF0941888 /* FavoriteRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRowView.swift; sourceTree = "<group>"; };
-		66A6CDA41091D54124338210 /* schema.sql */ = {isa = PBXFileReference; path = schema.sql; sourceTree = "<group>"; };
+		66A6CDA41091D54124338210 /* schema.sql */ = {isa = PBXFileReference; lastKnownFileType = text; path = schema.sql; sourceTree = "<group>"; };
 		676BD8E018B4ABA82C1A4B33 /* WorkoutCue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCue.swift; sourceTree = "<group>"; };
-		6F6F3597ABBC67B9F9419D29 /* cue_halfway.m4a */ = {isa = PBXFileReference; path = cue_halfway.m4a; sourceTree = "<group>"; };
+		6F6F3597ABBC67B9F9419D29 /* cue_halfway.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = cue_halfway.m4a; sourceTree = "<group>"; };
 		7028643DFFCCD0D92CF883D8 /* PhaseTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseTheme.swift; sourceTree = "<group>"; };
 		704F09BF332567EC9ADA8289 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		72031F1E7D3A722E75F130B3 /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
@@ -125,23 +125,23 @@
 		84EA4FA00A621D7D0E5FE2ED /* ActiveTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTrainingView.swift; sourceTree = "<group>"; };
 		85B8FC9A8E753FD24E3EF928 /* IntervalsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalsListView.swift; sourceTree = "<group>"; };
 		8745C9D53DFC9BC29EEFD814 /* WorkoutEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutEntityTests.swift; sourceTree = "<group>"; };
-		87E35037F16B3B7146ED77B9 /* cue_one.m4a */ = {isa = PBXFileReference; path = cue_one.m4a; sourceTree = "<group>"; };
+		87E35037F16B3B7146ED77B9 /* cue_one.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = cue_one.m4a; sourceTree = "<group>"; };
 		94A6B11C4072CB2A062858C5 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
-		96F78A9E903E6B322A242E37 /* cue_work_start.m4a */ = {isa = PBXFileReference; path = cue_work_start.m4a; sourceTree = "<group>"; };
+		96F78A9E903E6B322A242E37 /* cue_work_start.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = cue_work_start.m4a; sourceTree = "<group>"; };
 		9DA9A411DDAC91317A47E15E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AF69F049B98C42DF7820F16D /* AdjustWorkoutSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustWorkoutSheet.swift; sourceTree = "<group>"; };
-		B1AB367F33E195113E625DE1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		B1AB367F33E195113E625DE1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B24BB45715541464AD162385 /* SaveFavoriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFavoriteSheet.swift; sourceTree = "<group>"; };
 		BCA0056F71F6F39178E7598B /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		BDA56F18E72BE9C86B5F016B /* CueChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CueChannel.swift; sourceTree = "<group>"; };
-		CB710857BC5B50D25CE31390 /* cue_last_round.m4a */ = {isa = PBXFileReference; path = cue_last_round.m4a; sourceTree = "<group>"; };
-		CE6064128651A7C05DCDFAE2 /* Interval v1 Tests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = "Interval v1 Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF2D57CB6C236BBEB65FF6A5 /* Interval v1.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "Interval v1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB710857BC5B50D25CE31390 /* cue_last_round.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = cue_last_round.m4a; sourceTree = "<group>"; };
+		CE6064128651A7C05DCDFAE2 /* Interval v1 Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Interval v1 Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF2D57CB6C236BBEB65FF6A5 /* Interval v1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Interval v1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4419A45F035E74D556B60F9 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		EEF38F836176890F13921DA3 /* TimerEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngineTests.swift; sourceTree = "<group>"; };
 		F1D23B0DAC25EC0787897AF5 /* InlineTimeWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTimeWheel.swift; sourceTree = "<group>"; };
 		F1FDA818CC047AFFBEA47C3A /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
-		F4B29833870ACB7395A57726 /* cue_three.m4a */ = {isa = PBXFileReference; path = cue_three.m4a; sourceTree = "<group>"; };
+		F4B29833870ACB7395A57726 /* cue_three.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = cue_three.m4a; sourceTree = "<group>"; };
 		FDE0D4319DE0D8E63AFE149E /* WorkoutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -434,7 +434,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					D5FFBB9648D063549E00B778 = {
 						DevelopmentTeam = VB6FS3N78T;
@@ -450,6 +450,8 @@
 			knownRegions = (
 				Base,
 				nl,
+				en,
+				fr,
 			);
 			mainGroup = 23130B48F9CBD6D8D0597DCB;
 			minimizedProjectReferenceProxies = 1;
@@ -613,6 +615,7 @@
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -627,6 +630,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -677,6 +681,7 @@
 				DEVELOPMENT_TEAM = VB6FS3N78T;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -698,6 +703,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;

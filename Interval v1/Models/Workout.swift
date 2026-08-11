@@ -17,7 +17,7 @@ struct Workout: Identifiable, Hashable, Codable {
         // up the source key automatically, no C-style format string needed.
         // Reuses `Int.asCompactDuration` so duration formatting stays in one
         // place (see Duration+Formatting).
-        String(localized: "\(workSeconds.asCompactDuration) werk · \(restSeconds.asCompactDuration) rust · \(rounds) ronden")
+        String(localized: "\(workSeconds.asCompactDuration) inspanning · \(restSeconds.asCompactDuration) rust · \(rounds) ronden")
     }
 
     static let placeholder = Workout(name: "Tabata 30/15", workSeconds: 30, restSeconds: 15, rounds: 8)

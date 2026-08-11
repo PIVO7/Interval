@@ -12,12 +12,10 @@ enum PurchaseOutcome {
 
 /// Owns the app's single non-consumable "Pro unlock" purchase via StoreKit 2.
 ///
-/// **The app currently ships fully free:** `freeForEveryone` is `true`, so
-/// `isUnlocked` is always `true`, the paywall is never shown, and every former
-/// "Pro" feature (saved favorites, colour themes) is available to everyone.
-/// The StoreKit machinery below stays fully intact and dormant — flip
-/// `freeForEveryone` to `false` (and re-show the Pro UI in AccountView) to
-/// start charging again, e.g. in a future paid version.
+/// **The app charges for Pro:** `freeForEveryone` is `false`, so favorites
+/// and colour themes are gated behind the one-time unlock and the paywall
+/// shows for non-buyers. Flip `freeForEveryone` back to `true` to ship
+/// everything free again — all gates and the Account Pro card key off it.
 ///
 /// StoreKit 2 gives us transaction verification for free (`VerificationResult`),
 /// a live `Transaction.updates` stream for purchases made elsewhere (e.g.
@@ -28,7 +26,7 @@ enum PurchaseOutcome {
 final class StoreManager {
     /// Master switch. While `true` the whole app is free and the paywall is
     /// suppressed — the single place to flip to monetize again.
-    static let freeForEveryone = true
+    static let freeForEveryone = false
 
     /// Must match the product ID in App Store Connect and `ProUnlock.storekit`.
     static let unlockProductID = "com.superapp.intervalv1.pro_unlock"

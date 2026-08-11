@@ -98,7 +98,7 @@ final class WorkoutKitExporter {
         let workStep = WorkoutStep(
             goal: .time(Double(workout.workSeconds), .seconds),
             displayName: NSLocalizedString(
-                "Werk",
+                "Inspanning",
                 comment: "WorkoutKit step display name for work intervals"
             )
         )
