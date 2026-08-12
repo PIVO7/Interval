@@ -13,7 +13,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ effort · %@ repos · %lld rounds"
+            "value" : "%@ effort · %@ repos · %lld tours"
           }
         },
         "nl" : {
@@ -108,6 +108,18 @@
       "comment" : "Subtitle for the rounds card",
       "extractionState" : "stale",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number of rounds"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre de tours"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1178,7 +1190,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dernier round"
+            "value" : "Dernier tour"
           }
         }
       }
@@ -1618,7 +1630,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Par round"
+            "value" : "Par tour"
           }
         }
       }
@@ -1720,7 +1732,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Round %lld / %lld"
+            "value" : "Tour %lld / %lld"
           }
         },
         "nl" : {
@@ -1743,7 +1755,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rounds"
+            "value" : "Tours"
           }
         },
         "nl" : {
@@ -1766,7 +1778,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rounds"
+            "value" : "Tours"
           }
         },
         "nl" : {
@@ -2238,7 +2250,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trois, deux, un — GO à chaque round"
+            "value" : "Trois, deux, un — GO à chaque tour"
           }
         }
       }
@@ -2452,6 +2464,18 @@
       "comment" : "Increase rounds accessibility label",
       "extractionState" : "stale",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Increase rounds"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Augmenter les tours"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2464,6 +2488,18 @@
       "comment" : "Decrease rounds accessibility label",
       "extractionState" : "stale",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decrease rounds"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diminuer les tours"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2700,7 +2736,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Effort, repos et rounds en un coup d'œil"
+            "value" : "Effort, repos et tours en un coup d'œil"
           }
         },
         "nl" : {
