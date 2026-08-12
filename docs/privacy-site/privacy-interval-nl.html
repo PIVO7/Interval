@@ -1,0 +1,124 @@
+<h1>Privacybeleid — Interval</h1>
+<p><em>Laatst bijgewerkt: 12 augustus 2026</em></p>
+
+<p>Interval is een interval-timer-app voor coaches, kinesitherapeuten en mensen die regelmatig HIIT/Tabata-style trainingen doen. We willen zo min mogelijk persoonsgegevens verwerken, en als we het doen — alleen om de app voor jou te laten werken. Geen tracking, geen advertenties, geen verkoop van gegevens.</p>
+
+<p>Dit document beschrijft welke gegevens we verzamelen, hoe we ze gebruiken, en welke rechten je hebt.</p>
+
+<h2>1. Wie we zijn</h2>
+<p><strong>Verantwoordelijke voor de gegevensverwerking</strong> (in de zin van GDPR / AVG art. 4(7)):</p>
+<p>Jelle Wauters<br>e-mail: <a href="mailto:jelle@pivo7.be">jelle@pivo7.be</a></p>
+<p>Voor alle vragen over je gegevens, of om je rechten uit te oefenen (zie sectie 7), gebruik dat e-mailadres.</p>
+
+<h2>2. Welke gegevens we verzamelen</h2>
+
+<h3>a. Inloggen via Sign in with Apple (optioneel)</h3>
+<p>Je kunt Interval volledig anoniem gebruiken (knop "Verder zonder account" in de onboarding). Doe je dat, dan slaan we <strong>geen persoonsgegevens op een server op</strong>. Alleen je workout-instellingen en voorkeuren blijven lokaal op je apparaat.</p>
+<p>Kies je voor "Sign in with Apple", dan ontvangen wij van Apple:</p>
+<ul>
+  <li>een <strong>anonieme gebruikers-ID</strong> (Apple's <code>userIdentifier</code>, bv. <code>001234.abcdef1234567890.0000</code>),</li>
+  <li>je <strong>volledige naam</strong> — alleen bij de eerste keer inloggen, en alleen als je daar toestemming voor geeft in Apple's dialoogvenster,</li>
+  <li>een <strong>e-mailadres</strong> — kan je echte e-mail zijn of een door Apple gegenereerd "Private Relay"-alias als je daarvoor kiest in dezelfde dialoog.</li>
+</ul>
+<p>We slaan die gegevens op in onze database (zie sectie 4) zodat we je opgeslagen workouts kunnen koppelen aan je account.</p>
+
+<h3>b. Workouts die je opslaat als favoriet</h3>
+<p>Wanneer je een interval-schema (work / rest / aantal rondes) opslaat als favoriet, slaan we het volgende op:</p>
+<ul>
+  <li>de naam die je het schema geeft (bv. "Tabata 30/15"),</li>
+  <li>de duur van de werkfases (seconden),</li>
+  <li>de duur van de rustfases (seconden),</li>
+  <li>het aantal rondes,</li>
+  <li>de datum waarop je hem aangemaakt hebt.</li>
+</ul>
+<p>Alleen lokaal als je niet ingelogd bent. Plus in onze cloud-database als je wel ingelogd bent.</p>
+
+<h3>c. In-app aankoop (Interval Pro)</h3>
+<p>De eenmalige "Interval Pro"-aankoop verloopt volledig via Apple's App Store (StoreKit). Wij ontvangen <strong>geen betaalgegevens</strong> — geen kaartnummers, geen factuuradres, geen Apple-ID. Of je de aankoop gedaan hebt wordt door Apple bijgehouden en door de app alleen lokaal uitgelezen; wij slaan het niet op onze server op.</p>
+
+<h3>d. Lokale voorkeuren</h3>
+<p>De volgende gegevens worden <strong>alleen lokaal op je apparaat</strong> opgeslagen, in iOS' <code>UserDefaults</code>, en gaan nooit naar onze server:</p>
+<ul>
+  <li>of je de onboarding al hebt gezien,</li>
+  <li>welk omgevingsgeluid je laatst koos en op welk volume,</li>
+  <li>of haptic feedback en signaaltonen aan staan,</li>
+  <li>of je licht / donker / systeem-uiterlijk hebt geselecteerd.</li>
+</ul>
+
+<h3>e. Wat we NIET verzamelen</h3>
+<ul>
+  <li>Geen locatie.</li>
+  <li>Geen contactpersonen, foto's, of microfoon-data.</li>
+  <li>Geen gezondheidsgegevens (geen hartslag of vergelijkbare data).</li>
+  <li>Geen analytics-pixels, geen advertentie-IDs.</li>
+  <li>Geen tracking tussen apps of websites.</li>
+</ul>
+
+<h2>3. Waarom we deze gegevens gebruiken</h2>
+<table>
+  <thead>
+    <tr><th>Doel</th><th>Gegevens</th><th>Rechtsgrond (GDPR art. 6)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Je account herkennen tussen apparaten</td><td>Apple user-ID, naam, e-mail</td><td>Uitvoering van de overeenkomst (art. 6.1.b)</td></tr>
+    <tr><td>Je opgeslagen workouts synchroniseren</td><td>Workout-naam + instellingen</td><td>Uitvoering van de overeenkomst (art. 6.1.b)</td></tr>
+    <tr><td>Je per e-mail antwoorden op vragen die je stelt</td><td>E-mailadres</td><td>Gerechtvaardigd belang (art. 6.1.f)</td></tr>
+  </tbody>
+</table>
+<p>We doen <strong>geen profiling</strong>, <strong>geen geautomatiseerde besluitvorming</strong> op basis van je gegevens, en gebruiken je gegevens <strong>niet voor marketing</strong> (we sturen je nooit een nieuwsbrief tenzij je je daar expliciet op inschrijft — wat we momenteel niet eens aanbieden).</p>
+
+<h2>4. Met wie we gegevens delen</h2>
+<p>Wij verkopen je gegevens niet en delen ze niet met derden voor commerciële doeleinden. We gebruiken wel de volgende <strong>subverwerkers</strong> om de app technisch te laten werken:</p>
+
+<h3>Supabase (database + authenticatie)</h3>
+<p>Onze backend draait op <a href="https://supabase.com">Supabase</a>, een PostgreSQL-as-a-service provider. Supabase bewaart je account-gegevens en opgeslagen workouts op servers in de <strong>Europese Unie</strong> (regio <code>eu-central-1</code>, Frankfurt). Supabase is verwerker, wij zijn verantwoordelijke. Hun privacybeleid: <a href="https://supabase.com/privacy">supabase.com/privacy</a>.</p>
+
+<h3>Apple</h3>
+<ul>
+  <li><strong>Sign in with Apple</strong>: Apple authentiseert je identiteit. Wij ontvangen alleen wat je in het Apple-dialoogvenster goedkeurt (sectie 2.a).</li>
+  <li><strong>App Store / StoreKit</strong>: de eenmalige Interval Pro-aankoop wordt volledig door Apple afgehandeld (sectie 2.c). Apple's privacybeleid: <a href="https://www.apple.com/legal/privacy">apple.com/legal/privacy</a>.</li>
+</ul>
+<p>Geen andere derde partijen ontvangen je gegevens.</p>
+
+<h2>5. Hoe lang we gegevens bewaren</h2>
+<table>
+  <thead>
+    <tr><th>Categorie</th><th>Bewaartermijn</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Account-gegevens (Apple user-ID, naam, e-mail)</td><td>Zo lang je account actief is</td></tr>
+    <tr><td>Opgeslagen workouts</td><td>Zo lang je account actief is, of tot je ze handmatig verwijdert</td></tr>
+    <tr><td>Lokale voorkeuren</td><td>Tot je de app verwijdert van je apparaat</td></tr>
+  </tbody>
+</table>
+<p>Als je je account wilt laten verwijderen — zie sectie 7. We verwijderen dan alles binnen 30 dagen.</p>
+
+<h2>6. Beveiliging</h2>
+<ul>
+  <li>Alle communicatie tussen de app en onze backend gaat via <strong>HTTPS / TLS 1.2+</strong>.</li>
+  <li>Database-tabellen hebben <strong>Row Level Security (RLS)</strong>: je eigen gegevens zijn alleen toegankelijk vanuit jouw geauthenticeerde sessie.</li>
+  <li>Je privé Apple-wachtwoord raken wij nooit aan — Sign in with Apple gebruikt alleen identity tokens.</li>
+</ul>
+
+<h2>7. Jouw rechten</h2>
+<p>Onder de Europese Algemene Verordening Gegevensbescherming (AVG / GDPR) heb je het recht om:</p>
+<ul>
+  <li><strong>inzage</strong> te vragen in welke gegevens we van jou hebben (art. 15),</li>
+  <li><strong>rectificatie</strong> te vragen als gegevens incorrect zijn (art. 16),</li>
+  <li><strong>verwijdering</strong> te vragen van je gegevens (art. 17 — "right to be forgotten"),</li>
+  <li><strong>beperking</strong> van de verwerking te vragen (art. 18),</li>
+  <li><strong>overdraagbaarheid</strong> van je gegevens te vragen — wij sturen je dan een JSON-bestand met alles wat we van je hebben (art. 20),</li>
+  <li><strong>bezwaar te maken</strong> tegen onze verwerking (art. 21),</li>
+  <li>een <strong>klacht in te dienen</strong> bij de Gegevensbeschermingsautoriteit (GBA / Belgische DPA — <a href="https://www.gegevensbeschermingsautoriteit.be">gegevensbeschermingsautoriteit.be</a>) of de toezichthouder in je eigen EU-land.</li>
+</ul>
+<p>Stuur een mail naar <a href="mailto:jelle@pivo7.be">jelle@pivo7.be</a> en we verwerken je verzoek binnen 30 dagen.</p>
+<p>Wil je gewoon je hele account weg? Mail "Verwijder mijn account" naar het bovenstaande adres met je Apple user-ID of de e-mail waarmee je Sign in with Apple gedaan hebt, en we doen dat binnen 7 werkdagen.</p>
+
+<h2>8. Wijzigingen aan dit beleid</h2>
+<p>Als we dit beleid materieel wijzigen (bv. nieuwe subverwerkers, nieuwe gegevenscategorieën) updaten we de "Laatst bijgewerkt"-datum bovenaan en notificeren we ingelogde gebruikers per e-mail. Triviale wijzigingen (typo's, verduidelijkingen) verschijnen gewoon hier zonder notificatie.</p>
+
+<h2>9. Contact</h2>
+<p>Vragen? Klachten? Mail <a href="mailto:jelle@pivo7.be">jelle@pivo7.be</a>.</p>
+
+<hr>
+<p><em>Korte versie voor wie haast heeft: we slaan alleen je Apple-naam, e-mail en favorieten op een Europese Supabase-server op (als je inlogt). Daar gebeurt verder niets mee. Geen advertenties, geen analytics, geen verkoop. Mail ons als je je account weg wilt.</em></p>

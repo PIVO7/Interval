@@ -1,0 +1,124 @@
+<h1>Privacy Policy — Interval</h1>
+<p><em>Last updated: 12 August 2026</em></p>
+
+<p>Interval is an interval timer app for coaches, physical therapists and anyone who regularly does HIIT/Tabata-style training. We want to process as little personal data as possible, and when we do — only to make the app work for you. No tracking, no advertising, no selling of data.</p>
+
+<p>This document describes what data we collect, how we use it, and what rights you have.</p>
+
+<h2>1. Who we are</h2>
+<p><strong>Data controller</strong> (within the meaning of GDPR art. 4(7)):</p>
+<p>Jelle Wauters<br>email: <a href="mailto:jelle@pivo7.be">jelle@pivo7.be</a></p>
+<p>For any questions about your data, or to exercise your rights (see section 7), use that email address.</p>
+
+<h2>2. What data we collect</h2>
+
+<h3>a. Signing in with Sign in with Apple (optional)</h3>
+<p>You can use Interval completely anonymously (the "Continue without account" button in the onboarding). If you do, we store <strong>no personal data on any server</strong>. Only your workout settings and preferences remain locally on your device.</p>
+<p>If you choose "Sign in with Apple", we receive the following from Apple:</p>
+<ul>
+  <li>an <strong>anonymous user ID</strong> (Apple's <code>userIdentifier</code>, e.g. <code>001234.abcdef1234567890.0000</code>),</li>
+  <li>your <strong>full name</strong> — only the first time you sign in, and only if you consent to it in Apple's dialog,</li>
+  <li>an <strong>email address</strong> — this can be your real email or an Apple-generated "Private Relay" alias if you choose that option in the same dialog.</li>
+</ul>
+<p>We store this data in our database (see section 4) so we can link your saved workouts to your account.</p>
+
+<h3>b. Workouts you save as favorites</h3>
+<p>When you save an interval scheme (work / rest / number of rounds) as a favorite, we store the following:</p>
+<ul>
+  <li>the name you give the scheme (e.g. "Tabata 30/15"),</li>
+  <li>the duration of the work phases (seconds),</li>
+  <li>the duration of the rest phases (seconds),</li>
+  <li>the number of rounds,</li>
+  <li>the date you created it.</li>
+</ul>
+<p>Locally only if you are not signed in. Plus in our cloud database if you are signed in.</p>
+
+<h3>c. In-app purchase (Interval Pro)</h3>
+<p>The one-time "Interval Pro" purchase is handled entirely by Apple's App Store (StoreKit). We receive <strong>no payment data</strong> — no card numbers, no billing address, no Apple ID. Whether you made the purchase is tracked by Apple and only read locally by the app; we do not store it on our server.</p>
+
+<h3>d. Local preferences</h3>
+<p>The following data is stored <strong>only locally on your device</strong>, in iOS' <code>UserDefaults</code>, and never goes to our server:</p>
+<ul>
+  <li>whether you have already seen the onboarding,</li>
+  <li>which ambient sound you last chose and at what volume,</li>
+  <li>whether haptic feedback and signal tones are enabled,</li>
+  <li>whether you selected light / dark / system appearance.</li>
+</ul>
+
+<h3>e. What we do NOT collect</h3>
+<ul>
+  <li>No location.</li>
+  <li>No contacts, photos or microphone data.</li>
+  <li>No health data (no heart rate or similar data).</li>
+  <li>No analytics pixels, no advertising IDs.</li>
+  <li>No tracking across apps or websites.</li>
+</ul>
+
+<h2>3. Why we use this data</h2>
+<table>
+  <thead>
+    <tr><th>Purpose</th><th>Data</th><th>Legal basis (GDPR art. 6)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Recognising your account across devices</td><td>Apple user ID, name, email</td><td>Performance of the contract (art. 6.1.b)</td></tr>
+    <tr><td>Syncing your saved workouts</td><td>Workout name + settings</td><td>Performance of the contract (art. 6.1.b)</td></tr>
+    <tr><td>Replying by email to questions you ask</td><td>Email address</td><td>Legitimate interest (art. 6.1.f)</td></tr>
+  </tbody>
+</table>
+<p>We do <strong>no profiling</strong>, <strong>no automated decision-making</strong> based on your data, and we do <strong>not use your data for marketing</strong> (we will never send you a newsletter unless you explicitly sign up for one — which we don't even offer at the moment).</p>
+
+<h2>4. Who we share data with</h2>
+<p>We do not sell your data and do not share it with third parties for commercial purposes. We do use the following <strong>sub-processors</strong> to make the app work technically:</p>
+
+<h3>Supabase (database + authentication)</h3>
+<p>Our backend runs on <a href="https://supabase.com">Supabase</a>, a PostgreSQL-as-a-service provider. Supabase stores your account data and saved workouts on servers in the <strong>European Union</strong> (region <code>eu-central-1</code>, Frankfurt). Supabase is the processor, we are the controller. Their privacy policy: <a href="https://supabase.com/privacy">supabase.com/privacy</a>.</p>
+
+<h3>Apple</h3>
+<ul>
+  <li><strong>Sign in with Apple</strong>: Apple authenticates your identity. We only receive what you approve in Apple's dialog (section 2.a).</li>
+  <li><strong>App Store / StoreKit</strong>: the one-time Interval Pro purchase is handled entirely by Apple (section 2.c). Apple's privacy policy: <a href="https://www.apple.com/legal/privacy">apple.com/legal/privacy</a>.</li>
+</ul>
+<p>No other third parties receive your data.</p>
+
+<h2>5. How long we keep data</h2>
+<table>
+  <thead>
+    <tr><th>Category</th><th>Retention period</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Account data (Apple user ID, name, email)</td><td>As long as your account is active</td></tr>
+    <tr><td>Saved workouts</td><td>As long as your account is active, or until you delete them manually</td></tr>
+    <tr><td>Local preferences</td><td>Until you delete the app from your device</td></tr>
+  </tbody>
+</table>
+<p>If you want your account deleted — see section 7. We will then delete everything within 30 days.</p>
+
+<h2>6. Security</h2>
+<ul>
+  <li>All communication between the app and our backend goes over <strong>HTTPS / TLS 1.2+</strong>.</li>
+  <li>Database tables have <strong>Row Level Security (RLS)</strong>: your own data is only accessible from your authenticated session.</li>
+  <li>We never touch your private Apple password — Sign in with Apple uses identity tokens only.</li>
+</ul>
+
+<h2>7. Your rights</h2>
+<p>Under the European General Data Protection Regulation (GDPR) you have the right to:</p>
+<ul>
+  <li>request <strong>access</strong> to the data we hold about you (art. 15),</li>
+  <li>request <strong>rectification</strong> if data is incorrect (art. 16),</li>
+  <li>request <strong>erasure</strong> of your data (art. 17 — "right to be forgotten"),</li>
+  <li>request <strong>restriction</strong> of processing (art. 18),</li>
+  <li>request <strong>portability</strong> of your data — we will send you a JSON file with everything we hold about you (art. 20),</li>
+  <li><strong>object</strong> to our processing (art. 21),</li>
+  <li>file a <strong>complaint</strong> with the Belgian Data Protection Authority (<a href="https://www.gegevensbeschermingsautoriteit.be">gegevensbeschermingsautoriteit.be</a>) or the supervisory authority in your own EU country.</li>
+</ul>
+<p>Send an email to <a href="mailto:jelle@pivo7.be">jelle@pivo7.be</a> and we will process your request within 30 days.</p>
+<p>Just want your whole account gone? Email "Delete my account" to the address above with your Apple user ID or the email you used for Sign in with Apple, and we will do so within 7 working days.</p>
+
+<h2>8. Changes to this policy</h2>
+<p>If we materially change this policy (e.g. new sub-processors, new data categories) we will update the "Last updated" date at the top and notify signed-in users by email. Trivial changes (typos, clarifications) simply appear here without notification.</p>
+
+<h2>9. Contact</h2>
+<p>Questions? Complaints? Email <a href="mailto:jelle@pivo7.be">jelle@pivo7.be</a>.</p>
+
+<hr>
+<p><em>Short version for those in a hurry: we only store your Apple name, email and favorites on a European Supabase server (if you sign in). Nothing else happens with them. No ads, no analytics, no selling. Email us if you want your account deleted.</em></p>

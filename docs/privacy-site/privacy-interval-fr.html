@@ -1,0 +1,124 @@
+<h1>Politique de confidentialité — Interval</h1>
+<p><em>Dernière mise à jour : 12 août 2026</em></p>
+
+<p>Interval est une application de minuteur d'intervalles pour les coachs, les kinésithérapeutes et tous ceux qui s'entraînent régulièrement en mode HIIT/Tabata. Nous voulons traiter le moins de données personnelles possible, et quand nous le faisons — uniquement pour faire fonctionner l'application pour vous. Pas de tracking, pas de publicité, pas de vente de données.</p>
+
+<p>Ce document décrit quelles données nous collectons, comment nous les utilisons et quels sont vos droits.</p>
+
+<h2>1. Qui nous sommes</h2>
+<p><strong>Responsable du traitement des données</strong> (au sens de l'art. 4(7) du RGPD) :</p>
+<p>Jelle Wauters<br>e-mail : <a href="mailto:jelle@pivo7.be">jelle@pivo7.be</a></p>
+<p>Pour toute question sur vos données, ou pour exercer vos droits (voir section 7), utilisez cette adresse e-mail.</p>
+
+<h2>2. Quelles données nous collectons</h2>
+
+<h3>a. Connexion via Sign in with Apple (facultatif)</h3>
+<p>Vous pouvez utiliser Interval de manière totalement anonyme (bouton « Continuer sans compte » dans l'onboarding). Dans ce cas, nous ne stockons <strong>aucune donnée personnelle sur un serveur</strong>. Seuls vos réglages d'entraînement et vos préférences restent en local sur votre appareil.</p>
+<p>Si vous choisissez « Sign in with Apple », nous recevons d'Apple :</p>
+<ul>
+  <li>un <strong>identifiant utilisateur anonyme</strong> (le <code>userIdentifier</code> d'Apple, p. ex. <code>001234.abcdef1234567890.0000</code>),</li>
+  <li>votre <strong>nom complet</strong> — uniquement lors de la première connexion, et uniquement si vous y consentez dans la boîte de dialogue d'Apple,</li>
+  <li>une <strong>adresse e-mail</strong> — qui peut être votre véritable adresse ou un alias « Private Relay » généré par Apple si vous choisissez cette option dans la même boîte de dialogue.</li>
+</ul>
+<p>Nous stockons ces données dans notre base de données (voir section 4) afin de pouvoir lier vos entraînements enregistrés à votre compte.</p>
+
+<h3>b. Entraînements enregistrés comme favoris</h3>
+<p>Lorsque vous enregistrez un schéma d'intervalles (effort / repos / nombre de rounds) comme favori, nous stockons :</p>
+<ul>
+  <li>le nom que vous donnez au schéma (p. ex. « Tabata 30/15 »),</li>
+  <li>la durée des phases d'effort (secondes),</li>
+  <li>la durée des phases de repos (secondes),</li>
+  <li>le nombre de rounds,</li>
+  <li>la date de création.</li>
+</ul>
+<p>En local uniquement si vous n'êtes pas connecté. Également dans notre base de données cloud si vous êtes connecté.</p>
+
+<h3>c. Achat intégré (Interval Pro)</h3>
+<p>L'achat unique « Interval Pro » est entièrement géré par l'App Store d'Apple (StoreKit). Nous ne recevons <strong>aucune donnée de paiement</strong> — pas de numéros de carte, pas d'adresse de facturation, pas d'identifiant Apple. Le fait que vous ayez effectué l'achat est géré par Apple et uniquement lu en local par l'application ; nous ne le stockons pas sur notre serveur.</p>
+
+<h3>d. Préférences locales</h3>
+<p>Les données suivantes sont stockées <strong>uniquement en local sur votre appareil</strong>, dans les <code>UserDefaults</code> d'iOS, et ne sont jamais envoyées à notre serveur :</p>
+<ul>
+  <li>si vous avez déjà vu l'onboarding,</li>
+  <li>le dernier son d'ambiance choisi et son volume,</li>
+  <li>si le retour haptique et les signaux sonores sont activés,</li>
+  <li>si vous avez sélectionné l'apparence claire / sombre / système.</li>
+</ul>
+
+<h3>e. Ce que nous ne collectons PAS</h3>
+<ul>
+  <li>Pas de localisation.</li>
+  <li>Pas de contacts, photos ou données de microphone.</li>
+  <li>Pas de données de santé (pas de fréquence cardiaque ou données similaires).</li>
+  <li>Pas de pixels d'analytics, pas d'identifiants publicitaires.</li>
+  <li>Pas de tracking entre applications ou sites web.</li>
+</ul>
+
+<h2>3. Pourquoi nous utilisons ces données</h2>
+<table>
+  <thead>
+    <tr><th>Finalité</th><th>Données</th><th>Base légale (art. 6 RGPD)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Reconnaître votre compte entre vos appareils</td><td>Identifiant Apple, nom, e-mail</td><td>Exécution du contrat (art. 6.1.b)</td></tr>
+    <tr><td>Synchroniser vos entraînements enregistrés</td><td>Nom + réglages de l'entraînement</td><td>Exécution du contrat (art. 6.1.b)</td></tr>
+    <tr><td>Répondre par e-mail à vos questions</td><td>Adresse e-mail</td><td>Intérêt légitime (art. 6.1.f)</td></tr>
+  </tbody>
+</table>
+<p>Nous ne faisons <strong>aucun profilage</strong>, <strong>aucune décision automatisée</strong> sur la base de vos données, et nous n'utilisons <strong>pas vos données à des fins marketing</strong> (nous ne vous enverrons jamais de newsletter sauf inscription explicite de votre part — ce que nous ne proposons même pas actuellement).</p>
+
+<h2>4. Avec qui nous partageons des données</h2>
+<p>Nous ne vendons pas vos données et ne les partageons pas avec des tiers à des fins commerciales. Nous faisons toutefois appel aux <strong>sous-traitants</strong> suivants pour le fonctionnement technique de l'application :</p>
+
+<h3>Supabase (base de données + authentification)</h3>
+<p>Notre backend fonctionne sur <a href="https://supabase.com">Supabase</a>, un fournisseur PostgreSQL-as-a-service. Supabase conserve vos données de compte et vos entraînements enregistrés sur des serveurs situés dans l'<strong>Union européenne</strong> (région <code>eu-central-1</code>, Francfort). Supabase est le sous-traitant, nous sommes le responsable du traitement. Leur politique de confidentialité : <a href="https://supabase.com/privacy">supabase.com/privacy</a>.</p>
+
+<h3>Apple</h3>
+<ul>
+  <li><strong>Sign in with Apple</strong> : Apple authentifie votre identité. Nous ne recevons que ce que vous approuvez dans la boîte de dialogue d'Apple (section 2.a).</li>
+  <li><strong>App Store / StoreKit</strong> : l'achat unique Interval Pro est entièrement géré par Apple (section 2.c). Politique de confidentialité d'Apple : <a href="https://www.apple.com/legal/privacy">apple.com/legal/privacy</a>.</li>
+</ul>
+<p>Aucun autre tiers ne reçoit vos données.</p>
+
+<h2>5. Durée de conservation des données</h2>
+<table>
+  <thead>
+    <tr><th>Catégorie</th><th>Durée de conservation</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Données de compte (identifiant Apple, nom, e-mail)</td><td>Tant que votre compte est actif</td></tr>
+    <tr><td>Entraînements enregistrés</td><td>Tant que votre compte est actif, ou jusqu'à leur suppression manuelle</td></tr>
+    <tr><td>Préférences locales</td><td>Jusqu'à la suppression de l'application de votre appareil</td></tr>
+  </tbody>
+</table>
+<p>Si vous souhaitez faire supprimer votre compte — voir section 7. Nous supprimons alors tout dans un délai de 30 jours.</p>
+
+<h2>6. Sécurité</h2>
+<ul>
+  <li>Toute communication entre l'application et notre backend passe par <strong>HTTPS / TLS 1.2+</strong>.</li>
+  <li>Les tables de la base de données utilisent le <strong>Row Level Security (RLS)</strong> : vos données ne sont accessibles que depuis votre session authentifiée.</li>
+  <li>Nous ne touchons jamais à votre mot de passe Apple privé — Sign in with Apple utilise uniquement des jetons d'identité.</li>
+</ul>
+
+<h2>7. Vos droits</h2>
+<p>En vertu du Règlement général sur la protection des données (RGPD), vous avez le droit de :</p>
+<ul>
+  <li>demander l'<strong>accès</strong> aux données que nous détenons sur vous (art. 15),</li>
+  <li>demander la <strong>rectification</strong> de données incorrectes (art. 16),</li>
+  <li>demander l'<strong>effacement</strong> de vos données (art. 17 — « droit à l'oubli »),</li>
+  <li>demander la <strong>limitation</strong> du traitement (art. 18),</li>
+  <li>demander la <strong>portabilité</strong> de vos données — nous vous envoyons alors un fichier JSON contenant tout ce que nous détenons sur vous (art. 20),</li>
+  <li>vous <strong>opposer</strong> à notre traitement (art. 21),</li>
+  <li>déposer une <strong>plainte</strong> auprès de l'Autorité de protection des données belge (<a href="https://www.autoriteprotectiondonnees.be">autoriteprotectiondonnees.be</a>) ou de l'autorité de contrôle de votre propre pays de l'UE.</li>
+</ul>
+<p>Envoyez un e-mail à <a href="mailto:jelle@pivo7.be">jelle@pivo7.be</a> et nous traiterons votre demande dans un délai de 30 jours.</p>
+<p>Vous voulez simplement supprimer tout votre compte ? Envoyez « Supprimez mon compte » à l'adresse ci-dessus avec votre identifiant Apple ou l'adresse e-mail utilisée pour Sign in with Apple, et nous le ferons dans les 7 jours ouvrables.</p>
+
+<h2>8. Modifications de cette politique</h2>
+<p>Si nous modifions substantiellement cette politique (p. ex. nouveaux sous-traitants, nouvelles catégories de données), nous mettons à jour la date « Dernière mise à jour » en haut de la page et nous informons les utilisateurs connectés par e-mail. Les modifications mineures (fautes de frappe, clarifications) apparaissent simplement ici sans notification.</p>
+
+<h2>9. Contact</h2>
+<p>Des questions ? Des plaintes ? Écrivez à <a href="mailto:jelle@pivo7.be">jelle@pivo7.be</a>.</p>
+
+<hr>
+<p><em>Version courte pour les pressés : nous ne stockons que votre nom Apple, votre e-mail et vos favoris sur un serveur Supabase européen (si vous vous connectez). Rien d'autre n'en est fait. Pas de publicité, pas d'analytics, pas de vente. Écrivez-nous si vous voulez supprimer votre compte.</em></p>
