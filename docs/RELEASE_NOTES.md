@@ -64,7 +64,7 @@ release-/TestFlight-notes en getest moeten worden vóór archive.
   emission via `cues.emittedCues` zonder enige audio/haptics
   hardware nodig.
 - **Voice clips gebundled**: 8 ElevenLabs-AI-stemclips
-  (Engels) zitten in `Interval v1/Resources/Audio/`:
+  (Engels) zitten in `Interval/Resources/Audio/`:
   `cue_three / two / one / work_start / rest_start / halfway /
   last_round / finished`. Synth-code volledig uit `VoicePlayer`
   verwijderd. AAC m4a 44.1 kHz stereo, ~94 KB elk, totaal ~750 KB

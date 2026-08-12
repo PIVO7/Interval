@@ -39,7 +39,7 @@ web-build/
 .env.local
 
 # Local secrets — never commit
-Interval v1/Supabase/SupabaseConfig.swift
+Interval/Supabase/SupabaseConfig.swift
 
 # Claude Code local state
 .claude/

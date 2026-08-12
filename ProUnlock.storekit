@@ -22,7 +22,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "com.superapp.intervalv1.pro_unlock",
+      "productID" : "com.superapp.interval.pro_unlock",
       "referenceName" : "Interval Pro Unlock",
       "type" : "NonConsumable"
     }

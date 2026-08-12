@@ -228,7 +228,7 @@ Voor je commit:
 
 1. Drop alle 8 m4a-bestanden in:
    ```
-   Interval v1/Resources/Audio/
+   Interval/Resources/Audio/
    ```
    (of in een nieuwe `Voice/` submap — XcodeGen pakt het auto op)
 2. Run `xcodegen generate` om de Xcode-project op te frissen
@@ -246,8 +246,8 @@ Mocht je later besluiten dat je toch een NL/FR/DE-variant wilt:
   model (ondersteunt 29+ talen met consistente voice timbre)
 - NL voorbeeld-teksten: `Drie.`, `Twee.`, `Eén.`, `Go!`, `Rust.`,
   `Halverwege.`, `Laatste ronde!`, `Goed gedaan!`
-- Bestanden in `Interval v1/Resources/Audio/nl.lproj/`
-- EN-bestanden verhuizen naar `Interval v1/Resources/Audio/en.lproj/`
+- Bestanden in `Interval/Resources/Audio/nl.lproj/`
+- EN-bestanden verhuizen naar `Interval/Resources/Audio/en.lproj/`
 - `Bundle.main.url(forResource:)` resolvet automatisch naar de
   juiste locale — geen code-wijziging nodig
 

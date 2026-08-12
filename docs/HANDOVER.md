@@ -2,20 +2,20 @@
 
 ## Project context
 
-iOS-app `com.superapp.intervalv1` voor coaches/kinesitherapeuten:
+iOS-app `com.superapp.interval` voor coaches/kinesitherapeuten:
 intervaltimer met work/rest/rounds, achtergrondgeluid, Live Activity,
 Sign in with Apple → Supabase voor cross-device favorites.
 
-**Project root**: `/Users/jellewauters/Superapp-Projects/Interval v1/`
+**Project root**: `/Users/jellewauters/Superapp-Projects/Interval/`
 **Versie**: 1.0 build 4 in TestFlight (build 5 nodig om push fix te
 testen). Werkmap is XcodeGen-gebaseerd, run `xcodegen generate` na
 project.yml-wijziging.
 
 **Identifiers:**
 - Apple Team ID: `VB6FS3N78T`
-- App ID: `com.superapp.intervalv1`
-- Services ID (Sign in with Apple via Supabase): `com.superapp.intervalv1.signin`
-- Widget bundle: `com.superapp.intervalv1.widget`
+- App ID: `com.superapp.interval`
+- Services ID (Sign in with Apple via Supabase): `com.superapp.interval.signin`
+- Widget bundle: `com.superapp.interval.widget`
 - APNs Auth Key ID: `76C427WRHC` (.p8 in ~/Downloads/)
 - Supabase project ref: `gfescsrjilmprsyuzipj`
 - Supabase URL: `https://gfescsrjilmprsyuzipj.supabase.co`
@@ -41,7 +41,7 @@ project.yml-wijziging.
 - `aps-environment = development` entitlement
 - Activity.request gebruikt `pushType: .token`
 - `Activity.pushTokenUpdates` AsyncSequence geobserveerd
-- LiveActivityPushScheduler.swift + ScheduledLiveActivityPush.swift in `Interval v1/LiveActivity/`
+- LiveActivityPushScheduler.swift + ScheduledLiveActivityPush.swift in `Interval/LiveActivity/`
 - Supabase migration `20260521120000_live_activity_pushes.sql` + `20260521130000_dispatcher_hardcoded_url.sql`
 - Edge Functions live: `schedule-live-activity`, `cancel-live-activity`, `send-due-live-activity-pushes`
 - pg_cron job draait elke minuut, inner-loop voor 1s precisie via pg_sleep
@@ -96,7 +96,7 @@ verschilde). **Push notifications komen NIET aan** op vergrendelde iPhone.
 **Wat is gecheckt**:
 - ✅ Build 4 met push-code geïnstalleerd via TestFlight
 - ✅ Live Activity zelf verschijnt → `Activity.request(pushType: .token)` slaagt
-- ✅ Push Notifications capability AAN op App ID `com.superapp.intervalv1` in developer portal
+- ✅ Push Notifications capability AAN op App ID `com.superapp.interval` in developer portal
 - ❌ `live_activity_pushes` tabel in Supabase blijft **leeg** — iPhone POST nooit een schedule
 - ❌ `schedule-live-activity` Edge Function heeft **0 invocations**
 
@@ -109,7 +109,7 @@ gearchiveerd is. Xcode auto-regenereert profile bij archive maar
 doet dat soms niet.
 
 **Volgende stappen die nog niet zijn uitgevoerd**:
-1. Xcode → target Interval v1 → Signing & Capabilities → toggle
+1. Xcode → target Interval → Signing & Capabilities → toggle
    "Automatically manage signing" OFF en weer ON
 2. Clean Build Folder ⌘⇧K
 3. Bump `CURRENT_PROJECT_VERSION` 4 → 5 in project.yml
@@ -121,7 +121,7 @@ doet dat soms niet.
 
 **Als dat niet helpt** — diagnose via Console.app:
 - iPhone via kabel naar Mac
-- Console.app open, iPhone selecteren, filter `subsystem:com.superapp.intervalv1`
+- Console.app open, iPhone selecteren, filter `subsystem:com.superapp.interval`
 - Start workout
 - Zoek naar log lines van `LiveActivity` category:
   - "Scheduled N Live Activity pushes" = OK
@@ -136,7 +136,7 @@ en pure-pulse experimenten). User had feedback:
 9.7× partial naar 0.03, decay constant naar 4.0, durations verlengd.
 **User heeft deze laatste iteratie nog niet getest**. Niet committed.
 
-File: `Interval v1/Audio/AudioEngine.swift` (uncommitted in working tree)
+File: `Interval/Audio/AudioEngine.swift` (uncommitted in working tree)
 
 ### 🟡 TestFlight Beta App Review
 
@@ -157,9 +157,9 @@ permission error blokkeerde antwoord.
 
 ### 🟢 Niet-blockers maar wel TODO
 
-- **WorkoutKit Apple Watch export**: code in `Interval v1/WorkoutKit/WorkoutKitExporter.swift` is geschreven en compileert maar **niet gewired in UI**. Zou een "Stuur naar Watch" knop op Home of Favorites kunnen.
+- **WorkoutKit Apple Watch export**: code in `Interval/WorkoutKit/WorkoutKitExporter.swift` is geschreven en compileert maar **niet gewired in UI**. Zou een "Stuur naar Watch" knop op Home of Favorites kunnen.
 - **Subscriptions / paywall**: user wil Pro-versie maar bewust gedeferd tot na TestFlight feedback. Plan B in eerdere reviews: Pattern C (free guest + sign-in required for purchase).
-- **Tests**: er is een Interval v1 Tests target met enkele TimerEngineTests, WorkoutTests etc. maar nieuwe @Observable + push code is niet test-covered.
+- **Tests**: er is een Interval Tests target met enkele TimerEngineTests, WorkoutTests etc. maar nieuwe @Observable + push code is niet test-covered.
 - **Localization**: `Localizable.xcstrings` heeft Nederlandse source strings; geen Engelse vertalingen. Project is iPad/iPhone NL-first dus mag wachten.
 - **Image asset for App Store**: marketing 1024×1024 staat in `Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png`. Voor App Store screenshots (≠ TestFlight) zijn ook nog ~5 screenshots per device size nodig — niet nodig voor pure TestFlight.
 
@@ -168,14 +168,14 @@ permission error blokkeerde antwoord.
 ## Belangrijke files
 
 ```
-Interval v1/
+Interval/
 ├── project.yml                                          # XcodeGen config — bevat CURRENT_PROJECT_VERSION
 ├── Icon/
 │   ├── AppIcon.svg                                       # composited 1024 source
 │   ├── IntervalIcon_Background.svg                       # cream/coral gradient layer
 │   └── IntervalIcon_Foreground.svg                       # white stopwatch layer
-├── Interval v1/
-│   ├── Interval v1.entitlements                          # applesignin + aps-environment
+├── Interval/
+│   ├── Interval.entitlements                          # applesignin + aps-environment
 │   ├── Info.plist                                        # NSSupportsLiveActivities, UISupportedInterfaceOrientations
 │   ├── PrivacyInfo.xcprivacy
 │   ├── Audio/AudioEngine.swift                           # ⚠️ uncommitted marimba experiment

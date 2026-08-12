@@ -1,9 +1,9 @@
-// Template for the gitignored "Interval v1/Supabase/SupabaseConfig.swift".
+// Template for the gitignored "Interval/Supabase/SupabaseConfig.swift".
 //
 // That file is deliberately NOT in source control (see .gitignore), so a
 // fresh clone won't build until you create it:
 //
-//   1. Copy this file to:  Interval v1/Supabase/SupabaseConfig.swift
+//   1. Copy this file to:  Interval/Supabase/SupabaseConfig.swift
 //   2. Fill in your project URL and publishable (anon) key from
 //      Supabase → Project Settings → API
 //

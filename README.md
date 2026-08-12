@@ -12,7 +12,7 @@ haptics, favorieten en optionele sync via Sign in with Apple + Supabase.
    bouwt het project niet:
 
    ```bash
-   cp SupabaseConfig.example.swift "Interval v1/Supabase/SupabaseConfig.swift"
+   cp SupabaseConfig.example.swift "Interval/Supabase/SupabaseConfig.swift"
    ```
 
    Vul daarna je project-URL en publishable key in
@@ -23,7 +23,7 @@ haptics, favorieten en optionele sync via Sign in with Apple + Supabase.
 
    ```bash
    xcodegen generate
-   open "Interval v1.xcodeproj"
+   open "Interval.xcodeproj"
    ```
 
    `project.pbxproj` wordt gegenereerd uit `project.yml` — nieuwe bestanden
@@ -32,7 +32,7 @@ haptics, favorieten en optionele sync via Sign in with Apple + Supabase.
 4. **Tests:** Cmd+U, of:
 
    ```bash
-   xcodebuild test -project "Interval v1.xcodeproj" -scheme "Interval v1" \
+   xcodebuild test -project "Interval.xcodeproj" -scheme "Interval" \
      -destination 'platform=iOS Simulator,name=iPhone 17'
    ```
 

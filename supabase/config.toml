@@ -5,4 +5,4 @@
 # `user_preferences` tables, neither of which needs custom Edge Function
 # settings.
 
-project_id = "interval-v1"
+project_id = "interval"

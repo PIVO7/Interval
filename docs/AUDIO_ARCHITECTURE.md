@@ -155,7 +155,7 @@ lifecycle-coördinator.
 ```swift
 @MainActor
 final class AudioSessionController {
-    private let log = Logger(subsystem: "com.superapp.intervalv1", category: "AudioSession")
+    private let log = Logger(subsystem: "com.superapp.interval", category: "AudioSession")
 
     func activate() {
         do {
@@ -482,7 +482,7 @@ extra taal toegevoegd worden, dan migreren we naar de gelokaliseerde
 opzet onderaan.
 
 ```
-Interval v1/
+Interval/
 └── Resources/
     ├── Audio/                          (English voice clips, niet gelokaliseerd)
     │   ├── cue_three.m4a               ("Three")

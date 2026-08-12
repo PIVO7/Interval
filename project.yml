@@ -1,4 +1,4 @@
-name: Interval v1
+name: Interval
 options:
   bundleIdPrefix: com.superapp
   developmentLanguage: nl
@@ -25,16 +25,16 @@ settings:
     DEVELOPMENT_TEAM: VB6FS3N78T
 
 targets:
-  Interval v1:
+  Interval:
     type: application
     platform: iOS
     deploymentTarget: '18.0'
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.superapp.intervalv1
-        CODE_SIGN_ENTITLEMENTS: Interval v1/Interval v1.entitlements
+        PRODUCT_BUNDLE_IDENTIFIER: com.superapp.interval
+        CODE_SIGN_ENTITLEMENTS: Interval/Interval.entitlements
     entitlements:
-      path: Interval v1/Interval v1.entitlements
+      path: Interval/Interval.entitlements
       properties:
         com.apple.developer.applesignin:
           - Default
@@ -42,12 +42,12 @@ targets:
       - package: Supabase
         product: Supabase
     sources:
-      - path: Interval v1
+      - path: Interval
     info:
-      path: Interval v1/Info.plist
+      path: Interval/Info.plist
       properties:
         CFBundleDevelopmentRegion: $(DEVELOPMENT_LANGUAGE)
-        # Home-screen name — NOT the target name ("Interval v1").
+        # Home-screen name — NOT the target name ("Interval").
         CFBundleDisplayName: Interval
         CFBundleExecutable: $(EXECUTABLE_NAME)
         CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
@@ -80,28 +80,28 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
 
-  Interval v1 Tests:
+  Interval Tests:
     type: bundle.unit-test
     platform: iOS
     deploymentTarget: '18.0'
     sources:
-      - path: Interval v1 Tests
+      - path: Interval Tests
     dependencies:
-      - target: Interval v1
+      - target: Interval
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.superapp.intervalv1.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.superapp.interval.tests
         GENERATE_INFOPLIST_FILE: YES
 
 schemes:
-  Interval v1:
+  Interval:
     build:
       targets:
-        Interval v1: all
-        Interval v1 Tests: [test]
+        Interval: all
+        Interval Tests: [test]
     test:
       targets:
-        - Interval v1 Tests
+        - Interval Tests
     run:
       config: Debug
       # Local StoreKit testing — lets the Pro unlock purchase/restore flow run

@@ -1,6 +1,6 @@
 # In-app aankoop aanmaken + sandbox/TestFlight testen
 
-De "Interval Pro" unlock. Product-ID in de code: **`com.superapp.intervalv1.pro_unlock`**
+De "Interval Pro" unlock. Product-ID in de code: **`com.superapp.interval.pro_unlock`**
 (zie `StoreManager.unlockProductID` en `ProUnlock.storekit`). Dit ID moet overal
 exact gelijk zijn — het kan na aanmaken niet meer wijzigen.
 
@@ -9,7 +9,7 @@ exact gelijk zijn — het kan na aanmaken niet meer wijzigen.
 ## Vooraf (eenmalig, anders laadt de aankoop niet)
 
 1. **Apple Developer Program** actief (€99/jaar).
-2. **App-record** bestaat in App Store Connect met bundle-ID `com.superapp.intervalv1`.
+2. **App-record** bestaat in App Store Connect met bundle-ID `com.superapp.interval`.
    (App Store Connect → Apps → + → New App, als die er nog niet is.)
 3. ⚠️ **Paid Apps Agreement actief** — App Store Connect → *Business* → onderteken
    de "Paid Applications Agreement" en vul bank- + belastinggegevens in.
@@ -22,7 +22,7 @@ exact gelijk zijn — het kan na aanmaken niet meer wijzigen.
 1. App Store Connect → **Apps** → jouw app → zijbalk **Monetization → In-App Purchases** → **(+)**.
 2. **Type:** Non-Consumable.
 3. **Reference Name:** `Interval Pro Unlock` (alleen intern zichtbaar).
-4. **Product ID:** `com.superapp.intervalv1.pro_unlock`  ← exact dit, niet wijzigbaar.
+4. **Product ID:** `com.superapp.interval.pro_unlock`  ← exact dit, niet wijzigbaar.
 5. **Price:** kies het prijspunt (bv. €4,99-tier).
 6. **Localizations:** voeg minstens NL (+ EN) toe:
    - Display Name: `Interval Pro`
