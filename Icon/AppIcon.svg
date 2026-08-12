@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Composited app icon source — merges IntervalIcon_Background.svg and
-  IntervalIcon_Foreground.svg into a single 1024×1024 file ready for
+  Composited app icon source - merges IntervalIcon_Background.svg and
+  IntervalIcon_Foreground.svg into a single 1024x1024 file ready for
   rendering to PNG (qlmanage -t -s 1024 -o out AppIcon.svg).
 
-  Keep the two source files separate too: they map directly to
-  "Background" and "Foreground" layers in Apple's Icon Composer when
-  you adopt the iOS 26 Liquid Glass workflow — same layout, same
-  coordinates, same colours.
+  iOS 26 Liquid Glass lives in Interval/AppIcon.icon (Icon Composer).
+  That package splits the stopwatch into Ring / Hand / Crown layers
+  so the system can apply glass per piece. This SVG remains the flat
+  composite for the iOS 18 asset-catalog fallback.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <defs>

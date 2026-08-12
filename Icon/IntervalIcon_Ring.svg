@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Stopwatch face ring - Icon Composer foreground layer.
+
+  Outlined (not stroked) so Liquid Glass highlights follow a hard edge.
+  Same geometry as IntervalIcon_Foreground.svg: centre (512, 535),
+  mid-radius 290, thickness 72 -> outer r=326, inner r=254.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <path fill="#FFFFFF" fill-rule="evenodd" d="M186,535 a326,326 0 1 0 652,0 a326,326 0 1 0 -652,0 z M258,535 a254,254 0 1 0 508,0 a254,254 0 1 0 -508,0 z"/>
+</svg>

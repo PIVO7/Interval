@@ -3,9 +3,9 @@
   App icon background layer — paired with IntervalIcon_Foreground.svg.
 
   Layered for Apple Icon Composer (iOS 26 Liquid Glass):
-  - Bold warm gradient running coral → coral-deep → amber. When Icon
-    Composer auto-renders Dark / Tinted / Clear variants this layer is
-    what gets recoloured; the foreground stays a clean white silhouette.
+  - The live icon is Interval/AppIcon.icon; this SVG documents the
+    brand gradient (coral -> amber) that Icon Composer applies as a
+    native fill rather than an imported image.
   - Matches AppTheme.workGradient so the app icon sits visually in the
     same warm palette as the Home screen's "Start training" button.
 -->

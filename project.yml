@@ -2,6 +2,10 @@ name: Interval
 options:
   bundleIdPrefix: com.superapp
   developmentLanguage: nl
+  # Icon Composer packages must be a single file reference, not exploded.
+  fileTypes:
+    icon:
+      file: true
 
 packages:
   Supabase:

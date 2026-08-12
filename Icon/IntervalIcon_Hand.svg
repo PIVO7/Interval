@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Stopwatch hand + pivot - Icon Composer foreground layer.
+
+  Capsule along the original 45-degree hand (length 200, thickness 58)
+  plus the r=34 pivot. Outlined fills, same canvas as the ring/crown layers.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <g fill="#FFFFFF">
+    <circle cx="653.4" cy="393.6" r="29"/>
+    <polygon points="532.506,555.506 491.494,514.494 632.894,373.094 673.906,414.106"/>
+    <circle cx="512" cy="535" r="34"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Stopwatch crown + stem - Icon Composer foreground layer.
+
+  Same coordinates as IntervalIcon_Foreground.svg. The stem overlaps the
+  ring by a few pixels so the button reads as attached, not floating.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <g fill="#FFFFFF">
+    <rect x="470" y="163" width="84" height="48" rx="16"/>
+    <rect x="494" y="203" width="36" height="40"/>
+  </g>
+</svg>

@@ -18,6 +18,9 @@
 
   All elements pure white so the silhouette reads cleanly in light mode
   and remains tintable by Icon Composer for Dark/Tinted/Clear variants.
+
+  Split into IntervalIcon_Ring.svg / _Hand.svg / _Crown.svg for the
+  layered AppIcon.icon package. This file stays the combined glyph.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
   <!-- Top crown (the stopwatch's start/stop button) -->

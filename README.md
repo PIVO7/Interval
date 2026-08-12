@@ -58,3 +58,7 @@ en TestFlight), `APP_STORE_COPY.md` (store-listing in NL/EN/FR) en
 
 De Pro-unlock is actief: `StoreManager.freeForEveryone` staat op `false`.
 Terug naar volledig gratis shippen = die ene vlag op `true` zetten.
+
+Het iOS 26-icoon is `Interval/AppIcon.icon` (Icon Composer, Liquid Glass).
+De platte 1024 PNG in `Assets.xcassets` blijft de fallback voor iOS 18.
+Open het `.icon`-bestand in Icon Composer om glass, dark en tinted te tunen.

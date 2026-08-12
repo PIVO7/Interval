@@ -44,5 +44,8 @@ Interval/Supabase/SupabaseConfig.swift
 # Claude Code local state
 .claude/
 
+# Generated Icon Composer previews (ictool)
+Icon/previews/
+
 # Supabase CLI cache
 supabase/.temp/

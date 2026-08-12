@@ -67,7 +67,7 @@ project.yml-wijziging.
 - Supabase schema voor workouts, user_preferences
 
 ### App features / UI
-- App icon: nieuwe stopwatch (coral bg + white symbol), gecentreerd in canvas (37px omhoog shift)
+- App icon: layered Icon Composer package (`Interval/AppIcon.icon`) for iOS 26 Liquid Glass (ring / hand / crown); flat 1024 PNG remains the iOS 18 fallback
 - Round indicator: title3/heavy + visual progress dots (≤12) / bar (>12)
 - Active timer: 320pt ring, 96pt heavy font, Dynamic Type scaling
 - Favorites: alleen play-knop start, slider-icon opent in-place EditFavoriteSheet (sheet)
@@ -171,10 +171,14 @@ permission error blokkeerde antwoord.
 Interval/
 ├── project.yml                                          # XcodeGen config — bevat CURRENT_PROJECT_VERSION
 ├── Icon/
-│   ├── AppIcon.svg                                       # composited 1024 source
-│   ├── IntervalIcon_Background.svg                       # cream/coral gradient layer
-│   └── IntervalIcon_Foreground.svg                       # white stopwatch layer
+│   ├── AppIcon.svg                                       # composited 1024 source (iOS 18 fallback)
+│   ├── IntervalIcon_Background.svg                       # coral-amber gradient (docs the brand fill)
+│   ├── IntervalIcon_Foreground.svg                       # combined white stopwatch
+│   ├── IntervalIcon_Ring.svg                             # glass torus layer
+│   ├── IntervalIcon_Hand.svg                             # hand + pivot layer
+│   └── IntervalIcon_Crown.svg                            # crown + stem layer
 ├── Interval/
+│   ├── AppIcon.icon                                      # Icon Composer Liquid Glass package
 │   ├── Interval.entitlements                          # applesignin + aps-environment
 │   ├── Info.plist                                        # NSSupportsLiveActivities, UISupportedInterfaceOrientations
 │   ├── PrivacyInfo.xcprivacy

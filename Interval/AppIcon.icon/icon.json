@@ -1,0 +1,134 @@
+{
+  "fill-specializations" : [
+    {
+      "value" : {
+        "linear-gradient" : [
+          "extended-srgb:0.90980,0.50980,0.41961,1.00000",
+          "extended-srgb:0.95686,0.72157,0.37647,1.00000"
+        ]
+      }
+    },
+    {
+      "appearance" : "dark",
+      "value" : {
+        "linear-gradient" : [
+          "extended-srgb:0.72157,0.35294,0.27059,1.00000",
+          "extended-srgb:0.76863,0.56471,0.25098,1.00000"
+        ]
+      }
+    }
+  ],
+  "groups" : [
+    {
+      "name" : "Ring",
+      "blur-material" : 0.35,
+      "lighting" : "combined",
+      "shadow" : {
+        "kind" : "layer-color",
+        "opacity" : 0.45
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.72
+      },
+      "layers" : [
+        {
+          "name" : "Ring",
+          "image-name" : "Ring.svg",
+          "glass" : true,
+          "hidden" : false,
+          "opacity" : 1,
+          "fill-specializations" : [
+            {
+              "value" : { "solid" : "extended-gray:1.00000,1.00000" }
+            },
+            {
+              "appearance" : "dark",
+              "value" : { "solid" : "extended-gray:1.00000,1.00000" }
+            },
+            {
+              "appearance" : "tinted",
+              "value" : { "solid" : "extended-gray:1.00000,1.00000" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "Hand",
+      "blur-material" : 0.2,
+      "lighting" : "combined",
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.2
+      },
+      "layers" : [
+        {
+          "name" : "Hand",
+          "image-name" : "Hand.svg",
+          "glass" : true,
+          "hidden" : false,
+          "opacity" : 1,
+          "fill-specializations" : [
+            {
+              "value" : { "solid" : "extended-gray:1.00000,1.00000" }
+            },
+            {
+              "appearance" : "dark",
+              "value" : { "solid" : "extended-gray:1.00000,1.00000" }
+            },
+            {
+              "appearance" : "tinted",
+              "value" : { "solid" : "extended-gray:1.00000,1.00000" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "Crown",
+      "blur-material" : 0.2,
+      "lighting" : "combined",
+      "shadow" : {
+        "kind" : "layer-color",
+        "opacity" : 0.35
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.15
+      },
+      "layers" : [
+        {
+          "name" : "Crown",
+          "image-name" : "Crown.svg",
+          "glass" : true,
+          "hidden" : false,
+          "opacity" : 1,
+          "fill-specializations" : [
+            {
+              "value" : { "solid" : "extended-gray:1.00000,1.00000" }
+            },
+            {
+              "appearance" : "dark",
+              "value" : { "solid" : "extended-gray:1.00000,1.00000" }
+            },
+            {
+              "appearance" : "tinted",
+              "value" : { "solid" : "extended-gray:1.00000,1.00000" }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : "shared"
+  }
+}
