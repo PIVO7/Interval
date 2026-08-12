@@ -113,22 +113,22 @@ Alternatief als bezet: `Interval – Minuteur HIIT`
 **Sous-titre** (max 30): `Minuteur pour coachs et kinés`
 
 **Texte promotionnel** (max 170):
-> Réglez effort, repos et rounds en quelques secondes et lancez-vous. Couleurs claires, décompte vocal et signaux à chaque phase — conçu pour coachs et kinés.
+> Réglez effort, repos et tours en quelques secondes et lancez-vous. Couleurs claires, décompte vocal et signaux à chaque phase — conçu pour coachs et kinés.
 
 **Description** (max 4000):
 
 ```
 Interval est un minuteur d'intervalles sans superflu, conçu pour les coachs, les kinésithérapeutes et tous ceux qui s'entraînent en blocs d'effort et de repos.
 
-Réglez votre effort, votre repos et le nombre de rounds en quelques secondes, puis lancez-vous. Pendant l'entraînement, vous voyez où vous en êtes d'un coup d'œil : couleurs vives par phase, grande horloge et compteur de rounds. L'écran reste allumé tant que l'entraînement est en cours.
+Réglez votre effort, votre repos et le nombre de tours en quelques secondes, puis lancez-vous. Pendant l'entraînement, vous voyez où vous en êtes d'un coup d'œil : couleurs vives par phase, grande horloge et compteur de tours. L'écran reste allumé tant que l'entraînement est en cours.
 
 POURQUOI INTERVAL
-• Réglage rapide : effort, repos et rounds en un coup d'œil
-• « Three, two, one — GO » : décompte vocal à chaque round
+• Réglage rapide : effort, repos et tours en un coup d'œil
+• « Three, two, one — GO » : décompte vocal à chaque tour
 • Signaux sonores au début de l'effort et du repos et pendant les 3 dernières secondes
 • Retour haptique à chaque changement de phase
 • Mettez en pause, passez une phase ou ajustez votre entraînement sans repartir de zéro
-• Bilan à la fin : durée totale, temps par round et rounds effectués
+• Bilan à la fin : durée totale, temps par tour et tours effectués
 • Clair, sombre ou automatique selon votre appareil
 
 INTERVAL PRO — UN SEUL ACHAT, SANS ABONNEMENT
