@@ -1,7 +1,9 @@
 # Interval
 
 Simpele, betrouwbare interval-timer voor iOS (work/rest/rounds) met stem-cues,
-haptics, favorieten en optionele sync via Sign in with Apple + Supabase.
+haptics en optionele sync via Sign in with Apple + Supabase. De timer is
+volledig gratis; favorieten en trainingskleuren zitten achter een eenmalige
+"Interval Pro"-aankoop (€4,99, non-consumable via StoreKit 2).
 
 ## Project opzetten (verse clone)
 
@@ -50,6 +52,9 @@ Let op: gratis Supabase-projecten pauzeren na ~1 week inactiviteit
 ## Docs
 
 Zie `docs/` — o.a. `HANDOVER.md` (architectuur), `AUDIO_ARCHITECTURE.md`
-(cue-systeem) en `IAP_AND_TESTFLIGHT.md` (voor wanneer de slapende
-Pro-unlock ooit geactiveerd wordt; de app shipt nu volledig gratis via
-`StoreManager.freeForEveryone`).
+(cue-systeem), `IAP_AND_TESTFLIGHT.md` (Pro-unlock in App Store Connect
+en TestFlight), `APP_STORE_COPY.md` (store-listing in NL/EN/FR) en
+`PRIVACY.md` (privacybeleid — publiek hosten vóór submissie).
+
+De Pro-unlock is actief: `StoreManager.freeForEveryone` staat op `false`.
+Terug naar volledig gratis shippen = die ene vlag op `true` zetten.

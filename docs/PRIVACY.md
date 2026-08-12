@@ -1,6 +1,6 @@
 # Privacybeleid — Interval
 
-_Laatst bijgewerkt: 21 mei 2026_
+_Laatst bijgewerkt: 12 augustus 2026_
 
 Interval is een interval-timer-app voor coaches, kinesitherapeuten en
 mensen die regelmatig HIIT/Tabata-style trainingen doen. We willen zo
@@ -60,15 +60,13 @@ als favoriet, slaan we het volgende op:
 Alleen lokaal als je niet ingelogd bent. Plus in onze cloud database
 als je wel ingelogd bent.
 
-### c. Push token voor Live Activity (alleen tijdens een actieve workout)
+### c. In-app aankoop (Interval Pro)
 
-Bij het starten van een workout maakt iOS een tijdelijke "push token"
-voor de Live Activity (de timer-kaart op je vergrendelscherm). Wij
-ontvangen dat token en gebruiken het om je iPhone push-notificaties
-te sturen op het moment dat een werk- of rustblok afloopt — zodat de
-timer ook blijft updaten als je iPhone vergrendeld is en de app niet
-actief draait. Het token wordt verwijderd zodra je workout eindigt of
-je hem stopt.
+De eenmalige "Interval Pro"-aankoop verloopt volledig via Apple's
+App Store (StoreKit). Wij ontvangen **geen betaalgegevens** — geen
+kaartnummers, geen factuuradres, geen Apple-ID. Of je de aankoop
+gedaan hebt wordt door Apple bijgehouden en door de app alleen
+lokaal uitgelezen; wij slaan het niet op onze server op.
 
 ### d. Lokale voorkeuren
 
@@ -84,10 +82,7 @@ in iOS' `UserDefaults`, en gaan nooit naar onze server:
 
 - Geen locatie.
 - Geen contactpersonen, foto's, of microfoon-data.
-- Geen gezondheidsgegevens (de app exporteert workouts wel naar Apple
-  Watch's WorkoutKit als die functie geactiveerd is, maar slaat geen
-  hartslag of vergelijkbare data bij ons op — dat blijft in Apple Health
-  op je eigen apparaat).
+- Geen gezondheidsgegevens (geen hartslag of vergelijkbare data).
 - Geen analytics-pixels, geen advertentie-IDs.
 - Geen tracking tussen apps of websites.
 
@@ -98,7 +93,6 @@ in iOS' `UserDefaults`, en gaan nooit naar onze server:
 |---|---|---|
 | Je account herkennen tussen apparaten | Apple user-ID, naam, e-mail | Uitvoering van de overeenkomst (art. 6.1.b) |
 | Je opgeslagen workouts synchroniseren | Workout-naam + instellingen | Uitvoering van de overeenkomst (art. 6.1.b) |
-| Live Activity updates leveren tijdens een training | Push token | Uitvoering van de overeenkomst (art. 6.1.b) |
 | Je per e-mail antwoorden op vragen die je stelt | E-mailadres | Gerechtvaardigd belang (art. 6.1.f) |
 
 We doen **geen profiling**, **geen geautomatiseerde besluitvorming**
@@ -127,9 +121,8 @@ verantwoordelijke. Hun privacybeleid:
 - **Sign in with Apple**: Apple authentiseert je identiteit. Wij
   ontvangen alleen wat je in het Apple-dialoogvenster goedkeurt
   (sectie 2.a).
-- **Apple Push Notification Service (APNs)**: gebruikt om Live
-  Activity updates naar je iPhone te sturen. APNs ziet alleen je push
-  token + de boodschap (welke fase, welke ronde). Apple's privacybeleid:
+- **App Store / StoreKit**: de eenmalige Interval Pro-aankoop wordt
+  volledig door Apple afgehandeld (sectie 2.c). Apple's privacybeleid:
   [apple.com/legal/privacy](https://www.apple.com/legal/privacy).
 
 Geen andere derde partijen ontvangen je gegevens.
@@ -141,7 +134,6 @@ Geen andere derde partijen ontvangen je gegevens.
 |---|---|
 | Account-gegevens (Apple user-ID, naam, e-mail) | Zo lang je account actief is |
 | Opgeslagen workouts | Zo lang je account actief is, of tot je ze handmatig verwijdert |
-| Push tokens voor Live Activity | Tijdens de actieve workout; daarna verwijderd binnen 8 dagen |
 | Lokale voorkeuren | Tot je de app verwijdert van je apparaat |
 
 Als je je account wilt laten verwijderen — zie sectie 7. We verwijderen
@@ -154,9 +146,6 @@ dan alles binnen 30 dagen.
 - Database-tabellen hebben **Row Level Security (RLS)**: je eigen
   gegevens zijn alleen toegankelijk vanuit jouw geauthenticeerde
   sessie.
-- Sleutels die toegang geven tot Apple Push Notification Service
-  worden bewaard in Supabase Secrets, niet in code of in publieke
-  configuratie.
 - Je privé Apple-wachtwoord raken wij nooit aan — Sign in with Apple
   gebruikt alleen identity tokens.
 
