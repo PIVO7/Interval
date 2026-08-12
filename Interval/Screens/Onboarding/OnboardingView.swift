@@ -93,10 +93,12 @@ struct OnboardingView: View {
                 title: "Voice cues",
                 sub: "Three, two, one — GO bij elke ronde"
             )
+            // Favorites are the paid feature — say so here already, so the
+            // free promise stays honest and the paywall later isn't a surprise.
             featureRow(
                 icon: "heart.fill",
                 title: "Favorieten",
-                sub: "Sla je schema's op voor hergebruik"
+                sub: "Sla je schema's op met Interval Pro"
             )
         }
         .opacity(appeared ? 1 : 0)

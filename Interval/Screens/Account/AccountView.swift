@@ -332,8 +332,11 @@ struct AccountView: View {
                            : Text("Ontgrendel met Interval Pro"))
     }
 
-    /// Pro gate: free users tapping any theme get the paywall; Pro users select.
+    /// Pro gate: free users tapping a *locked* theme get the paywall; the
+    /// already-active theme is theirs regardless of Pro, so tapping it is a
+    /// no-op rather than a paywall dead-end.
     private func selectTheme(_ theme: PhaseTheme) {
+        guard appearance.phaseThemeID != theme.id else { return }
         if pro.isUnlocked {
             appearance.phaseThemeID = theme.id
         } else {

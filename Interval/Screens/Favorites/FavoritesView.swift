@@ -3,6 +3,7 @@ import SwiftData
 
 struct FavoritesView: View {
     @Environment(WorkoutStore.self) private var store
+    @Environment(StoreManager.self) private var pro
     @Environment(\.modelContext) private var modelContext
 
     @Query(sort: \WorkoutEntity.createdAt, order: .reverse)
@@ -11,6 +12,7 @@ struct FavoritesView: View {
     @State private var syncErrorMessage: String?
     @State private var showSyncErrorAlert = false
     @State private var editingEntity: WorkoutEntity?
+    @State private var showPaywall = false
 
     var body: some View {
         NavigationStack {
@@ -32,6 +34,9 @@ struct FavoritesView: View {
                 EditFavoriteSheet(entity: entity) {
                     syncEditedFavorite(entity)
                 }
+            }
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
             }
         }
     }
@@ -127,11 +132,22 @@ struct FavoritesView: View {
         }
     }
 
+    /// Empty state doubles as a soft Pro entry point: free users see what
+    /// favorites are for and can open the paywall right here instead of
+    /// discovering the gate mid-save on the training screen.
     private var emptyState: some View {
         ContentUnavailableView {
             Label("Nog geen favorieten", systemImage: "heart")
         } description: {
-            Text("Sla je veelgebruikte intervallen op vanaf het trainingsscherm.")
+            Text(pro.isUnlocked
+                 ? "Sla je veelgebruikte intervallen op vanaf het trainingsscherm."
+                 : "Bewaar je veelgebruikte intervallen met Interval Pro.")
+        } actions: {
+            if !pro.isUnlocked {
+                Button("Ontgrendel favorieten") { showPaywall = true }
+                    .buttonStyle(.borderedProminent)
+                    .tint(AppTheme.coral)
+            }
         }
     }
 }
@@ -139,5 +155,6 @@ struct FavoritesView: View {
 #Preview {
     FavoritesView()
         .environment(WorkoutStore())
+        .environment(StoreManager())
         .modelContainer(for: WorkoutEntity.self, inMemory: true)
 }

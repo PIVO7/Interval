@@ -376,6 +376,29 @@
         }
       }
     },
+    "Bewaar je veelgebruikte intervallen met Interval Pro." : {
+      "comment" : "Favorites empty state subtitle (free users)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save your go-to intervals with Interval Pro."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrez vos intervalles favoris avec Interval Pro."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewaar je veelgebruikte intervallen met Interval Pro."
+          }
+        }
+      }
+    },
     "Bewerk %@" : {
       "localizations" : {
         "en" : {
@@ -528,6 +551,29 @@
         }
       }
     },
+    "Er is geen eerdere aankoop gevonden op dit Apple-account." : {
+      "comment" : "Restore-found-nothing alert message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No previous purchase was found for this Apple Account."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun achat antérieur n'a été trouvé pour ce compte Apple."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is geen eerdere aankoop gevonden op dit Apple-account."
+          }
+        }
+      }
+    },
     "Er is niets in rekening gebracht. Probeer het later opnieuw." : {
       "localizations" : {
         "en" : {
@@ -614,6 +660,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GO!"
+          }
+        }
+      }
+    },
+    "Geef je timer je eigen kleuren." : {
+      "comment" : "Paywall benefit subtitle (colour themes)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Give your timer your own colors."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donnez vos propres couleurs à votre minuteur."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geef je timer je eigen kleuren."
+          }
+        }
+      }
+    },
+    "Geen aankoop gevonden" : {
+      "comment" : "Restore-found-nothing alert title",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No purchase found"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun achat trouvé"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen aankoop gevonden"
           }
         }
       }
@@ -1335,6 +1427,29 @@
         }
       }
     },
+    "Ontgrendel favorieten" : {
+      "comment" : "Favorites empty state Pro CTA",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock favorites"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déverrouiller les favoris"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontgrendel favorieten"
+          }
+        }
+      }
+    },
     "Ontgrendel met Interval Pro" : {
       "localizations" : {
         "en" : {
@@ -1751,6 +1866,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Passer"
+          }
+        }
+      }
+    },
+    "Sla je schema's op met Interval Pro" : {
+      "comment" : "Onboarding feature description",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save your routines with Interval Pro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrez vos routines avec Interval Pro"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sla je schema's op met Interval Pro"
           }
         }
       }

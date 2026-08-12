@@ -16,6 +16,7 @@ struct PaywallView: View {
 
     @State private var showError = false
     @State private var showPending = false
+    @State private var showNothingToRestore = false
 
     var body: some View {
         NavigationStack {
@@ -50,6 +51,11 @@ struct PaywallView: View {
                 Button("OK", role: .cancel) {}
             } message: {
                 Text("Er is niets in rekening gebracht. Probeer het later opnieuw.")
+            }
+            .alert("Geen aankoop gevonden", isPresented: $showNothingToRestore) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("Er is geen eerdere aankoop gevonden op dit Apple-account.")
             }
             .alert("Aankoop in behandeling", isPresented: $showPending) {
                 Button("OK", role: .cancel) { dismiss() }
@@ -104,6 +110,12 @@ struct PaywallView: View {
                 icon: "icloud.fill",
                 title: "Synct overal",
                 subtitle: "Je favorieten staan op al je apparaten."
+            )
+            Divider().padding(.leading, 60)
+            benefitRow(
+                icon: "paintpalette.fill",
+                title: "Trainingskleuren",
+                subtitle: "Geef je timer je eigen kleuren."
             )
         }
         .softCard()
@@ -191,6 +203,10 @@ struct PaywallView: View {
         if store.isUnlocked {
             onUnlocked()
             dismiss()
+        } else {
+            // A restore that finds nothing must not end in silence — App
+            // Review taps this button on a fresh account and expects feedback.
+            showNothingToRestore = true
         }
     }
 }
