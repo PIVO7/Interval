@@ -28,6 +28,9 @@ struct BrandIconCircle<Glyph: View>: View {
     private var glyphContent: some View {
         glyph
             .foregroundStyle(.white)
+            // Mirrors the app icon's neutral drop shadow under its
+            // solid-white glyph layers.
+            .shadow(color: .black.opacity(0.25), radius: 3, x: 0, y: 2)
             .frame(width: size, height: size)
     }
 }

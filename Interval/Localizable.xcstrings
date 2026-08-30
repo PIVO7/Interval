@@ -2087,28 +2087,6 @@
         }
       }
     },
-    "Start training" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start workout"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Démarrer l'entraînement"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start training"
-          }
-        }
-      }
-    },
     "Stel je intervallen in en begin wanneer je klaar bent." : {
       "comment" : "Home screen subtitle",
       "localizations" : {
@@ -2422,6 +2400,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Training"
+          }
+        }
+      }
+    },
+    "Training starten" : {
+      "comment" : "Primary CTA on the Home screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start workout"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer l'entraînement"
           }
         }
       }

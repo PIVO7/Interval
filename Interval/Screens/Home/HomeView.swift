@@ -242,7 +242,7 @@ struct HomeView: View {
     private var startLabel: some View {
         HStack(spacing: 10) {
             Image(systemName: "play.fill")
-            Text("Start training")
+            Text("Training starten")
         }
         .font(.system(.title3, design: .rounded, weight: .bold))
         .frame(maxWidth: .infinity)

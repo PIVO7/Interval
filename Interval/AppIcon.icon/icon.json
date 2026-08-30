@@ -24,13 +24,13 @@
       "blur-material" : 0.35,
       "lighting" : "combined",
       "shadow" : {
-        "kind" : "layer-color",
-        "opacity" : 0.45
+        "kind" : "neutral",
+        "opacity" : 0.5
       },
       "specular" : true,
       "translucency" : {
-        "enabled" : true,
-        "value" : 0.72
+        "enabled" : false,
+        "value" : 0.55
       },
       "layers" : [
         {
@@ -65,7 +65,7 @@
       },
       "specular" : true,
       "translucency" : {
-        "enabled" : true,
+        "enabled" : false,
         "value" : 0.2
       },
       "layers" : [
@@ -96,12 +96,12 @@
       "blur-material" : 0.2,
       "lighting" : "combined",
       "shadow" : {
-        "kind" : "layer-color",
-        "opacity" : 0.35
+        "kind" : "neutral",
+        "opacity" : 0.45
       },
       "specular" : true,
       "translucency" : {
-        "enabled" : true,
+        "enabled" : false,
         "value" : 0.15
       },
       "layers" : [

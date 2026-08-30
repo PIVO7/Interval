@@ -157,13 +157,10 @@ extension View {
 struct LiquidGlassSurface: ViewModifier {
     let shape: AnyShape
     let fallbackOpacity: Double
-    /// Interactive glass reacts to touches with the system's shimmer;
-    /// disable for non-tappable surfaces like cards.
-    let interactive: Bool
 
     func body(content: Content) -> some View {
         if #available(iOS 26.0, *) {
-            content.glassEffect(.regular.interactive(interactive), in: shape)
+            content.glassEffect(.regular.interactive(), in: shape)
         } else {
             content.background(shape.fill(Color.white.opacity(fallbackOpacity)))
         }
@@ -171,16 +168,8 @@ struct LiquidGlassSurface: ViewModifier {
 }
 
 extension View {
-    func liquidGlassSurface(
-        in shape: some Shape,
-        fallbackOpacity: Double,
-        interactive: Bool = true
-    ) -> some View {
-        modifier(LiquidGlassSurface(
-            shape: AnyShape(shape),
-            fallbackOpacity: fallbackOpacity,
-            interactive: interactive
-        ))
+    func liquidGlassSurface(in shape: some Shape, fallbackOpacity: Double) -> some View {
+        modifier(LiquidGlassSurface(shape: AnyShape(shape), fallbackOpacity: fallbackOpacity))
     }
 }
 

@@ -78,7 +78,10 @@ struct FinishedView: View {
             }
             .padding(.horizontal, 28)
             .padding(.vertical, 22)
-            .liquidGlassSurface(in: .rect(cornerRadius: 24), fallbackOpacity: 0.18, interactive: false)
+            // Content layer, not a control — plain translucent fill; Apple
+            // advises against decorative Liquid Glass in the content area.
+            .background(Color.white.opacity(0.18))
+            .clipShape(RoundedRectangle(cornerRadius: 24))
             .opacity(statsAppear ? 1 : 0)
             .offset(y: statsAppear ? 0 : 12)
 
