@@ -46,6 +46,9 @@ struct HomeView: View {
                     .frame(maxWidth: 720)
                     .frame(maxWidth: .infinity)
                 }
+                // Content fits on tall devices — only allow scrolling when
+                // it actually overflows (small screens, large Dynamic Type).
+                .scrollBounceBehavior(.basedOnSize)
             }
             .navigationTitle("Interval")
             .navigationBarTitleDisplayMode(.large)
@@ -158,13 +161,9 @@ struct HomeView: View {
     // MARK: - Summary card (hero)
     private var summaryCard: some View {
         HStack(spacing: 18) {
-            ZStack {
-                Circle()
-                    .fill(AppTheme.workGradient)
-                    .frame(width: 64, height: 64)
+            BrandIconCircle {
                 Image(systemName: "stopwatch.fill")
                     .font(.title2)
-                    .foregroundStyle(.white)
             }
             VStack(alignment: .leading, spacing: 4) {
                 Text("Totale duur")

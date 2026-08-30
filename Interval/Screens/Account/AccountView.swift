@@ -128,16 +128,13 @@ struct AccountView: View {
     private var profileCard: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(spacing: 16) {
-                ZStack {
-                    Circle().fill(AppTheme.workGradient).frame(width: 64, height: 64)
+                BrandIconCircle {
                     if let initials = userInitials {
                         Text(initials)
                             .font(.system(.title, design: .rounded, weight: .bold))
-                            .foregroundStyle(.white)
                     } else {
                         Image(systemName: "person.fill")
                             .font(.title)
-                            .foregroundStyle(.white)
                     }
                 }
                 VStack(alignment: .leading, spacing: 4) {

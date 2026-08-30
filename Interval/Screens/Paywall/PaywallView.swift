@@ -69,13 +69,9 @@ struct PaywallView: View {
     // MARK: - Hero
     private var hero: some View {
         VStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(AppTheme.workGradient)
-                    .frame(width: 96, height: 96)
+            BrandIconCircle(size: 96) {
                 Image(systemName: "heart.fill")
                     .font(.system(size: 40))
-                    .foregroundStyle(.white)
             }
             .padding(.top, 12)
             VStack(spacing: 8) {

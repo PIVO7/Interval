@@ -2,23 +2,14 @@ import SwiftUI
 
 struct ActiveTrainingView: View {
     // Engine is owned by `ActiveSession`, not this view — it keeps ticking
-    // (and cueing) when the user minimizes to the tab bar accessory.
-    private let engine: TimerEngine
+    // (and cueing) across the cover's dismiss animation and app suspension.
+    let engine: TimerEngine
     /// Ends the session for good (stop button, finished screen).
-    private let onClose: () -> Void
-    /// Hides the fullscreen UI while the training keeps running. Nil on
-    /// systems without a tab bar accessory to get back in through (<iOS 26).
-    private let onMinimize: (() -> Void)?
+    let onClose: () -> Void
     @Environment(AppearanceSettings.self) private var appearance
 
     @State private var showStopAlert = false
     @State private var showAdjustSheet = false
-
-    init(engine: TimerEngine, onClose: @escaping () -> Void, onMinimize: (() -> Void)? = nil) {
-        self.engine = engine
-        self.onClose = onClose
-        self.onMinimize = onMinimize
-    }
 
     var body: some View {
         ZStack {
@@ -40,12 +31,10 @@ struct ActiveTrainingView: View {
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
         }
-        .overlay(alignment: .topLeading) { minimizeButton }
         .animation(.easeInOut(duration: 0.45), value: phaseKey)
         .statusBarHidden()
-        // Idle timer only tracks the fullscreen UI: minimized sessions may
-        // let the screen sleep — the engine catches up from the wall clock
-        // when the app returns to the foreground (see RootTabView).
+        // Keep the screen awake while the training runs; the engine catches
+        // up from the wall clock after suspension (see RootTabView).
         .onAppear { UIApplication.shared.isIdleTimerDisabled = true }
         .onDisappear { UIApplication.shared.isIdleTimerDisabled = false }
         .alert("Training stoppen?", isPresented: $showStopAlert) {
@@ -56,25 +45,6 @@ struct ActiveTrainingView: View {
         }
         .sheet(isPresented: $showAdjustSheet) {
             AdjustWorkoutSheet(engine: engine)
-        }
-    }
-
-    /// Chevron that tucks the training behind the tab bar accessory while it
-    /// keeps running — the mini-player pattern. Hidden on the finished screen
-    /// (nothing left to keep running) and on systems without the accessory.
-    @ViewBuilder
-    private var minimizeButton: some View {
-        if let onMinimize, phaseKey != "finished" {
-            Button(action: onMinimize) {
-                Image(systemName: "chevron.down")
-                    .font(.system(.body, weight: .semibold))
-                    .foregroundStyle(.white)
-                    .frame(width: 40, height: 40)
-                    .background(Circle().fill(Color.white.opacity(0.18)))
-            }
-            .padding(.leading, 20)
-            .padding(.top, 20)
-            .accessibilityLabel(Text("Training minimaliseren"))
         }
     }
 
@@ -136,9 +106,7 @@ struct ActiveTrainingView: View {
                 .foregroundStyle(.white)
                 .padding(.horizontal, 18)
                 .padding(.vertical, 10)
-                .background(
-                    Capsule().fill(Color.white.opacity(0.18))
-                )
+                .liquidGlassSurface(in: .capsule, fallbackOpacity: 0.18)
             }
             .transition(
                 .opacity.combined(with: .move(edge: .bottom))
@@ -286,7 +254,7 @@ struct ActiveTrainingView: View {
                     .font(.system(size: size * 0.38, weight: .semibold))
                     .foregroundStyle(.white)
                     .frame(width: size, height: size)
-                    .background(Circle().fill(Color.white.opacity(bgOpacity)))
+                    .liquidGlassSurface(in: .circle, fallbackOpacity: bgOpacity)
             }
             Text(label)
                 .font(.system(.caption, design: .rounded, weight: .medium))

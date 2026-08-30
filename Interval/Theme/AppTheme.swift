@@ -150,6 +150,40 @@ extension View {
     }
 }
 
+// MARK: - Liquid Glass surface
+/// Subtle Liquid Glass backdrop for controls sitting on the vibrant workout
+/// gradients (iOS 26+). Falls back to the original translucent-white fill on
+/// earlier systems so the layout doesn't shift between OS generations.
+struct LiquidGlassSurface: ViewModifier {
+    let shape: AnyShape
+    let fallbackOpacity: Double
+    /// Interactive glass reacts to touches with the system's shimmer;
+    /// disable for non-tappable surfaces like cards.
+    let interactive: Bool
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffect(.regular.interactive(interactive), in: shape)
+        } else {
+            content.background(shape.fill(Color.white.opacity(fallbackOpacity)))
+        }
+    }
+}
+
+extension View {
+    func liquidGlassSurface(
+        in shape: some Shape,
+        fallbackOpacity: Double,
+        interactive: Bool = true
+    ) -> some View {
+        modifier(LiquidGlassSurface(
+            shape: AnyShape(shape),
+            fallbackOpacity: fallbackOpacity,
+            interactive: interactive
+        ))
+    }
+}
+
 // MARK: - Button press feedback
 /// Press-down shrink + dim for the big gradient CTAs, mirroring the tactile
 /// response the list rows get from their RowButtonStyle. Without this the

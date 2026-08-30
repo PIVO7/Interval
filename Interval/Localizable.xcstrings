@@ -2426,28 +2426,6 @@
         }
       }
     },
-    "Training minimaliseren" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Minimize workout"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Réduire l'entraînement"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Training minimaliseren"
-          }
-        }
-      }
-    },
     "Training stoppen?" : {
       "comment" : "Stop training alert title",
       "localizations" : {

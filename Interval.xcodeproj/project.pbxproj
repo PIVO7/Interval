@@ -16,7 +16,6 @@
 		0B57AC28BC3F3BB089D8DE43 /* ValuePickerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2269A9F41C7F32A2D64FF7F /* ValuePickerRow.swift */; };
 		0E18786AA18120F6B809F881 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04ACBDFD5742004091AA41A /* CountdownView.swift */; };
 		A11CE55E55107A0000000002 /* ActiveSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE55E55107A0000000001 /* ActiveSession.swift */; };
-		A11CE55E55107A0000000004 /* ActiveSessionAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE55E55107A0000000003 /* ActiveSessionAccessory.swift */; };
 		0E5734CC01E97443A4EB4F50 /* cue_finished.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1CC1D7F13391A8F6AD0434CB /* cue_finished.m4a */; };
 		0EF44145ECD1576EE3703D55 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7BD5634C8402C1ABF4B37A /* PaywallView.swift */; };
 		100DE654742905DFE40BC952 /* InlineTimeWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E255E2AE663617BBC9B3B3 /* InlineTimeWheel.swift */; };
@@ -42,6 +41,7 @@
 		797930F88CCB8F0A7DCCD03D /* Duration+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A53A3D76A9ED6642E97AD13 /* Duration+Formatting.swift */; };
 		7C752F6B44D2084DF0E59D2B /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E391BD054CABD189B28253 /* Animations.swift */; };
 		7CEFFBBDABF57ECE4BA379D0 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1F9B23CD262E3AA571DFA3 /* AppTheme.swift */; };
+		B44D1C0E11A2B3C4D5E6F002 /* BrandIconCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44D1C0E11A2B3C4D5E6F001 /* BrandIconCircle.swift */; };
 		7ED1B89A493D72EB0FB3715A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6A22F58EEA679E1F5A873B /* OnboardingView.swift */; };
 		7F8ED9D7DCD2D09A6418DA93 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D79914C53DC97701222B5276 /* README.md */; };
 		8D57B0F11471078A35B637A8 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337E93E69B930FB1E7434796 /* FavoritesView.swift */; };
@@ -95,7 +95,6 @@
 		223B59BDE97FBE39779F5AA2 /* SaveFavoriteSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFavoriteSheet.swift; sourceTree = "<group>"; };
 		253D44E3730E3157A24BD377 /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
 		A11CE55E55107A0000000001 /* ActiveSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSession.swift; sourceTree = "<group>"; };
-		A11CE55E55107A0000000003 /* ActiveSessionAccessory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSessionAccessory.swift; sourceTree = "<group>"; };
 		27E391BD054CABD189B28253 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		2E7D56FB5A059FFB88274D17 /* ActiveTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTrainingView.swift; sourceTree = "<group>"; };
 		309BCDCFE4C3ABB75C7662A7 /* AudioSessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionController.swift; sourceTree = "<group>"; };
@@ -115,6 +114,7 @@
 		6ADEC4387A2F773F7CE7CF93 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		6BD66B41188A3EF174B0FE26 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		6C1F9B23CD262E3AA571DFA3 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		B44D1C0E11A2B3C4D5E6F001 /* BrandIconCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandIconCircle.swift; sourceTree = "<group>"; };
 		6D17CAC99CC1365F5E439C3B /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		752CBD28BA7940D2A9E78619 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		762BE01CD01ECDE5E46E316A /* WorkoutEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutEntityTests.swift; sourceTree = "<group>"; };
@@ -229,6 +229,7 @@
 				AB162193643A9BFB2BE0334B /* AppearanceMode.swift */,
 				C6AEA91642F0A398A4EB7D00 /* AppearanceSettings.swift */,
 				6C1F9B23CD262E3AA571DFA3 /* AppTheme.swift */,
+				B44D1C0E11A2B3C4D5E6F001 /* BrandIconCircle.swift */,
 				BCC9F44ABA19DB024C2ED3C4 /* PhaseTheme.swift */,
 			);
 			path = Theme;
@@ -237,7 +238,6 @@
 		3355AC8C8262D65ECE060177 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				A11CE55E55107A0000000003 /* ActiveSessionAccessory.swift */,
 				340DF40FC80AB7159E3BD955 /* RootTabView.swift */,
 			);
 			path = Navigation;
@@ -528,6 +528,7 @@
 				4A059695B4F24379D49C58AF /* AdjustWorkoutSheet.swift in Sources */,
 				7C752F6B44D2084DF0E59D2B /* Animations.swift in Sources */,
 				7CEFFBBDABF57ECE4BA379D0 /* AppTheme.swift in Sources */,
+				B44D1C0E11A2B3C4D5E6F002 /* BrandIconCircle.swift in Sources */,
 				0B138210CB8024340185A71F /* AppearanceMode.swift in Sources */,
 				D044EE26AAF639CAD31B238F /* AppearanceSettings.swift in Sources */,
 				CABB7A7520878E16AE34F61D /* AppleUser.swift in Sources */,
@@ -536,7 +537,6 @@
 				C16185227FABF2DD3164F8A3 /* AuthManager.swift in Sources */,
 				0E18786AA18120F6B809F881 /* CountdownView.swift in Sources */,
 				A11CE55E55107A0000000002 /* ActiveSession.swift in Sources */,
-				A11CE55E55107A0000000004 /* ActiveSessionAccessory.swift in Sources */,
 				40DD1B6CB83B6660231985AB /* CueChannel.swift in Sources */,
 				E8F187B7EBDA5739F8EE3361 /* CueOrchestrator.swift in Sources */,
 				797930F88CCB8F0A7DCCD03D /* Duration+Formatting.swift in Sources */,

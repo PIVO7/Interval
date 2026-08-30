@@ -30,6 +30,8 @@
   --font: "Nunito", ui-rounded, "SF Pro Rounded", system-ui, "Segoe UI", sans-serif;
 
   --work-gradient: linear-gradient(135deg, var(--coral), var(--amber));
+  /* App-icon / primary-button run: deeper coral→amber (matches AppTheme.buttonGradient) */
+  --button-gradient: linear-gradient(135deg, #D96A4E, #C07E24);
   --rest-gradient: linear-gradient(135deg, var(--sage), var(--cream));
   --deep-gradient: linear-gradient(160deg, var(--coral) 0%, var(--coral-deep) 100%);
 }
@@ -90,7 +92,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: var(--work-gradient);
+  background: var(--button-gradient);
   box-shadow: var(--shadow);
   display: grid;
   place-items: center;

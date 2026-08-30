@@ -78,8 +78,7 @@ struct FinishedView: View {
             }
             .padding(.horizontal, 28)
             .padding(.vertical, 22)
-            .background(Color.white.opacity(0.18))
-            .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+            .liquidGlassSurface(in: .rect(cornerRadius: 24), fallbackOpacity: 0.18, interactive: false)
             .opacity(statsAppear ? 1 : 0)
             .offset(y: statsAppear ? 0 : 12)
 
@@ -98,9 +97,8 @@ struct FinishedView: View {
                             .font(.system(.headline, design: .rounded, weight: .semibold))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
-                            .background(Color.white.opacity(0.22))
                             .foregroundStyle(.white)
-                            .clipShape(Capsule())
+                            .liquidGlassSurface(in: .capsule, fallbackOpacity: 0.22)
                     }
                 }
 

@@ -47,9 +47,9 @@ struct RootTabView: View {
                 AccountView()
             }
         }
-        .modifier(SessionTabChrome(session: session))
-        // Presented from the tab root (not HomeView) so the minimized
-        // session can be reopened from any tab via the accessory.
+        .modifier(TabBarChrome())
+        // Presented from the tab root (not HomeView) so the cover overlays
+        // the entire tab UI regardless of the selected tab.
         .fullScreenCover(
             isPresented: $session.isPresentingFullScreen,
             onDismiss: { session.finalizeEnd() }
@@ -57,8 +57,7 @@ struct RootTabView: View {
             if let engine = session.engine {
                 ActiveTrainingView(
                     engine: engine,
-                    onClose: { session.end() },
-                    onMinimize: minimizeAction
+                    onClose: { session.end() }
                 )
                 .environment(store)
                 .environment(audioSettings)
@@ -73,10 +72,8 @@ struct RootTabView: View {
             session.start(workout, cues: cueOrchestrator)
             store.pendingStart = nil
         }
-        // Foreground catch-up lives here rather than in ActiveTrainingView:
-        // a minimized session has no fullscreen view alive to observe
-        // scenePhase, but its engine still needs to fast-forward through
-        // phases missed while suspended.
+        // Foreground catch-up: the engine fast-forwards through phases
+        // missed while the app was suspended in the background.
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active { session.engine?.recomputeFromWallClock() }
         }
@@ -90,15 +87,6 @@ struct RootTabView: View {
         .task(id: auth.user?.supabaseUserId) {
             await pullRemoteFavorites()
         }
-    }
-
-    /// Non-nil only where a tab bar accessory exists to reopen a minimized
-    /// session; on earlier systems the minimize button stays hidden.
-    private var minimizeAction: (() -> Void)? {
-        if #available(iOS 26.0, *) {
-            return { session.minimize() }
-        }
-        return nil
     }
 
     private func pullRemoteFavorites() async {
@@ -120,26 +108,12 @@ struct RootTabView: View {
     }
 }
 
-/// iOS 26 tab bar chrome: Liquid Glass minimize-on-scroll plus the
-/// running-training bottom accessory. No-op on earlier systems.
-private struct SessionTabChrome: ViewModifier {
-    let session: ActiveSession
-
+/// iOS 26 tab bar chrome: Liquid Glass minimize-on-scroll. No-op on
+/// earlier systems.
+private struct TabBarChrome: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 26.0, *) {
-            // The accessory modifier renders an empty glass capsule when its
-            // content resolves to nothing, so it's only attached while a
-            // minimized session actually exists.
-            if session.isMinimized, let engine = session.engine {
-                content
-                    .tabBarMinimizeBehavior(.onScrollDown)
-                    .tabViewBottomAccessory {
-                        ActiveSessionAccessory(engine: engine) { session.reopen() }
-                    }
-            } else {
-                content
-                    .tabBarMinimizeBehavior(.onScrollDown)
-            }
+            content.tabBarMinimizeBehavior(.onScrollDown)
         } else {
             content
         }
