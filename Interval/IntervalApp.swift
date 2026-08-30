@@ -11,6 +11,7 @@ struct IntervalApp: App {
     @State private var appearance = AppearanceSettings()
     @State private var store = StoreManager()
     @State private var cueOrchestrator: CueOrchestrator
+    @State private var activeSession = ActiveSession()
 
     init() {
         // Cue stack is constructed once and shared across workouts.
@@ -54,6 +55,7 @@ struct IntervalApp: App {
                 .environment(appearance)
                 .environment(cueOrchestrator)
                 .environment(store)
+                .environment(activeSession)
                 .tint(AppTheme.coral)
                 .preferredColorScheme(appearance.mode.colorScheme)
                 .task {

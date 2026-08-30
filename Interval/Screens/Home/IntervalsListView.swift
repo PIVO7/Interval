@@ -26,6 +26,7 @@ struct IntervalsListView: View {
                 title: "Work",
                 systemImage: "flame.fill",
                 tint: AppTheme.coral,
+                textTint: AppTheme.coralText,
                 value: workSeconds.asMinuteSecond,
                 isSelected: expandedField == .work,
                 isNudging: nudgeWork
@@ -44,8 +45,9 @@ struct IntervalsListView: View {
 
             ValuePickerRow(
                 title: "Rest",
-                systemImage: "leaf.fill",
+                systemImage: "apple.meditate",
                 tint: AppTheme.sage,
+                textTint: AppTheme.sageText,
                 value: restSeconds.asMinuteSecond,
                 isSelected: expandedField == .rest
             ) { toggle(.rest) }
@@ -65,6 +67,7 @@ struct IntervalsListView: View {
                 title: "Rounds",
                 systemImage: "repeat",
                 tint: AppTheme.amber,
+                textTint: AppTheme.amberText,
                 value: rounds.formatted(),
                 isSelected: expandedField == .rounds
             ) { toggle(.rounds) }

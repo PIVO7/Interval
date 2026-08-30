@@ -5,7 +5,13 @@ import os
 struct RootTabView: View {
     @Environment(AuthManager.self) private var auth
     @Environment(WorkoutStore.self) private var store
+    @Environment(AudioSettings.self) private var audioSettings
+    @Environment(CueOrchestrator.self) private var cueOrchestrator
+    @Environment(StoreManager.self) private var pro
+    @Environment(AppearanceSettings.self) private var appearance
+    @Environment(ActiveSession.self) private var session
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
     @State private var selection: AppTab = .training
 
     private let log = Logger(subsystem: "com.superapp.interval", category: "Sync")
@@ -26,19 +32,53 @@ struct RootTabView: View {
     }
 
     private var mainTabs: some View {
-        TabView(selection: $selection) {
-            Tab("Training", systemImage: "timer", value: AppTab.training) {
+        @Bindable var session = session
+        // Outline symbols only — on iOS 26 the system fills the selected
+        // tab's icon itself; hard-coding `.fill` makes a tab look
+        // permanently selected.
+        return TabView(selection: $selection) {
+            Tab("Training", systemImage: "stopwatch", value: AppTab.training) {
                 HomeView()
             }
-            Tab("Favorieten", systemImage: "heart.fill", value: AppTab.favorites) {
+            Tab("Favorieten", systemImage: "heart", value: AppTab.favorites) {
                 FavoritesView()
             }
             Tab("Account", systemImage: "person.crop.circle", value: AppTab.account) {
                 AccountView()
             }
         }
+        .modifier(SessionTabChrome(session: session))
+        // Presented from the tab root (not HomeView) so the minimized
+        // session can be reopened from any tab via the accessory.
+        .fullScreenCover(
+            isPresented: $session.isPresentingFullScreen,
+            onDismiss: { session.finalizeEnd() }
+        ) {
+            if let engine = session.engine {
+                ActiveTrainingView(
+                    engine: engine,
+                    onClose: { session.end() },
+                    onMinimize: minimizeAction
+                )
+                .environment(store)
+                .environment(audioSettings)
+                .environment(pro)
+                .environment(appearance)
+                .environment(session)
+            }
+        }
         .onChange(of: store.pendingStart) { _, newValue in
-            if newValue != nil { selection = .training }
+            guard let workout = newValue else { return }
+            selection = .training
+            session.start(workout, cues: cueOrchestrator)
+            store.pendingStart = nil
+        }
+        // Foreground catch-up lives here rather than in ActiveTrainingView:
+        // a minimized session has no fullscreen view alive to observe
+        // scenePhase, but its engine still needs to fast-forward through
+        // phases missed while suspended.
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active { session.engine?.recomputeFromWallClock() }
         }
         // Pull remote favorites into the local store — at launch when a
         // session is already present, and again the moment the async
@@ -50,6 +90,15 @@ struct RootTabView: View {
         .task(id: auth.user?.supabaseUserId) {
             await pullRemoteFavorites()
         }
+    }
+
+    /// Non-nil only where a tab bar accessory exists to reopen a minimized
+    /// session; on earlier systems the minimize button stays hidden.
+    private var minimizeAction: (() -> Void)? {
+        if #available(iOS 26.0, *) {
+            return { session.minimize() }
+        }
+        return nil
     }
 
     private func pullRemoteFavorites() async {
@@ -71,11 +120,41 @@ struct RootTabView: View {
     }
 }
 
+/// iOS 26 tab bar chrome: Liquid Glass minimize-on-scroll plus the
+/// running-training bottom accessory. No-op on earlier systems.
+private struct SessionTabChrome: ViewModifier {
+    let session: ActiveSession
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            // The accessory modifier renders an empty glass capsule when its
+            // content resolves to nothing, so it's only attached while a
+            // minimized session actually exists.
+            if session.isMinimized, let engine = session.engine {
+                content
+                    .tabBarMinimizeBehavior(.onScrollDown)
+                    .tabViewBottomAccessory {
+                        ActiveSessionAccessory(engine: engine) { session.reopen() }
+                    }
+            } else {
+                content
+                    .tabBarMinimizeBehavior(.onScrollDown)
+            }
+        } else {
+            content
+        }
+    }
+}
+
 #Preview {
+    let audioSettings = AudioSettings()
     RootTabView()
         .environment(WorkoutStore())
-        .environment(AudioSettings())
+        .environment(audioSettings)
         .environment(AuthManager())
         .environment(AppearanceSettings())
+        .environment(CueOrchestrator.makeDefault(settings: audioSettings))
+        .environment(StoreManager())
+        .environment(ActiveSession())
         .modelContainer(for: WorkoutEntity.self, inMemory: true)
 }

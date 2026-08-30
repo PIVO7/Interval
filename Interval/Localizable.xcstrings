@@ -664,18 +664,6 @@
         }
       }
     },
-    "GO!" : {
-      "comment" : "Countdown go indicator",
-      "extractionState" : "stale",
-      "localizations" : {
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GO!"
-          }
-        }
-      }
-    },
     "Geef je timer je eigen kleuren." : {
       "comment" : "Paywall benefit subtitle (colour themes)",
       "localizations" : {
@@ -729,6 +717,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geen geluid"
+          }
+        }
+      }
+    },
+    "GO!" : {
+      "comment" : "Countdown go indicator",
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GO!"
           }
         }
       }
@@ -1261,6 +1261,29 @@
         }
       }
     },
+    "min" : {
+      "comment" : "Minutes wheel picker label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min"
+          }
+        }
+      }
+    },
     "Naam" : {
       "comment" : "Name field label in save favorite sheet",
       "localizations" : {
@@ -1352,6 +1375,17 @@
         }
       }
     },
+    "Oceaangolven" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oceaangolven"
+          }
+        }
+      }
+    },
     "OK" : {
       "localizations" : {
         "en" : {
@@ -1364,17 +1398,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
-          }
-        }
-      }
-    },
-    "Oceaangolven" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oceaangolven"
           }
         }
       }
@@ -1423,22 +1446,6 @@
         }
       }
     },
-    "Ontgrendel Interval Pro" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unlock Interval Pro"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Déverrouiller Interval Pro"
-          }
-        }
-      }
-    },
     "Ontgrendel favorieten" : {
       "comment" : "Favorites empty state Pro CTA",
       "localizations" : {
@@ -1458,6 +1465,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ontgrendel favorieten"
+          }
+        }
+      }
+    },
+    "Ontgrendel Interval Pro" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock Interval Pro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déverrouiller Interval Pro"
           }
         }
       }
@@ -1651,29 +1674,6 @@
         }
       }
     },
-    "REST" : {
-      "comment" : "Active workout phase label",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "REST"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "REPOS"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "RUST"
-          }
-        }
-      }
-    },
     "Regen" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1716,6 +1716,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rust"
+          }
+        }
+      }
+    },
+    "REST" : {
+      "comment" : "Active workout phase label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REST"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REPOS"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RUST"
           }
         }
       }
@@ -1802,6 +1825,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Repos"
+          }
+        }
+      }
+    },
+    "sec" : {
+      "comment" : "Seconds wheel picker label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sec"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sec"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sec"
           }
         }
       }
@@ -1907,6 +1953,7 @@
     },
     "Sla je schema's op voor hergebruik" : {
       "comment" : "Onboarding feature description",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2344,6 +2391,28 @@
         }
       }
     },
+    "Training minimaliseren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimize workout"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "R\u00e9duire l'entra\u00eenement"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Training minimaliseren"
+          }
+        }
+      }
+    },
     "Training stoppen?" : {
       "comment" : "Stop training alert title",
       "localizations" : {
@@ -2440,6 +2509,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trillen bij elke fase-overgang"
+          }
+        }
+      }
+    },
+    "v2" : {
+      "comment" : "Coming-soon version marker",
+      "extractionState" : "stale",
+      "localizations" : {
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "v2"
           }
         }
       }
@@ -2651,29 +2732,6 @@
         }
       }
     },
-    "WORK" : {
-      "comment" : "Active workout phase label",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "WORK"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "EFFORT"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "INSPANNING"
-          }
-        }
-      }
-    },
     "Weergave" : {
       "localizations" : {
         "en" : {
@@ -2720,6 +2778,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inspanning"
+          }
+        }
+      }
+    },
+    "WORK" : {
+      "comment" : "Active workout phase label",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WORK"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EFFORT"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "INSPANNING"
           }
         }
       }
@@ -2775,64 +2856,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entraînement terminé"
-          }
-        }
-      }
-    },
-    "min" : {
-      "comment" : "Minutes wheel picker label",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "min"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "min"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "min"
-          }
-        }
-      }
-    },
-    "sec" : {
-      "comment" : "Seconds wheel picker label",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "sec"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "sec"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "sec"
-          }
-        }
-      }
-    },
-    "v2" : {
-      "comment" : "Coming-soon version marker",
-      "extractionState" : "stale",
-      "localizations" : {
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "v2"
           }
         }
       }

@@ -52,10 +52,11 @@ struct SaveFavoriteSheet: View {
                             .font(.system(.headline, design: .rounded, weight: .bold))
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
-                            .background(AppTheme.workGradient)
+                            .background(AppTheme.buttonGradient)
                             .foregroundStyle(.white)
                             .clipShape(Capsule())
                     }
+                    .buttonStyle(PressableButtonStyle())
                 }
                 .padding(24)
             }

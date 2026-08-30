@@ -3,16 +3,14 @@ import SwiftData
 
 struct HomeView: View {
     @Environment(WorkoutStore.self) private var store
-    @Environment(AudioSettings.self) private var audioSettings
     @Environment(CueOrchestrator.self) private var cueOrchestrator
     @Environment(StoreManager.self) private var pro
-    @Environment(AppearanceSettings.self) private var appearance
+    @Environment(ActiveSession.self) private var session
     @Environment(\.modelContext) private var modelContext
 
     @State private var showSaveSheet = false
     @State private var showPaywall = false
     @State private var continueToSaveAfterUnlock = false
-    @State private var showActive = false
     @State private var expandedField: IntervalsListView.Field?
     @State private var justSaved = false
     @State private var savedTrigger = 0
@@ -65,13 +63,6 @@ struct HomeView: View {
             }) {
                 PaywallView { continueToSaveAfterUnlock = true }
             }
-            .fullScreenCover(isPresented: $showActive) {
-                ActiveTrainingView(workout: store.current, cues: cueOrchestrator)
-                    .environment(store)
-                    .environment(audioSettings)
-                    .environment(pro)
-                    .environment(appearance)
-            }
             .sensoryFeedback(.success, trigger: savedTrigger)
             // Single-button "OK" alert — SwiftUI provides the default OK
             // when no actions are declared (navigation.md guidance).
@@ -80,11 +71,6 @@ struct HomeView: View {
                 Text(syncErrorMessage ?? "")
             }
             .onAppear(perform: triggerFirstLaunchNudgeIfNeeded)
-            .onChange(of: store.pendingStart) { _, newValue in
-                guard newValue != nil else { return }
-                showActive = true
-                store.pendingStart = nil
-            }
         }
     }
 
@@ -145,16 +131,11 @@ struct HomeView: View {
 
     // MARK: - Header
     private var header: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Klaar voor je sessie")
-                .font(.system(.title2, design: .rounded, weight: .semibold))
-                .foregroundStyle(AppTheme.primaryText)
-            Text("Stel je intervallen in en begin wanneer je klaar bent.")
-                .font(.system(.subheadline, design: .rounded))
-                .foregroundStyle(AppTheme.secondaryText)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, 4)
+        Text("Stel je intervallen in en begin wanneer je klaar bent.")
+            .font(.system(.subheadline, design: .rounded))
+            .foregroundStyle(AppTheme.secondaryText)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 4)
     }
 
     // MARK: - Summary card (hero)
@@ -193,7 +174,7 @@ struct HomeView: View {
         VStack(spacing: 14) {
             // Primary: start the training
             Button {
-                showActive = true
+                session.start(store.current, cues: cueOrchestrator)
             } label: {
                 HStack(spacing: 10) {
                     Image(systemName: "play.fill")
@@ -202,12 +183,12 @@ struct HomeView: View {
                 .font(.system(.title3, design: .rounded, weight: .bold))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
-                .background(AppTheme.workGradient)
+                .background(AppTheme.buttonGradient)
                 .foregroundStyle(.white)
                 .clipShape(Capsule())
-                .shadow(color: AppTheme.coral.opacity(0.45), radius: 10, x: 0, y: 6)
+                .shadow(color: AppTheme.coralDeep.opacity(0.35), radius: 10, x: 0, y: 6)
             }
-            .accessibilityLabel("Start training")
+            .buttonStyle(PressableButtonStyle())
 
             // Secondary: subtle text-only save action
             Button {
@@ -218,12 +199,11 @@ struct HomeView: View {
                     Text(justSaved ? "Opgeslagen" : "Opslaan als favoriet")
                 }
                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                .foregroundStyle(AppTheme.coral)
+                .foregroundStyle(AppTheme.coralText)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 6)
                 .contentShape(Rectangle())
             }
-            .accessibilityLabel("Opslaan als favoriet")
             .disabled(justSaved)
             .animation(.appSmooth, value: justSaved)
         }

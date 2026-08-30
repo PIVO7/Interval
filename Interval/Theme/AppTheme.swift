@@ -58,8 +58,46 @@ enum AppTheme {
         })
     }
 
+    // Text-safe brand tints. The base coral/amber/sage read fine as fills,
+    // but as *text* on cream/white they land around 1.9–2.5:1. These darker
+    // stops hit ≥4.5:1 on cream and on the tinted value chips; in dark mode
+    // the base tints already clear 5.5:1 on darkBg/darkCard, so they stay.
+    static var coralText: Color {
+        Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0xE8/255, green: 0x82/255, blue: 0x6B/255, alpha: 1)
+                : UIColor(red: 0xAC/255, green: 0x55/255, blue: 0x35/255, alpha: 1)
+        })
+    }
+
+    static var amberText: Color {
+        Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0xF4/255, green: 0xB8/255, blue: 0x60/255, alpha: 1)
+                : UIColor(red: 0x96/255, green: 0x63/255, blue: 0x1A/255, alpha: 1)
+        })
+    }
+
+    static var sageText: Color {
+        Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0xA8/255, green: 0xB8/255, blue: 0x9C/255, alpha: 1)
+                : UIColor(red: 0x56/255, green: 0x7A/255, blue: 0x64/255, alpha: 1)
+        })
+    }
+
     static let workGradient = LinearGradient(
         colors: [coral, amber],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
+    // Deeper coral→amber run for buttons that carry a white label. The base
+    // workGradient bottoms out at ~1.8:1 against white near the amber stop;
+    // these stops keep ≥3.3:1 (large-bold threshold is 3:1) across the run
+    // while staying decorative-bright for icon circles via workGradient.
+    static let buttonGradient = LinearGradient(
+        colors: [Color(hex: 0xD96A4E), Color(hex: 0xC07E24)],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
@@ -94,4 +132,17 @@ struct SoftCard: ViewModifier {
 
 extension View {
     func softCard() -> some View { modifier(SoftCard()) }
+}
+
+// MARK: - Button press feedback
+/// Press-down shrink + dim for the big gradient CTAs, mirroring the tactile
+/// response the list rows get from their RowButtonStyle. Without this the
+/// primary buttons give no visual feedback at all on touch.
+struct PressableButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .opacity(configuration.isPressed ? 0.85 : 1.0)
+            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
+    }
 }

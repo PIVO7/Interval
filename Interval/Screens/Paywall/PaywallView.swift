@@ -158,10 +158,11 @@ struct PaywallView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
-                .background(AppTheme.workGradient)
+                .background(AppTheme.buttonGradient)
                 .foregroundStyle(.white)
                 .clipShape(Capsule())
             }
+            .buttonStyle(PressableButtonStyle())
             .disabled(store.purchaseInFlight || store.product == nil)
 
             Text("Eenmalige aankoop · geen abonnement")

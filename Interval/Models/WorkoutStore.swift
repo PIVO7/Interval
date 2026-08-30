@@ -5,8 +5,8 @@ import Observation
 @Observable
 final class WorkoutStore {
     var current: Workout
-    /// Tap-to-start on a favorite. RootTabView switches to Training tab,
-    /// HomeView opens the active workout — then clears the flag.
+    /// Tap-to-start on a favorite. RootTabView switches to the Training tab,
+    /// hands the workout to ActiveSession — then clears the flag.
     var pendingStart: Workout?
 
     init() {

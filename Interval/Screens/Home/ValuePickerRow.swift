@@ -16,6 +16,10 @@ struct ValuePickerRow: View {
     let title: LocalizedStringKey
     let systemImage: String
     let tint: Color
+    /// Darker variant of `tint` used for the value text — the base tints
+    /// don't reach 4.5:1 on the light chip fill. Defaults to `tint` for
+    /// callers that pass an already-accessible colour.
+    var textTint: Color? = nil
     let value: String
     let isSelected: Bool
     /// One-shot "this is tappable" pulse on the value chip. Used for first-launch
@@ -39,6 +43,13 @@ struct ValuePickerRow: View {
                     .foregroundStyle(AppTheme.primaryText)
                 Spacer()
                 valueChip
+                // Permanent tap affordance — the first-launch nudge pulses
+                // once and never again, so the chevron is what tells
+                // returning users the row expands. Flips with the accordion.
+                Image(systemName: "chevron.down")
+                    .font(.system(.caption2, weight: .bold))
+                    .foregroundStyle(AppTheme.secondaryText.opacity(0.7))
+                    .rotationEffect(.degrees(isSelected ? -180 : 0))
             }
             .padding(.horizontal, 18)
             .padding(.vertical, 14)
@@ -51,7 +62,7 @@ struct ValuePickerRow: View {
     private var valueChip: some View {
         Text(verbatim: value)
             .font(.system(.body, design: .rounded, weight: .bold).monospacedDigit())
-            .foregroundStyle(tint)
+            .foregroundStyle(textTint ?? tint)
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
             .background(
