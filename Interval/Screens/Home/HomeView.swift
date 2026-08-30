@@ -186,19 +186,24 @@ struct HomeView: View {
     }
 
     // MARK: - Action buttons
-    // iOS 26+: Liquid Glass button styles matching Apple's iOS 27 kit —
-    // "Glass Prominent" for the primary CTA, plain "Glass" for the secondary.
-    // Older systems keep the original gradient capsule.
+    // iOS 26+: Liquid Glass — merk-gradient onder helder glas voor de
+    // primaire CTA, plain "Glass" voor de secundaire. Older systems keep
+    // the original gradient capsule.
     private var actionButtons: some View {
         VStack(spacing: 14) {
             if #available(iOS 26.0, *) {
+                // Zelfde oranje als de hero-medaillon bovenaan: de
+                // coral→amber `buttonGradient` onder `.clear` glas (à la
+                // BrandIconCircle) i.p.v. een getinte glassProminent, die
+                // het oranje naar dof baksteen frostte.
                 Button(action: startTraining) {
                     startLabel
+                        .foregroundStyle(.white)
+                        .padding(.vertical, 18)
+                        .glassEffect(.clear.interactive(), in: .capsule)
+                        .background(Capsule().fill(AppTheme.buttonGradient))
                 }
-                .buttonStyle(.glassProminent)
-                .buttonBorderShape(.capsule)
-                .controlSize(.large)
-                .tint(AppTheme.coralDeep)
+                .buttonStyle(PressableButtonStyle())
 
                 Button {
                     requestSaveFavorite()

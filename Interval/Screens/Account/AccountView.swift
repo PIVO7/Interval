@@ -37,7 +37,6 @@ struct AccountView: View {
                 }
             }
             .navigationTitle("Account")
-            .toolbarSubtitle("Sync, signalen en weergave.")
             // Observe errorVersion (monotonic counter) instead of errorMessage
             // so an identical error string thrown twice still re-presents.
             .onChange(of: auth.errorVersion) { _, _ in

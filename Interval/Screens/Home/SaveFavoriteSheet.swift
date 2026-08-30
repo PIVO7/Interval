@@ -29,34 +29,32 @@ struct SaveFavoriteSheet: View {
                         .foregroundStyle(AppTheme.secondaryText)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
-                    Button {
-                        var saved = workout
-                        // A save always creates a NEW favorite. The incoming
-                        // workout may carry the id of an existing favorite
-                        // (started from FavoritesView, or saved earlier from
-                        // Home) — and WorkoutEntity.id is unique, so keeping
-                        // it would silently overwrite that favorite both
-                        // locally and in Supabase. Fresh id + timestamp also
-                        // keeps the createdAt-sorted list honest.
-                        saved.id = UUID()
-                        saved.createdAt = .now
-                        // Trim whitespace so " " typed by accident doesn't
-                        // produce a blank-looking favorite. Falls back to
-                        // the autosuggestion if the user trimmed to empty.
-                        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-                        saved.name = trimmed.isEmpty ? autoSuggestion : trimmed
-                        onSave(saved)
-                        dismiss()
-                    } label: {
-                        Text("Opslaan")
-                            .font(.system(.headline, design: .rounded, weight: .bold))
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background(AppTheme.buttonGradient)
-                            .foregroundStyle(.white)
-                            .clipShape(Capsule())
+                    // iOS 26+: zelfde behandeling als de Home-CTA — de
+                    // merk-gradient onder helder interactief glas. Older
+                    // systems keep the gradient capsule.
+                    if #available(iOS 26.0, *) {
+                        Button(action: save) {
+                            Text("Opslaan")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .frame(maxWidth: .infinity)
+                                .foregroundStyle(.white)
+                                .padding(.vertical, 16)
+                                .glassEffect(.clear.interactive(), in: .capsule)
+                                .background(Capsule().fill(AppTheme.buttonGradient))
+                        }
+                        .buttonStyle(PressableButtonStyle())
+                    } else {
+                        Button(action: save) {
+                            Text("Opslaan")
+                                .font(.system(.headline, design: .rounded, weight: .bold))
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 16)
+                                .background(AppTheme.buttonGradient)
+                                .foregroundStyle(.white)
+                                .clipShape(Capsule())
+                        }
+                        .buttonStyle(PressableButtonStyle())
                     }
-                    .buttonStyle(PressableButtonStyle())
                 }
                 .padding(24)
             }
@@ -68,6 +66,25 @@ struct SaveFavoriteSheet: View {
                 }
             }
         }
+    }
+
+    private func save() {
+        var saved = workout
+        // A save always creates a NEW favorite. The incoming workout may
+        // carry the id of an existing favorite (started from FavoritesView,
+        // or saved earlier from Home) — and WorkoutEntity.id is unique, so
+        // keeping it would silently overwrite that favorite both locally and
+        // in Supabase. Fresh id + timestamp also keeps the createdAt-sorted
+        // list honest.
+        saved.id = UUID()
+        saved.createdAt = .now
+        // Trim whitespace so " " typed by accident doesn't produce a
+        // blank-looking favorite. Falls back to the autosuggestion if the
+        // user trimmed to empty.
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        saved.name = trimmed.isEmpty ? autoSuggestion : trimmed
+        onSave(saved)
+        dismiss()
     }
 
     private var autoSuggestion: String {
