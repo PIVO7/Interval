@@ -25,6 +25,7 @@ struct FavoritesView: View {
                 }
             }
             .navigationTitle("Favorieten")
+            .toolbarSubtitle("Je opgeslagen trainingen.")
             .alert("Synchroniseren mislukt", isPresented: $showSyncErrorAlert) {
                 Button("OK", role: .cancel) {}
             } message: {
@@ -144,9 +145,22 @@ struct FavoritesView: View {
                  : "Bewaar je veelgebruikte intervallen met Interval Pro.")
         } actions: {
             if !pro.isUnlocked {
-                Button("Ontgrendel favorieten") { showPaywall = true }
-                    .buttonStyle(.borderedProminent)
-                    .tint(AppTheme.coral)
+                // iOS 26+: the kit's "Glass Prominent" capsule, matching the
+                // Home screen's primary CTA. Bordered-prominent fallback.
+                if #available(iOS 26.0, *) {
+                    // Large/bold like the Home CTA — white on coralDeep is
+                    // ≈3.8:1, which only passes WCAG as large text.
+                    Button("Ontgrendel favorieten") { showPaywall = true }
+                        .font(.system(.headline, design: .rounded, weight: .bold))
+                        .buttonStyle(.glassProminent)
+                        .buttonBorderShape(.capsule)
+                        .controlSize(.large)
+                        .tint(AppTheme.coralDeep)
+                } else {
+                    Button("Ontgrendel favorieten") { showPaywall = true }
+                        .buttonStyle(.borderedProminent)
+                        .tint(AppTheme.coral)
+                }
             }
         }
     }

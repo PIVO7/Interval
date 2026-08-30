@@ -49,6 +49,7 @@ struct HomeView: View {
             }
             .navigationTitle("Interval")
             .navigationBarTitleDisplayMode(.large)
+            .toolbarSubtitle(Self.introSubtitle)
             .sheet(isPresented: $showSaveSheet) {
                 SaveFavoriteSheet(workout: store.current, onSave: saveFavorite)
                     .presentationDetents([.medium])
@@ -72,6 +73,15 @@ struct HomeView: View {
             }
             .onAppear(perform: triggerFirstLaunchNudgeIfNeeded)
         }
+    }
+
+    // Shown as a navigation-bar subtitle on iOS 26+ and as the in-content
+    // header row on older systems — one constant so the copy can't drift.
+    private static let introSubtitle: LocalizedStringKey =
+        "Stel je intervallen in en begin wanneer je klaar bent."
+
+    private func startTraining() {
+        session.start(store.current, cues: cueOrchestrator)
     }
 
     /// Entry point for the "Opslaan als favoriet" button. Saving named
@@ -130,12 +140,19 @@ struct HomeView: View {
     }
 
     // MARK: - Header
+    // On iOS 26+ the intro line lives in the navigation bar as a subtitle
+    // (Apple's iOS 27 kit "Toolbar - Top, Title and Subtitle" pattern);
+    // older systems keep it as the first content row.
     private var header: some View {
-        Text("Stel je intervallen in en begin wanneer je klaar bent.")
-            .font(.system(.subheadline, design: .rounded))
-            .foregroundStyle(AppTheme.secondaryText)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 4)
+        Group {
+            if #unavailable(iOS 26.0) {
+                Text(Self.introSubtitle)
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundStyle(AppTheme.secondaryText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 4)
+            }
+        }
     }
 
     // MARK: - Summary card (hero)
@@ -170,44 +187,74 @@ struct HomeView: View {
     }
 
     // MARK: - Action buttons
+    // iOS 26+: Liquid Glass button styles matching Apple's iOS 27 kit —
+    // "Glass Prominent" for the primary CTA, plain "Glass" for the secondary.
+    // Older systems keep the original gradient capsule.
     private var actionButtons: some View {
         VStack(spacing: 14) {
-            // Primary: start the training
-            Button {
-                session.start(store.current, cues: cueOrchestrator)
-            } label: {
-                HStack(spacing: 10) {
-                    Image(systemName: "play.fill")
-                    Text("Start training")
+            if #available(iOS 26.0, *) {
+                Button(action: startTraining) {
+                    startLabel
                 }
-                .font(.system(.title3, design: .rounded, weight: .bold))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 18)
-                .background(AppTheme.buttonGradient)
-                .foregroundStyle(.white)
-                .clipShape(Capsule())
-                .shadow(color: AppTheme.coralDeep.opacity(0.35), radius: 10, x: 0, y: 6)
-            }
-            .buttonStyle(PressableButtonStyle())
+                .buttonStyle(.glassProminent)
+                .buttonBorderShape(.capsule)
+                .controlSize(.large)
+                .tint(AppTheme.coralDeep)
 
-            // Secondary: subtle text-only save action
-            Button {
-                requestSaveFavorite()
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: justSaved ? "checkmark.circle.fill" : "heart")
-                    Text(justSaved ? "Opgeslagen" : "Opslaan als favoriet")
+                Button {
+                    requestSaveFavorite()
+                } label: {
+                    saveLabel
+                        .padding(.horizontal, 10)
                 }
-                .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                .foregroundStyle(AppTheme.coralText)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 6)
-                .contentShape(Rectangle())
+                .buttonStyle(.glass)
+                .buttonBorderShape(.capsule)
+                .controlSize(.large)
+                .tint(AppTheme.coralText)
+                .disabled(justSaved)
+                .animation(.appSmooth, value: justSaved)
+            } else {
+                Button(action: startTraining) {
+                    startLabel
+                        .padding(.vertical, 18)
+                        .background(AppTheme.buttonGradient)
+                        .foregroundStyle(.white)
+                        .clipShape(Capsule())
+                        .shadow(color: AppTheme.coralDeep.opacity(0.35), radius: 10, x: 0, y: 6)
+                }
+                .buttonStyle(PressableButtonStyle())
+
+                Button {
+                    requestSaveFavorite()
+                } label: {
+                    saveLabel
+                        .foregroundStyle(AppTheme.coralText)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
+                        .contentShape(Rectangle())
+                }
+                .disabled(justSaved)
+                .animation(.appSmooth, value: justSaved)
             }
-            .disabled(justSaved)
-            .animation(.appSmooth, value: justSaved)
         }
         .padding(.top, 6)
+    }
+
+    private var startLabel: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "play.fill")
+            Text("Start training")
+        }
+        .font(.system(.title3, design: .rounded, weight: .bold))
+        .frame(maxWidth: .infinity)
+    }
+
+    private var saveLabel: some View {
+        HStack(spacing: 6) {
+            Image(systemName: justSaved ? "checkmark.circle.fill" : "heart")
+            Text(justSaved ? "Opgeslagen" : "Opslaan als favoriet")
+        }
+        .font(.system(.subheadline, design: .rounded, weight: .semibold))
     }
 }
 

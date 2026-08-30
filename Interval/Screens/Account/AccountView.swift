@@ -37,6 +37,7 @@ struct AccountView: View {
                 }
             }
             .navigationTitle("Account")
+            .toolbarSubtitle("Sync, signalen en weergave.")
             // Observe errorVersion (monotonic counter) instead of errorMessage
             // so an identical error string thrown twice still re-presents.
             .onChange(of: auth.errorVersion) { _, _ in
@@ -380,15 +381,31 @@ struct AccountView: View {
         Group {
             if auth.isSignedIn {
                 VStack(spacing: 14) {
-                    Button(role: .destructive) {
-                        auth.signOut(modelContext: modelContext)
-                    } label: {
-                        Text("Log uit")
-                            .font(.system(.headline, design: .rounded, weight: .semibold))
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 14)
-                            .background(Capsule().stroke(AppTheme.error.opacity(0.4), lineWidth: 1))
-                            .foregroundStyle(AppTheme.error)
+                    // iOS 26+: the kit's plain "Glass" capsule in its
+                    // destructive variant — the role tints the label red.
+                    // Outline capsule fallback on older systems.
+                    if #available(iOS 26.0, *) {
+                        Button(role: .destructive) {
+                            auth.signOut(modelContext: modelContext)
+                        } label: {
+                            Text("Log uit")
+                                .font(.system(.headline, design: .rounded, weight: .semibold))
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.glass)
+                        .buttonBorderShape(.capsule)
+                        .controlSize(.large)
+                    } else {
+                        Button(role: .destructive) {
+                            auth.signOut(modelContext: modelContext)
+                        } label: {
+                            Text("Log uit")
+                                .font(.system(.headline, design: .rounded, weight: .semibold))
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 14)
+                                .background(Capsule().stroke(AppTheme.error.opacity(0.4), lineWidth: 1))
+                                .foregroundStyle(AppTheme.error)
+                        }
                     }
 
                     // Required by App Store Review Guideline 5.1.1(v): a user

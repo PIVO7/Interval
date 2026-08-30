@@ -1101,6 +1101,23 @@
         }
       }
     },
+    "Je opgeslagen trainingen." : {
+      "comment" : "Favorites screen subtitle",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your saved workouts."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos entraînements enregistrés."
+          }
+        }
+      }
+    },
     "Je wijzigingen konden niet worden bewaard. Probeer het opnieuw." : {
       "localizations" : {
         "en" : {
@@ -2189,6 +2206,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Synchronisez vos entraînements"
+          }
+        }
+      }
+    },
+    "Sync, signalen en weergave." : {
+      "comment" : "Account screen subtitle",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sync, cues, and appearance."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Synchronisation, signaux et affichage."
           }
         }
       }
