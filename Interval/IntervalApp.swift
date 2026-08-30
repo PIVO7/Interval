@@ -19,6 +19,22 @@ struct IntervalApp: App {
         let settings = AudioSettings()
         _audioSettings = State(initialValue: settings)
         _cueOrchestrator = State(initialValue: .makeDefault(settings: settings))
+        Self.applyRoundedNavigationTitles()
+    }
+
+    /// SwiftUI has no modifier for navigation-bar title fonts, so the rounded
+    /// design comes in via the UIKit appearance proxy. Only the fonts are set —
+    /// the bar background stays untouched so the system look keeps working.
+    private static func applyRoundedNavigationTitles() {
+        func roundedFont(style: UIFont.TextStyle, weight: UIFont.Weight) -> UIFont {
+            let size = UIFont.preferredFont(forTextStyle: style).pointSize
+            let base = UIFont.systemFont(ofSize: size, weight: weight)
+            guard let descriptor = base.fontDescriptor.withDesign(.rounded) else { return base }
+            return UIFontMetrics(forTextStyle: style).scaledFont(for: UIFont(descriptor: descriptor, size: size))
+        }
+        let navigationBar = UINavigationBar.appearance()
+        navigationBar.largeTitleTextAttributes = [.font: roundedFont(style: .largeTitle, weight: .bold)]
+        navigationBar.titleTextAttributes = [.font: roundedFont(style: .headline, weight: .semibold)]
     }
 
     let modelContainer: ModelContainer = {
