@@ -28,17 +28,13 @@ enum AppTheme {
     // Adaptive
     static var background: Color {
         Color(uiColor: UIColor { trait in
-            trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0x1C/255, green: 0x1A/255, blue: 0x18/255, alpha: 1)
-                : UIColor(red: 0xFA/255, green: 0xF6/255, blue: 0xF1/255, alpha: 1)
+            trait.userInterfaceStyle == .dark ? UIColor(darkBg) : UIColor(cream)
         })
     }
 
     static var card: Color {
         Color(uiColor: UIColor { trait in
-            trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0x2A/255, green: 0x27/255, blue: 0x24/255, alpha: 1)
-                : UIColor.white
+            trait.userInterfaceStyle == .dark ? UIColor(darkCard) : UIColor.white
         })
     }
 
@@ -46,7 +42,7 @@ enum AppTheme {
         Color(uiColor: UIColor { trait in
             trait.userInterfaceStyle == .dark
                 ? UIColor(white: 0.96, alpha: 1)
-                : UIColor(red: 0x2B/255, green: 0x2B/255, blue: 0x2B/255, alpha: 1)
+                : UIColor(textPrimary)
         })
     }
 
@@ -54,7 +50,7 @@ enum AppTheme {
         Color(uiColor: UIColor { trait in
             trait.userInterfaceStyle == .dark
                 ? UIColor(white: 0.65, alpha: 1)
-                : UIColor(red: 0x7A/255, green: 0x7A/255, blue: 0x7A/255, alpha: 1)
+                : UIColor(textSecondary)
         })
     }
 
@@ -65,7 +61,7 @@ enum AppTheme {
     static var coralText: Color {
         Color(uiColor: UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0xE8/255, green: 0x82/255, blue: 0x6B/255, alpha: 1)
+                ? UIColor(coral)
                 : UIColor(red: 0xAC/255, green: 0x55/255, blue: 0x35/255, alpha: 1)
         })
     }
@@ -73,7 +69,7 @@ enum AppTheme {
     static var amberText: Color {
         Color(uiColor: UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0xF4/255, green: 0xB8/255, blue: 0x60/255, alpha: 1)
+                ? UIColor(amber)
                 : UIColor(red: 0x96/255, green: 0x63/255, blue: 0x1A/255, alpha: 1)
         })
     }
@@ -81,29 +77,17 @@ enum AppTheme {
     static var sageText: Color {
         Color(uiColor: UIColor { trait in
             trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0xA8/255, green: 0xB8/255, blue: 0x9C/255, alpha: 1)
+                ? UIColor(sage)
                 : UIColor(red: 0x56/255, green: 0x7A/255, blue: 0x64/255, alpha: 1)
         })
     }
 
-    static let workGradient = LinearGradient(
-        colors: [coral, amber],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    // Deeper coral→amber run for buttons that carry a white label. The base
-    // workGradient bottoms out at ~1.8:1 against white near the amber stop;
-    // these stops keep ≥3.3:1 (large-bold threshold is 3:1) across the run
-    // while staying decorative-bright for icon circles via workGradient.
+    // Deeper coral→amber run for buttons that carry a white label. The bright
+    // base coral→amber pairing bottoms out at ~1.8:1 against white near the
+    // amber stop; these stops keep ≥3.3:1 (large-bold threshold is 3:1)
+    // across the run. Full-screen phase gradients live in PhaseTheme.
     static let buttonGradient = LinearGradient(
         colors: [Color(hex: 0xD96A4E), Color(hex: 0xC07E24)],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    static let restGradient = LinearGradient(
-        colors: [sage, cream],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
