@@ -1158,6 +1158,7 @@
     },
     "Klaar voor je sessie" : {
       "comment" : "Home screen header",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2402,7 +2403,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "R\u00e9duire l'entra\u00eenement"
+            "value" : "Réduire l'entraînement"
           }
         },
         "nl" : {
