@@ -77,19 +77,22 @@ final class CueOrchestrator: CueOrchestrating {
             object: AVAudioSession.sharedInstance(),
             queue: .main
         ) { [weak self] notification in
+            // Pull the plain values out here so the non-Sendable
+            // Notification doesn't cross into the main-actor closure.
+            let rawType = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt
+            let rawOptions = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt
             // `queue: .main` guarantees main-thread delivery, so it's
             // safe to re-enter the main actor synchronously.
             MainActor.assumeIsolated {
-                self?.handleInterruption(notification)
+                self?.handleInterruption(rawType: rawType, rawOptions: rawOptions)
             }
         }
     }
 
-    private func handleInterruption(_ notification: Notification) {
+    private func handleInterruption(rawType: UInt?, rawOptions: UInt?) {
         guard isActive,
-              let info = notification.userInfo,
-              let raw = info[AVAudioSessionInterruptionTypeKey] as? UInt,
-              let type = AVAudioSession.InterruptionType(rawValue: raw)
+              let rawType,
+              let type = AVAudioSession.InterruptionType(rawValue: rawType)
         else { return }
 
         switch type {
@@ -97,8 +100,7 @@ final class CueOrchestrator: CueOrchestrating {
             // System has paused our audio; nothing to do until it ends.
             break
         case .ended:
-            let options = (info[AVAudioSessionInterruptionOptionKey] as? UInt)
-                .map(AVAudioSession.InterruptionOptions.init(rawValue:)) ?? []
+            let options = rawOptions.map(AVAudioSession.InterruptionOptions.init(rawValue:)) ?? []
             guard options.contains(.shouldResume) else { return }
             sessionController.activate()
             for channel in channels {

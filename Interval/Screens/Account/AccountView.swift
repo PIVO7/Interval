@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import AuthenticationServices
 
 struct AccountView: View {
@@ -147,12 +148,22 @@ struct AccountView: View {
                                 .font(.system(.title3, design: .rounded, weight: .bold))
                                 .foregroundStyle(AppTheme.primaryText)
                         }
-                        if let email = auth.user?.email, !email.isEmpty {
+                        if auth.needsCloudReconnect {
+                            // Don't claim sync works when the cloud
+                            // connection never completed.
+                            Label("Synchronisatie niet verbonden", systemImage: "exclamationmark.icloud.fill")
+                                .font(.system(.footnote, design: .rounded, weight: .semibold))
+                                .foregroundStyle(AppTheme.coralText)
+                        } else if auth.cloudConnection == .connecting {
+                            Label("Verbinden met de cloud…", systemImage: "icloud")
+                                .font(.system(.footnote, design: .rounded))
+                                .foregroundStyle(AppTheme.secondaryText)
+                        } else if let email = auth.user?.email, !email.isEmpty {
                             Text(email)
                                 .font(.system(.footnote, design: .rounded))
                                 .foregroundStyle(AppTheme.secondaryText)
                                 .lineLimit(1)
-                        } else {
+                        } else if auth.user?.supabaseUserId != nil {
                             Label("Trainingen worden gesyncd", systemImage: "checkmark.icloud.fill")
                                 .font(.system(.footnote, design: .rounded))
                                 .foregroundStyle(AppTheme.secondaryText)
@@ -183,11 +194,33 @@ struct AccountView: View {
                 .signInWithAppleButtonStyle(.black)
                 .frame(height: 48)
                 .clipShape(Capsule())
+            } else if auth.needsCloudReconnect {
+                // Retry needs a fresh Apple identity token (they expire
+                // within minutes), so it goes through Sign in with Apple
+                // again rather than replaying the old credential.
+                Text("Je favorieten worden nu alleen op dit toestel bewaard. Verbind opnieuw om ze te synchroniseren.")
+                    .font(.system(.footnote, design: .rounded))
+                    .foregroundStyle(AppTheme.secondaryText)
+                    .fixedSize(horizontal: false, vertical: true)
+                SignInWithAppleButton(
+                    .continue,
+                    onRequest: { request in
+                        auth.configureSignInRequest(request)
+                    },
+                    onCompletion: { result in
+                        auth.handleAuthorization(result)
+                    }
+                )
+                .signInWithAppleButtonStyle(.black)
+                .frame(height: 48)
+                .clipShape(Capsule())
+                .accessibilityHint(Text("Verbind opnieuw om je favorieten te synchroniseren"))
             }
         }
         .padding(20)
         .softCard()
         .animation(.appSmooth, value: auth.isSignedIn)
+        .animation(.appSmooth, value: auth.needsCloudReconnect)
     }
 
     private var userInitials: String? {

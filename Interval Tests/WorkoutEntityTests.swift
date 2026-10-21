@@ -1,5 +1,6 @@
 import Testing
 import Foundation
+import SwiftData
 @testable import Interval
 
 @Suite("WorkoutEntity ↔ Workout conversion")

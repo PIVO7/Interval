@@ -1,6 +1,5 @@
 import SwiftUI
 import SwiftData
-import os
 
 struct RootTabView: View {
     @Environment(AuthManager.self) private var auth
@@ -10,11 +9,10 @@ struct RootTabView: View {
     @Environment(StoreManager.self) private var pro
     @Environment(AppearanceSettings.self) private var appearance
     @Environment(ActiveSession.self) private var session
-    @Environment(\.modelContext) private var modelContext
+    @Environment(FavoritesSync.self) private var favoritesSync
     @Environment(\.scenePhase) private var scenePhase
     @State private var selection: AppTab = .training
-
-    private let log = Logger(subsystem: "com.superapp.interval", category: "Sync")
+    @State private var showCloudConnectError = false
 
     enum AppTab: Hashable { case training, favorites, account }
 
@@ -64,6 +62,7 @@ struct RootTabView: View {
                 .environment(pro)
                 .environment(appearance)
                 .environment(session)
+                .environment(favoritesSync)
             }
         }
         .onChange(of: store.pendingStart) { _, newValue in
@@ -75,35 +74,31 @@ struct RootTabView: View {
         // Foreground catch-up: the engine fast-forwards through phases
         // missed while the app was suspended in the background.
         .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .active { session.engine?.recomputeFromWallClock() }
+            guard newPhase == .active else { return }
+            session.engine?.recomputeFromWallClock()
+            // Retry anything queued while offline or in the background.
+            if auth.user?.supabaseUserId != nil { favoritesSync.requestSync() }
         }
-        // Pull remote favorites into the local store — at launch when a
-        // session is already present, and again the moment the async
-        // Apple→Supabase bridge lands a user id after sign-in (`task(id:)`
-        // re-runs on id change). This is what makes "je favorieten op al
-        // je apparaten" true on a second device; without it the app only
-        // ever uploads. Additive merge: WorkoutEntity.id is unique, so
-        // inserts upsert in place and local-only favorites are kept.
+        // Sync favorites with the server — at launch when a session is
+        // already present, and again the moment the async Apple→Supabase
+        // bridge lands a user id after sign-in (`task(id:)` re-runs on id
+        // change). Pushes queued local changes and reconciles edits and
+        // deletes from other devices; see FavoritesSync.
         .task(id: auth.user?.supabaseUserId) {
-            await pullRemoteFavorites()
+            guard auth.user?.supabaseUserId != nil else { return }
+            await favoritesSync.sync()
         }
-    }
-
-    private func pullRemoteFavorites() async {
-        guard auth.user?.supabaseUserId != nil else { return }
-        do {
-            let remote = try await SupabaseManager.shared.fetchWorkouts()
-            guard !remote.isEmpty else { return }
-            for workout in remote {
-                modelContext.insert(WorkoutEntity(from: workout))
-            }
-            try modelContext.save()
-        } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
-            // Guest mode or unconfigured backend — local-only is fine.
-        } catch {
-            // Best-effort: a failed pull never blocks the UI; the next
-            // launch/sign-in retries.
-            log.warning("Favorites pull failed: \(error.localizedDescription, privacy: .public)")
+        // Signed in with Apple but the cloud connection failed: say so,
+        // instead of letting the user believe their favorites sync. The
+        // Account tab offers the retry.
+        .onChange(of: auth.cloudErrorVersion) { _, _ in
+            showCloudConnectError = true
+        }
+        .alert("Synchronisatie niet verbonden", isPresented: $showCloudConnectError) {
+            Button("Naar Account") { selection = .account }
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Je bent ingelogd, maar de verbinding met de cloud is mislukt. Je favorieten worden voorlopig alleen op dit toestel bewaard. Probeer opnieuw via Account.")
         }
     }
 }

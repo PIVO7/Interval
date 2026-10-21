@@ -10,10 +10,9 @@ import os
 /// - Bridges Sign in with Apple credentials into Supabase Auth
 /// - Provides CRUD for `workouts` and `user_preferences` rows
 ///
-/// Networking model: best-effort. SwiftData is the source of truth on device.
-/// Every mutation writes locally first, then attempts a remote sync. Failures
-/// are logged but do not block the UI. On next sign-in the local store is
-/// reconciled with the remote.
+/// Networking model: SwiftData is the source of truth on device. Every
+/// mutation writes locally first; `FavoritesSync` then pushes queued changes
+/// and reconciles with the remote, retrying failed uploads/deletes later.
 @MainActor
 final class SupabaseManager {
     static let shared = SupabaseManager()
@@ -99,7 +98,10 @@ final class SupabaseManager {
             workSeconds: workout.workSeconds,
             restSeconds: workout.restSeconds,
             rounds: workout.rounds,
-            createdAt: workout.createdAt
+            createdAt: workout.createdAt,
+            // Left nil so it's omitted from the payload: the server stamps
+            // updated_at itself (column default + BEFORE UPDATE trigger).
+            updatedAt: nil
         )
         try await client.from("workouts").upsert(row).execute()
     }
@@ -111,8 +113,9 @@ final class SupabaseManager {
         try await client.from("workouts").delete().eq("id", value: id).execute()
     }
 
-    /// Fetch all workouts for the current user. Used on sign-in to seed local store.
-    func fetchWorkouts() async throws -> [Workout] {
+    /// Fetch all workouts for the current user, with the server's last
+    /// modification time. `FavoritesSync` reconciles these with the local store.
+    func fetchWorkouts() async throws -> [RemoteWorkout] {
         guard SupabaseConfig.isConfigured, let userId = currentUserId else {
             throw SupabaseError.notSignedIn
         }
@@ -123,7 +126,7 @@ final class SupabaseManager {
             .order("created_at", ascending: false)
             .execute()
             .value
-        return rows.map { $0.toWorkout() }
+        return rows.map { RemoteWorkout(workout: $0.toWorkout(), updatedAt: $0.updatedAt ?? $0.createdAt) }
     }
 
     // MARK: - User preferences
@@ -183,6 +186,7 @@ private struct WorkoutRow: Codable {
     let restSeconds: Int
     let rounds: Int
     let createdAt: Date
+    let updatedAt: Date?
 
     enum CodingKeys: String, CodingKey {
         case id, name, rounds
@@ -190,6 +194,7 @@ private struct WorkoutRow: Codable {
         case workSeconds = "work_seconds"
         case restSeconds = "rest_seconds"
         case createdAt = "created_at"
+        case updatedAt = "updated_at"
     }
 
     func toWorkout() -> Workout {

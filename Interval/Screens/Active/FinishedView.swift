@@ -6,7 +6,7 @@ struct FinishedView: View {
     let onHome: () -> Void
     let onRestart: () -> Void
 
-    @Environment(\.modelContext) private var modelContext
+    @Environment(FavoritesSync.self) private var favoritesSync
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(StoreManager.self) private var pro
     @Query private var favorites: [WorkoutEntity]
@@ -153,7 +153,7 @@ struct FinishedView: View {
             PaywallView { continueToSaveAfterUnlock = true }
         }
         .sensoryFeedback(.success, trigger: savedTrigger)
-        .alert("Synchroniseren mislukt", isPresented: $showSyncErrorAlert) {
+        .alert("Opslaan mislukt", isPresented: $showSyncErrorAlert) {
             Button("OK", role: .cancel) {}
         } message: {
             Text(syncErrorMessage ?? "")
@@ -170,28 +170,19 @@ struct FinishedView: View {
         }
     }
 
-    /// Persist this workout as a favorite, then sync it to Supabase.
+    /// Persist this workout as a favorite and queue it for sync.
     /// Guest mode / unconfigured backends are not surfaced as errors.
     private func saveFavorite(_ saved: Workout) {
-        modelContext.insert(WorkoutEntity(from: saved))
+        // The upload is queued and retried by FavoritesSync, so only a
+        // local save failure is surfaced.
         do {
-            try modelContext.save()
+            try favoritesSync.saveNew(saved)
         } catch {
             syncErrorMessage = error.localizedDescription
             showSyncErrorAlert = true
             return
         }
         savedTrigger &+= 1
-        Task {
-            do {
-                try await SupabaseManager.shared.upsertWorkout(saved)
-            } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
-                // Guest mode or unconfigured — local save is enough.
-            } catch {
-                syncErrorMessage = error.localizedDescription
-                showSyncErrorAlert = true
-            }
-        }
     }
 
     private var divider: some View {
@@ -227,6 +218,7 @@ struct FinishedView: View {
                        startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
         FinishedView(workout: .placeholder, onHome: {}, onRestart: {})
             .environment(StoreManager())
-            .modelContainer(for: WorkoutEntity.self, inMemory: true)
+            .environment(PreviewStore.favoritesSync)
+            .modelContainer(PreviewStore.container)
     }
 }

@@ -1,4 +1,5 @@
 import Testing
+import Foundation
 @testable import Interval
 
 /// Tests cover the phase state machine via `skip()`. Real-time tick-based
@@ -521,5 +522,83 @@ struct TimerEngineTests {
         advance(toWorkRound: 4, in: engine) // final round
         // lastRound, not halfway, for round 4 of 4
         #expect(cues.emittedCues.last(where: { $0 == .lastRound || $0 == .halfway }) == .lastRound)
+    }
+
+    // MARK: - Wall-clock timing (injected clock)
+
+    /// Manually advanced clock, so tests can simulate late ticks.
+    final class TestClock {
+        var date = Date(timeIntervalSince1970: 1_000_000)
+        func advance(by seconds: TimeInterval) { date += seconds }
+    }
+
+    private func makeClockedEngine(
+        workSeconds: Int,
+        restSeconds: Int,
+        rounds: Int,
+        clock: TestClock,
+        cues: MockCueOrchestrator = MockCueOrchestrator()
+    ) -> TimerEngine {
+        let workout = Workout(name: "Test", workSeconds: workSeconds, restSeconds: restSeconds, rounds: rounds)
+        return TimerEngine(workout: workout, cues: cues, now: { clock.date })
+    }
+
+    @Test("A late tick anchors the next phase to the scheduled deadline")
+    func lateTickKeepsDeadline() {
+        let clock = TestClock()
+        let start = clock.date
+        let engine = makeClockedEngine(workSeconds: 30, restSeconds: 15, rounds: 3, clock: clock)
+
+        // The countdown ends at +5s, but the tick only lands 0.4s later.
+        clock.date = start + TimeInterval(TimerEngine.countdownSeconds) + 0.4
+        engine.tick()
+        #expect(isWork(engine.phase))
+
+        // Work must end 30s after the countdown's deadline, not 30s after
+        // the late tick.
+        clock.date = start + TimeInterval(TimerEngine.countdownSeconds + 30)
+        engine.tick()
+        #expect(isRest(engine.phase))
+    }
+
+    @Test("Late ticks don't accumulate over a whole workout")
+    func delaysDoNotAccumulate() {
+        let clock = TestClock()
+        let start = clock.date
+        let engine = makeClockedEngine(workSeconds: 10, restSeconds: 5, rounds: 3, clock: clock)
+        let scheduled = TimeInterval(TimerEngine.countdownSeconds + 3 * 10 + 2 * 5)
+
+        // Coarse 0.3s ticks: every boundary is crossed late.
+        var guardCounter = 0
+        while !isFinished(engine.phase), guardCounter < 1_000 {
+            clock.advance(by: 0.3)
+            engine.tick()
+            guardCounter += 1
+        }
+        let finishedAfter = clock.date.timeIntervalSince(start)
+        // Before the fix each of the 6 transitions added up to 0.3s.
+        #expect(isFinished(engine.phase))
+        #expect(finishedAfter < scheduled + 0.3 + 0.000_1)
+    }
+
+    @Test("A long stall fast-forwards without a cue per missed phase")
+    func longStallCatchesUpQuietly() {
+        let clock = TestClock()
+        let start = clock.date
+        let cues = MockCueOrchestrator()
+        let engine = makeClockedEngine(workSeconds: 10, restSeconds: 5, rounds: 8, clock: clock, cues: cues)
+        engine.skip() // countdown -> work 1, ends at +10
+        let cuesBefore = cues.emittedCues.count
+
+        // Stalled until +26s: work1 0–10, rest1 10–15, work2 15–25, rest2 25–30.
+        // (+26 keeps us out of the 3-2-1 tick window, so only phase cues count.)
+        clock.date = start + 26
+        engine.tick()
+
+        #expect(isRest(engine.phase))
+        #expect(engine.currentRound == 2)
+        #expect(engine.secondsLeft == 4)
+        // At most the first transition's cue plus one for the landing phase.
+        #expect(cues.emittedCues.count - cuesBefore <= 2)
     }
 }
