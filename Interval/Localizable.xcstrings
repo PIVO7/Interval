@@ -460,6 +460,22 @@
         }
       }
     },
+    "De App Store is niet bereikbaar. Controleer je verbinding en probeer opnieuw." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can't reach the App Store. Check your connection and try again."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de joindre l'App Store. Vérifiez votre connexion et réessayez."
+          }
+        }
+      }
+    },
     "Dit verwijdert je account en al je gesynchroniseerde favorieten definitief. Dit kan niet ongedaan worden gemaakt." : {
       "localizations" : {
         "en" : {
@@ -1062,6 +1078,22 @@
         }
       }
     },
+    "Je bent ingelogd, maar de verbinding met de cloud is mislukt. Je favorieten worden voorlopig alleen op dit toestel bewaard. Probeer opnieuw via Account." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You're signed in, but connecting to the cloud failed. For now your favorites are only stored on this device. Try again from Account."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous êtes connecté, mais la connexion au cloud a échoué. Pour l'instant, vos favoris sont enregistrés uniquement sur cet appareil. Réessayez depuis Compte."
+          }
+        }
+      }
+    },
     "Je favorieten staan op al je apparaten." : {
       "localizations" : {
         "en" : {
@@ -1074,6 +1106,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vos favoris sont disponibles sur tous vos appareils."
+          }
+        }
+      }
+    },
+    "Je favorieten worden nu alleen op dit toestel bewaard. Verbind opnieuw om ze te synchroniseren." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your favorites are only stored on this device for now. Reconnect to sync them."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour l'instant, vos favoris sont enregistrés uniquement sur cet appareil. Reconnectez-vous pour les synchroniser."
           }
         }
       }
@@ -1325,6 +1373,22 @@
         }
       }
     },
+    "Naar Account" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to Account"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aller au compte"
+          }
+        }
+      }
+    },
     "Niet ingelogd" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1547,6 +1611,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enregistré"
+          }
+        }
+      }
+    },
+    "Opnieuw proberen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réessayer"
           }
         }
       }
@@ -2188,18 +2268,18 @@
         }
       }
     },
-    "Synchroniseren mislukt" : {
+    "Synchronisatie niet verbonden" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sync failed"
+            "value" : "Sync not connected"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Échec de la synchronisation"
+            "value" : "Synchronisation non connectée"
           }
         }
       }
@@ -2512,6 +2592,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "v2"
+          }
+        }
+      }
+    },
+    "Verbind opnieuw om je favorieten te synchroniseren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconnect to sync your favorites"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconnectez-vous pour synchroniser vos favoris"
+          }
+        }
+      }
+    },
+    "Verbinden met de cloud…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connecting to the cloud…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connexion au cloud…"
           }
         }
       }

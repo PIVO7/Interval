@@ -64,6 +64,9 @@ struct PaywallView: View {
             }
         }
         .presentationDetents([.large])
+        // The launch-time product load may have failed (offline, store
+        // hiccup) — try again whenever the paywall opens.
+        .task { await store.loadProductIfNeeded() }
     }
 
     // MARK: - Hero
@@ -142,10 +145,16 @@ struct PaywallView: View {
     private var purchaseSection: some View {
         VStack(spacing: 12) {
             Button {
-                Task { await buy() }
+                Task {
+                    if store.product == nil {
+                        await store.loadProduct()
+                    } else {
+                        await buy()
+                    }
+                }
             } label: {
                 ZStack {
-                    if store.purchaseInFlight {
+                    if store.purchaseInFlight || store.isLoadingProduct {
                         ProgressView().tint(.white)
                     } else {
                         Text(buyButtonTitle)
@@ -159,16 +168,27 @@ struct PaywallView: View {
                 .clipShape(Capsule())
             }
             .buttonStyle(PressableButtonStyle())
-            .disabled(store.purchaseInFlight || store.product == nil)
+            .disabled(store.purchaseInFlight || store.isLoadingProduct)
 
-            Text("Eenmalige aankoop · geen abonnement")
-                .font(.system(.caption, design: .rounded))
-                .foregroundStyle(AppTheme.secondaryText)
+            if store.product == nil, store.productLoadFailed, !store.isLoadingProduct {
+                Text("De App Store is niet bereikbaar. Controleer je verbinding en probeer opnieuw.")
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(AppTheme.secondaryText)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else {
+                Text("Eenmalige aankoop · geen abonnement")
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(AppTheme.secondaryText)
+            }
         }
         .padding(.bottom, 12)
     }
 
     private var buyButtonTitle: LocalizedStringKey {
+        if store.product == nil, store.productLoadFailed {
+            return "Opnieuw proberen"
+        }
         if let price = store.displayPrice {
             return "Ontgrendel voor \(price)"
         }

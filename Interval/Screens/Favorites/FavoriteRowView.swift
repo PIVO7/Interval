@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 /// One row in the Favorites list. Split into THREE zones with clearly
 /// distinct affordances:

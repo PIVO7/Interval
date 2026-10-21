@@ -6,7 +6,7 @@ struct HomeView: View {
     @Environment(CueOrchestrator.self) private var cueOrchestrator
     @Environment(StoreManager.self) private var pro
     @Environment(ActiveSession.self) private var session
-    @Environment(\.modelContext) private var modelContext
+    @Environment(FavoritesSync.self) private var favoritesSync
 
     @State private var showSaveSheet = false
     @State private var showPaywall = false
@@ -70,7 +70,7 @@ struct HomeView: View {
             .sensoryFeedback(.success, trigger: savedTrigger)
             // Single-button "OK" alert — SwiftUI provides the default OK
             // when no actions are declared (navigation.md guidance).
-            .alert("Synchroniseren mislukt", isPresented: $showSyncErrorAlert) {
+            .alert("Opslaan mislukt", isPresented: $showSyncErrorAlert) {
             } message: {
                 Text(syncErrorMessage ?? "")
             }
@@ -98,32 +98,22 @@ struct HomeView: View {
         }
     }
 
-    /// Persist the current workout as a favorite, sync it to Supabase, and
+    /// Persist the current workout as a favorite, queue it for sync, and
     /// flash the "Opgeslagen" confirmation. Guest mode / unconfigured
     /// backends are not surfaced as errors — the local save is enough.
     private func saveFavorite(_ saved: Workout) {
-        modelContext.insert(WorkoutEntity(from: saved))
-        // Force-persist now — SwiftData's autosave can lag, and showing
+        // Persists immediately — SwiftData's autosave can lag, and showing
         // the success toast while the row isn't yet on disk risks losing
-        // the save if the app dies.
+        // the save if the app dies. The upload is queued and retried by
+        // FavoritesSync, so only a local failure is surfaced.
         do {
-            try modelContext.save()
+            try favoritesSync.saveNew(saved)
         } catch {
             syncErrorMessage = error.localizedDescription
             showSyncErrorAlert = true
             return
         }
         savedTrigger &+= 1
-        Task {
-            do {
-                try await SupabaseManager.shared.upsertWorkout(saved)
-            } catch SupabaseError.notSignedIn, SupabaseError.notConfigured {
-                // Guest mode or unconfigured — local save is enough.
-            } catch {
-                syncErrorMessage = error.localizedDescription
-                showSyncErrorAlert = true
-            }
-        }
         withAnimation(.appSmooth) { justSaved = true }
         Task {
             try? await Task.sleep(for: .seconds(1.6))
@@ -267,5 +257,6 @@ struct HomeView: View {
         .environment(WorkoutStore())
         .environment(AudioSettings())
         .environment(StoreManager())
-        .modelContainer(for: WorkoutEntity.self, inMemory: true)
+        .environment(PreviewStore.favoritesSync)
+        .modelContainer(PreviewStore.container)
 }

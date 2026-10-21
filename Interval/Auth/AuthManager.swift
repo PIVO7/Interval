@@ -19,6 +19,24 @@ final class AuthManager {
     /// "there's a new error to show" without relying on string equality.
     private(set) var errorVersion: Int = 0
 
+    /// State of the Apple→Supabase bridge that makes favorites sync. Signing
+    /// in with Apple succeeds locally first; the cloud connection follows
+    /// asynchronously and can fail on its own.
+    enum CloudConnection: Equatable {
+        case idle, connecting, failed
+    }
+    private(set) var cloudConnection: CloudConnection = .idle
+    /// Bumped on every failed cloud connection, so the UI can alert even
+    /// when it fails twice in a row.
+    private(set) var cloudErrorVersion: Int = 0
+
+    /// Signed in with Apple, but favorites aren't syncing because the
+    /// cloud connection never completed. The Account tab offers a retry.
+    var needsCloudReconnect: Bool {
+        isSignedIn && user?.supabaseUserId == nil
+            && SupabaseConfig.isConfigured && cloudConnection != .connecting
+    }
+
     /// `@AppStorage` cannot live inside an `@Observable` class — it doesn't
     /// trigger observation. Use a plain `var` with `didSet` writing through
     /// to `UserDefaults` instead. View updates fire via the observation macro,
@@ -100,6 +118,7 @@ final class AuthManager {
             // Consume the nonce — it's single-use by design.
             let nonce = currentNonce
             currentNonce = nil
+            cloudConnection = .connecting
 
             Task { [weak self] in
                 do {
@@ -116,10 +135,17 @@ final class AuthManager {
                     newUser.supabaseUserId = supabaseId
                     self.user = newUser
                     self.persist(newUser)
+                    self.cloudConnection = .idle
                 } catch SupabaseError.notConfigured {
                     self?.log.info("Supabase not configured — skipping cloud sign-in")
+                    self?.cloudConnection = .idle
                 } catch {
-                    self?.log.error("Supabase sign-in failed: \(error.localizedDescription, privacy: .public)")
+                    guard let self else { return }
+                    self.log.error("Supabase sign-in failed: \(error.localizedDescription, privacy: .public)")
+                    // Only surface it if this attempt is still the current one.
+                    guard self.inFlightAuthorizationId == authorizationId else { return }
+                    self.cloudConnection = .failed
+                    self.cloudErrorVersion &+= 1
                 }
             }
 
@@ -156,8 +182,10 @@ final class AuthManager {
         // Invalidate any in-flight Apple→Supabase bridge so it can't
         // resurrect `user` after we've cleared it.
         inFlightAuthorizationId = nil
+        cloudConnection = .idle
         user = nil
         UserDefaults.standard.removeObject(forKey: userKey)
+        FavoritesSync.clearQueue()
         // Force onboarding to re-show so the next signer-in (or guest)
         // gets the welcome flow rather than landing straight on Home with
         // the previous account's UI state.
@@ -185,8 +213,10 @@ final class AuthManager {
         // Remote delete succeeded — now wipe local state (mirrors signOut, but
         // the remote signOut already happened inside deleteAccount()).
         inFlightAuthorizationId = nil
+        cloudConnection = .idle
         user = nil
         UserDefaults.standard.removeObject(forKey: userKey)
+        FavoritesSync.clearQueue()
         hasSeenOnboarding = false
 
         if let modelContext {

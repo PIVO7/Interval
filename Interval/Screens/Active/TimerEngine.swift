@@ -55,10 +55,13 @@ final class TimerEngine {
     /// users don't hear a rapid bell salvo for every phase they slept
     /// through — one final cue for the landing phase is enough.
     @ObservationIgnored private var isCatchingUp = false
+    /// Wall-clock source. Injectable so tests can simulate late ticks.
+    @ObservationIgnored private let now: () -> Date
 
-    init(workout: Workout, cues: CueOrchestrating) {
+    init(workout: Workout, cues: CueOrchestrating, now: @escaping () -> Date = { Date.now }) {
         self.workout = workout
         self.cues = cues
+        self.now = now
         cues.prepareForWorkout()
         startCountdown()
     }
@@ -73,7 +76,7 @@ final class TimerEngine {
             // Resume — shift the schedule forward by the pause duration so
             // secondsLeft doesn't lurch.
             if let pausedAt {
-                let delta = Date.now.timeIntervalSince(pausedAt)
+                let delta = now().timeIntervalSince(pausedAt)
                 phaseStartedAt = phaseStartedAt.addingTimeInterval(delta)
                 phaseEndsAt = phaseEndsAt.addingTimeInterval(delta)
             }
@@ -82,21 +85,22 @@ final class TimerEngine {
             scheduleTimer()
             tick()
         } else {
-            pausedAt = .now
+            pausedAt = now()
             isPaused = true
             tickTask?.cancel()
         }
     }
 
     func skip() {
-        advancePhase()
-        // Skipping while paused: the new phase was just anchored at .now,
+        // A manual skip starts the next phase from this moment.
+        advancePhase(at: now())
+        // Skipping while paused: the new phase was just anchored at now,
         // but the pause started earlier. Without re-anchoring, resume would
         // shift the schedule by the FULL pause duration (including the time
         // before the skip), inflating the new phase — pause 60s, skip,
         // resume → up to 60s extra. Re-anchor the pause at the skip moment
         // so resume only compensates for time paused after it.
-        if isPaused { pausedAt = .now }
+        if isPaused { pausedAt = now() }
     }
 
     /// Reset the engine for a fresh run of the same workout, called
@@ -176,7 +180,7 @@ final class TimerEngine {
         var didAdvance = false
         var guardCounter = 0
         let maxIterations = max(8, workout.rounds * 2 + 4)
-        while !isFinished, Date.now >= phaseEndsAt, guardCounter < maxIterations {
+        while !isFinished, now() >= phaseEndsAt, guardCounter < maxIterations {
             // Anchor the next phase to the moment the current one truly
             // ended, not `Date.now` — otherwise each catch-up step would
             // reset the timeline and we'd only ever advance one phase.
@@ -234,7 +238,7 @@ final class TimerEngine {
         let total = Self.countdownSeconds
         phase = .countdown(total)
         phaseTotal = total
-        phaseStartedAt = .now
+        phaseStartedAt = now()
         phaseEndsAt = phaseStartedAt.addingTimeInterval(TimeInterval(total))
         secondsLeft = total
         lastEmittedSecond = total
@@ -257,8 +261,9 @@ final class TimerEngine {
         }
     }
 
-    private func tick() {
-        let reference = pausedAt ?? .now
+    /// Internal (not private) so tests can drive it with an injected clock.
+    func tick() {
+        let reference = pausedAt ?? now()
         let remaining = max(0, phaseEndsAt.timeIntervalSince(reference))
         let newSecondsLeft = Int(remaining.rounded(.up))
 
@@ -283,15 +288,26 @@ final class TimerEngine {
         }
 
         if remaining <= 0 {
-            advancePhase()
+            // Anchor the next phase to the scheduled deadline, not to this
+            // tick's (possibly late) wall-clock time. Ticks land up to
+            // ~250 ms after a boundary — more when the run loop stalls —
+            // and anchoring to `now` would add that delay to every phase,
+            // gradually stretching the whole workout.
+            advancePhase(at: phaseEndsAt)
+            // Still behind after that (the tick loop was suspended for
+            // longer than the new phase lasts): fast-forward silently
+            // instead of ringing a cue for every missed phase.
+            if !isPaused, !isFinished, now() >= phaseEndsAt {
+                recomputeFromWallClock()
+            }
         }
     }
 
     /// Advance to the next phase. `at` is the wall-clock moment the new
-    /// phase should be anchored to — defaults to `.now` for live ticks,
-    /// but foreground catch-up passes the previous `phaseEndsAt` so a
-    /// chain of missed phases cascades through their real timing.
-    private func advancePhase(at startedAt: Date = .now) {
+    /// phase is anchored to: the previous `phaseEndsAt` for automatic
+    /// transitions (live ticks and foreground catch-up), so phases chain
+    /// on their scheduled timing; `now` only for a manual skip.
+    private func advancePhase(at startedAt: Date) {
         switch phase {
         case .countdown:
             beginWork(at: startedAt)
@@ -311,7 +327,7 @@ final class TimerEngine {
         }
     }
 
-    private func beginWork(at startedAt: Date = .now) {
+    private func beginWork(at startedAt: Date) {
         phase = .work
         phaseTotal = workout.workSeconds
         phaseStartedAt = startedAt
@@ -324,7 +340,7 @@ final class TimerEngine {
         }
     }
 
-    private func beginRest(at startedAt: Date = .now) {
+    private func beginRest(at startedAt: Date) {
         phase = .rest
         phaseTotal = workout.restSeconds
         phaseStartedAt = startedAt
@@ -337,7 +353,7 @@ final class TimerEngine {
         }
     }
 
-    private func endRound(at startedAt: Date = .now) {
+    private func endRound(at startedAt: Date) {
         if currentRound < workout.rounds {
             currentRound += 1
             beginWork(at: startedAt)

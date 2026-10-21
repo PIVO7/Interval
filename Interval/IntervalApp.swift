@@ -12,6 +12,9 @@ struct IntervalApp: App {
     @State private var store = StoreManager()
     @State private var cueOrchestrator: CueOrchestrator
     @State private var activeSession = ActiveSession()
+    @State private var favoritesSync: FavoritesSync
+
+    let modelContainer: ModelContainer
 
     init() {
         // Cue stack is constructed once and shared across workouts.
@@ -20,6 +23,19 @@ struct IntervalApp: App {
         let settings = AudioSettings()
         _audioSettings = State(initialValue: settings)
         _cueOrchestrator = State(initialValue: .makeDefault(settings: settings))
+        let container: ModelContainer
+        do {
+            container = try ModelContainer(for: WorkoutEntity.self)
+        } catch {
+            fatalError("Failed to create ModelContainer: \(error)")
+        }
+        modelContainer = container
+        // Sync works on the same main context the views' @Query reads, so
+        // reconciled changes show up immediately.
+        _favoritesSync = State(initialValue: FavoritesSync(
+            context: container.mainContext,
+            remote: SupabaseManager.shared
+        ))
         Self.applyRoundedNavigationTitles()
     }
 
@@ -38,14 +54,6 @@ struct IntervalApp: App {
         navigationBar.titleTextAttributes = [.font: roundedFont(style: .headline, weight: .semibold)]
     }
 
-    let modelContainer: ModelContainer = {
-        do {
-            return try ModelContainer(for: WorkoutEntity.self)
-        } catch {
-            fatalError("Failed to create ModelContainer: \(error)")
-        }
-    }()
-
     var body: some Scene {
         WindowGroup {
             RootTabView()
@@ -56,6 +64,7 @@ struct IntervalApp: App {
                 .environment(cueOrchestrator)
                 .environment(store)
                 .environment(activeSession)
+                .environment(favoritesSync)
                 .tint(AppTheme.coral)
                 .preferredColorScheme(appearance.mode.colorScheme)
                 .task {

@@ -119,6 +119,29 @@ release-/TestFlight-notes en getest moeten worden vóór archive.
   15s rust · 8 ronden") verwijderd — info staat al in de
   `IntervalsListView` daaronder, plus de middle-dots ogen rommelig.
 
+### Review-fixes vóór release (sync, timer, store, sign-in)
+- **Sync-wachtrij** (`FavoritesSync`): elke opslag/bewerking zet
+  `needsUpload` op de favoriet, elke verwijdering een tombstone. Een
+  mislukte upload/delete blijft in de wachtrij en wordt opnieuw
+  geprobeerd bij launch, sign-in, terug naar de voorgrond en de
+  volgende lokale wijziging. Geen rollback meer bij een offline delete.
+- **Conflicten**: last-writer-wins op `updatedAt` (lokale bewerktijd
+  vs. `updated_at` van de server). Een oudere servercopy overschrijft
+  geen nieuwere offline-bewerking meer.
+- **Verwijderingen synchroniseren**: favorieten die al gesynct waren
+  maar niet meer op de server staan, worden lokaal verwijderd.
+- **Migratie**: bestaande favorieten krijgen `needsUpload = true` +
+  `updatedAt = distantPast` — ze worden geüpload tenzij de server al
+  een copy heeft, en dus nooit als "elders verwijderd" weggegooid.
+- **Timer-drift**: automatische fase-overgangen starten vanaf de
+  geplande deadline i.p.v. het (late) tick-moment. Een lange stall
+  spoelt stil door (één cue voor de fase waarin je landt).
+- **Paywall**: laadt het product opnieuw bij openen als het bij launch
+  mislukte; bij een fout toont de knop "Opnieuw proberen".
+- **Sign-in**: lukt Apple wel maar de cloud-koppeling niet, dan krijg
+  je een melding en toont Account "Synchronisatie niet verbonden" met
+  een knop om opnieuw te verbinden.
+
 ---
 
 ## Tests-coverage toegevoegd
@@ -180,3 +203,18 @@ Build groen, ~30 tests in totaal.
       op één regel, niet wrapped
 - [ ] FinishedView stats card: drie kolommen op één regel uitgelijnd,
       ook voor lange workouts
+- [ ] Sync: favoriet opslaan in vliegtuigmodus → online → staat op
+      het 2e toestel na openen
+- [ ] Sync: favoriet bewerken offline op toestel A → online → A's
+      versie wint, ook na herstart van A
+- [ ] Sync: favoriet verwijderen op toestel A → verdwijnt op toestel
+      B bij openen / terug naar voorgrond
+- [ ] Sync: verwijderen in vliegtuigmodus → komt niet terug na herstart
+- [ ] Update over een bestaande build met favorieten: niets verdwijnt
+      (SwiftData-migratie van de nieuwe velden)
+- [ ] Timer: 8×(30/15)-workout eindigt binnen ~1s van de geplande
+      totale tijd
+- [ ] Paywall: app starten in vliegtuigmodus → paywall toont
+      "Opnieuw proberen" → online → tik → prijs verschijnt, aankoop werkt
+- [ ] Sign-in: inloggen met Supabase onbereikbaar → melding +
+      "Synchronisatie niet verbonden" in Account → opnieuw verbinden werkt

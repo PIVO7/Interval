@@ -47,11 +47,20 @@ final class StoreManager {
     /// a spinner and disable the buy button.
     private(set) var purchaseInFlight = false
 
+    /// True while `Product.products(for:)` is in flight.
+    private(set) var isLoadingProduct = false
+    /// True when the last product load failed or returned nothing — the
+    /// paywall then offers a retry instead of a dead, disabled button.
+    private(set) var productLoadFailed = false
+
     /// Localized price string (e.g. "€ 4,99"), or nil if the product hasn't
     /// loaded yet — the paywall falls back to a neutral label in that case.
     var displayPrice: String? { product?.displayPrice }
 
-    @ObservationIgnored private var updatesTask: Task<Void, Never>?
+    // `nonisolated(unsafe)` so the nonisolated `deinit` can cancel it
+    // without crossing the main actor (same pattern as TimerEngine).
+    // `Task.cancel()` itself is thread-safe.
+    @ObservationIgnored private nonisolated(unsafe) var updatesTask: Task<Void, Never>?
     private let log = Logger(subsystem: "com.superapp.interval", category: "Store")
 
     init() {
@@ -68,20 +77,33 @@ final class StoreManager {
         updatesTask?.cancel()
     }
 
-    /// Load the product and reconcile entitlements. Call once at launch.
+    /// Load the product and reconcile entitlements at launch. A failed load
+    /// is retried by `loadProductIfNeeded()` when the paywall opens.
     func start() async {
         await loadProduct()
         await refreshEntitlements()
     }
 
+    /// Retry path for the paywall: only hits the store when the product
+    /// isn't loaded yet (e.g. the launch-time load failed offline).
+    func loadProductIfNeeded() async {
+        guard product == nil else { return }
+        await loadProduct()
+    }
+
     func loadProduct() async {
+        guard !isLoadingProduct else { return }
+        isLoadingProduct = true
+        defer { isLoadingProduct = false }
         do {
             let products = try await Product.products(for: [Self.unlockProductID])
             product = products.first
+            productLoadFailed = product == nil
             if product == nil {
                 log.warning("Pro unlock product not found for id \(Self.unlockProductID, privacy: .public)")
             }
         } catch {
+            productLoadFailed = true
             log.error("Loading product failed: \(error.localizedDescription, privacy: .public)")
         }
     }
@@ -103,6 +125,7 @@ final class StoreManager {
     /// Start the purchase flow. The returned `PurchaseOutcome` lets the paywall
     /// continue on success, stay quiet on cancel, and only alert on failure.
     func purchase() async -> PurchaseOutcome {
+        if product == nil { await loadProduct() }
         guard let product else {
             log.error("Purchase attempted with no loaded product")
             return .failed
