@@ -4,17 +4,18 @@ Kant-en-klare copy voor App Store Connect (App Information + versiepagina per ta
 en de IAP-lokalisaties). Limieten staan er telkens bij; alle teksten hieronder
 passen binnen de limiet.
 
-> **App-naam moet uniek zijn in de hele App Store.** "Interval" alleen is vrijwel
-> zeker bezet. Hieronder staat per taal een voorstel mét descriptor; check bij het
-> aanmaken of hij vrij is en wijk zo nodig uit naar het alternatief.
+> **App-naam moet uniek zijn in de hele App Store.** De app heet **Roundly**
+> (vroeger "Interval", maar die naam was al bezet). Hieronder staat per taal een
+> voorstel mét descriptor; check bij het aanmaken of hij vrij is en wijk zo nodig
+> uit naar het alternatief.
 > De prijs staat bewust nergens in de teksten — die verschilt per land en tier.
 
 ---
 
 ## Nederlands (nl-NL)
 
-**Naam** (max 30): `Interval: Interval Timer`
-Alternatief als bezet: `Interval – Timer voor training`
+**Naam** (max 30): `Roundly: Interval Timer`
+Alternatief als bezet: `Roundly – Timer voor training`
 
 **Ondertitel** (max 30): `Intervaltimer voor coaches`
 
@@ -24,7 +25,7 @@ Alternatief als bezet: `Interval – Timer voor training`
 **Beschrijving** (max 4000):
 
 ```
-Interval is een intervaltimer zonder gedoe, gemaakt voor coaches, kinesitherapeuten en iedereen die traint met blokken van inspanning en rust.
+Roundly is een intervaltimer zonder gedoe, gemaakt voor coaches, kinesitherapeuten en iedereen die traint met blokken van inspanning en rust.
 
 Stel in enkele seconden je inspanning, rust en aantal ronden in en druk op start. Tijdens de training zie je in één oogopslag waar je zit: felle kleuren per fase, een grote klok en een rondeteller. Het scherm blijft automatisch aan zolang de training loopt.
 
@@ -60,8 +61,8 @@ hiit,tabata,workout,training,fitness,rust,ronden,stopwatch,fysio,kine,sport,cros
 
 ## Engels (en-US, ook bruikbaar voor en-GB)
 
-**Name** (max 30): `Interval: Interval Timer`
-Fallback: `Interval – Workout Timer`
+**Name** (max 30): `Roundly: Interval Timer`
+Fallback: `Roundly – Workout Timer`
 
 **Subtitle** (max 30): `Interval timer for coaches`
 
@@ -71,7 +72,7 @@ Fallback: `Interval – Workout Timer`
 **Description** (max 4000):
 
 ```
-Interval is a no-nonsense interval timer, built for coaches, physical therapists and anyone who trains in blocks of work and rest.
+Roundly is a no-nonsense interval timer, built for coaches, physical therapists and anyone who trains in blocks of work and rest.
 
 Set your work, rest and number of rounds in seconds and hit start. During the workout you can see where you are at a glance: bold colours per phase, a big clock and a round counter. The screen stays awake for as long as the workout runs.
 
@@ -107,8 +108,8 @@ hiit,tabata,workout,fitness,rest,rounds,stopwatch,physio,gym,crossfit,boxing,cir
 
 ## Frans (fr-FR, ook bruikbaar voor fr-CA)
 
-**Nom** (max 30): `Interval : minuteur fitness`
-Alternatief als bezet: `Interval – Minuteur HIIT`
+**Nom** (max 30): `Roundly : minuteur fitness`
+Alternatief als bezet: `Roundly – Minuteur HIIT`
 
 **Sous-titre** (max 30): `Minuteur pour coachs et kinés`
 
@@ -118,7 +119,7 @@ Alternatief als bezet: `Interval – Minuteur HIIT`
 **Description** (max 4000):
 
 ```
-Interval est un minuteur d'intervalles sans superflu, conçu pour les coachs, les kinésithérapeutes et tous ceux qui s'entraînent en blocs d'effort et de repos.
+Roundly est un minuteur d'intervalles sans superflu, conçu pour les coachs, les kinésithérapeutes et tous ceux qui s'entraînent en blocs d'effort et de repos.
 
 Réglez votre effort, votre repos et le nombre de tours en quelques secondes, puis lancez-vous. Pendant l'entraînement, vous voyez où vous en êtes d'un coup d'œil : couleurs vives par phase, grande horloge et compteur de tours. L'écran reste allumé tant que l'entraînement est en cours.
 
@@ -152,16 +153,16 @@ hiit,tabata,entrainement,fitness,repos,rounds,chrono,kine,sport,crossfit,boxe,ci
 
 ---
 
-## IAP-lokalisaties (Interval Pro, non-consumable)
+## IAP-lokalisaties (Roundly Pro, non-consumable)
 
 Display Name max 30 tekens, Description max **45** tekens (App Store Connect is
 hier strenger dan bij de app-beschrijving).
 
 | Taal | Display Name | Description |
 | --- | --- | --- |
-| NL | `Interval Pro` | `Onbeperkt favorieten en alle kleurthema's` |
-| EN | `Interval Pro` | `Unlimited favorites and all color themes` |
-| FR | `Interval Pro` | `Favoris illimités et tous les thèmes` |
+| NL | `Roundly Pro` | `Onbeperkt favorieten en alle kleurthema's` |
+| EN | `Roundly Pro` | `Unlimited favorites and all color themes` |
+| FR | `Roundly Pro` | `Favoris illimités et tous les thèmes` |
 
 ## Checklist bij het invoeren
 

@@ -50,7 +50,7 @@ struct HomeView: View {
                 // it actually overflows (small screens, large Dynamic Type).
                 .scrollBounceBehavior(.basedOnSize)
             }
-            .navigationTitle("Interval")
+            .navigationTitle("Roundly")
             .navigationBarTitleDisplayMode(.large)
             .toolbarSubtitle(Self.introSubtitle)
             .sheet(isPresented: $showSaveSheet) {

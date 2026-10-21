@@ -1,6 +1,6 @@
 # In-app aankoop aanmaken + sandbox/TestFlight testen
 
-De "Interval Pro" unlock. Product-ID in de code: **`com.superapp.interval.pro_unlock`**
+De "Roundly Pro" unlock. Product-ID in de code: **`com.superapp.interval.pro_unlock`**
 (zie `StoreManager.unlockProductID` en `ProUnlock.storekit`). Dit ID moet overal
 exact gelijk zijn — het kan na aanmaken niet meer wijzigen.
 
@@ -21,11 +21,11 @@ exact gelijk zijn — het kan na aanmaken niet meer wijzigen.
 
 1. App Store Connect → **Apps** → jouw app → zijbalk **Monetization → In-App Purchases** → **(+)**.
 2. **Type:** Non-Consumable.
-3. **Reference Name:** `Interval Pro Unlock` (alleen intern zichtbaar).
+3. **Reference Name:** `Roundly Pro Unlock` (alleen intern zichtbaar).
 4. **Product ID:** `com.superapp.interval.pro_unlock`  ← exact dit, niet wijzigbaar.
 5. **Price:** kies het prijspunt (bv. €4,99-tier).
 6. **Localizations:** voeg minstens NL (+ EN) toe:
-   - Display Name: `Interval Pro`
+   - Display Name: `Roundly Pro`
    - Description: bv. "Bewaar en hergebruik onbeperkt benoemde favoriete workouts en
      ontgrendel kleurthema's."
 7. **App Store Review Information:** upload een **screenshot van de paywall** (verplicht

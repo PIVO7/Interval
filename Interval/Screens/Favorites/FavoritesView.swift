@@ -142,7 +142,7 @@ struct FavoritesView: View {
         } description: {
             Text(pro.isUnlocked
                  ? "Sla je veelgebruikte intervallen op vanaf het trainingsscherm."
-                 : "Bewaar je veelgebruikte intervallen met Interval Pro.")
+                 : "Bewaar je veelgebruikte intervallen met Roundly Pro.")
         } actions: {
             if !pro.isUnlocked {
                 // iOS 26+: the kit's "Glass Prominent" capsule, matching the

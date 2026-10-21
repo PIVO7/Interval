@@ -1,8 +1,8 @@
-# Privacybeleid — Interval
+# Privacybeleid — Roundly
 
 _Laatst bijgewerkt: 12 augustus 2026_
 
-Interval is een interval-timer-app voor coaches, kinesitherapeuten en
+Roundly is een interval-timer-app voor coaches, kinesitherapeuten en
 mensen die regelmatig HIIT/Tabata-style trainingen doen. We willen zo
 min mogelijk persoonsgegevens verwerken, en als we het doen — alleen om
 de app voor jou te laten werken. Geen tracking, geen advertenties,
@@ -28,7 +28,7 @@ Voor alle vragen over je gegevens, of om je rechten uit te oefenen
 
 ### a. Inloggen via Sign in with Apple (optioneel)
 
-Je kunt Interval volledig anoniem gebruiken (knop "Verder zonder
+Je kunt Roundly volledig anoniem gebruiken (knop "Verder zonder
 account" in de onboarding). Doe je dat, dan slaan we **geen
 persoonsgegevens op een server op**. Alleen je workout-instellingen en
 voorkeuren blijven lokaal op je apparaat.
@@ -60,9 +60,9 @@ als favoriet, slaan we het volgende op:
 Alleen lokaal als je niet ingelogd bent. Plus in onze cloud database
 als je wel ingelogd bent.
 
-### c. In-app aankoop (Interval Pro)
+### c. In-app aankoop (Roundly Pro)
 
-De eenmalige "Interval Pro"-aankoop verloopt volledig via Apple's
+De eenmalige "Roundly Pro"-aankoop verloopt volledig via Apple's
 App Store (StoreKit). Wij ontvangen **geen betaalgegevens** — geen
 kaartnummers, geen factuuradres, geen Apple-ID. Of je de aankoop
 gedaan hebt wordt door Apple bijgehouden en door de app alleen
@@ -121,7 +121,7 @@ verantwoordelijke. Hun privacybeleid:
 - **Sign in with Apple**: Apple authentiseert je identiteit. Wij
   ontvangen alleen wat je in het Apple-dialoogvenster goedkeurt
   (sectie 2.a).
-- **App Store / StoreKit**: de eenmalige Interval Pro-aankoop wordt
+- **App Store / StoreKit**: de eenmalige Roundly Pro-aankoop wordt
   volledig door Apple afgehandeld (sectie 2.c). Apple's privacybeleid:
   [apple.com/legal/privacy](https://www.apple.com/legal/privacy).
 

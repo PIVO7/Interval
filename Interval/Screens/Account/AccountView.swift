@@ -56,7 +56,7 @@ struct AccountView: View {
     // MARK: - Pro
     private var proSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            sectionHeader("Interval Pro")
+            sectionHeader("Roundly Pro")
             VStack(spacing: 0) {
                 HStack(spacing: 14) {
                     ZStack {
@@ -66,7 +66,7 @@ struct AccountView: View {
                             .font(.callout)
                     }
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(pro.isUnlocked ? "Interval Pro actief" : "Bewaar je favorieten")
+                        Text(pro.isUnlocked ? "Roundly Pro actief" : "Bewaar je favorieten")
                             .font(.system(.body, design: .rounded, weight: .semibold))
                             .foregroundStyle(AppTheme.primaryText)
                         Text(pro.isUnlocked
@@ -326,7 +326,7 @@ struct AccountView: View {
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
         .accessibilityHint(pro.isUnlocked
                            ? Text("Selecteer kleurenthema")
-                           : Text("Ontgrendel met Interval Pro"))
+                           : Text("Ontgrendel met Roundly Pro"))
     }
 
     /// Pro gate: free users tapping a *locked* theme get the paywall; the

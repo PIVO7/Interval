@@ -1,7 +1,7 @@
 import SwiftUI
 import StoreKit
 
-/// One-time "Interval Pro" unlock paywall, shown the moment a free user tries
+/// One-time "Roundly Pro" unlock paywall, shown the moment a free user tries
 /// to save a favorite. Deliberately framed around the value the user just
 /// reached for (saving + reusing named workouts) rather than a generic
 /// feature wall.
@@ -34,7 +34,7 @@ struct PaywallView: View {
                     .frame(maxWidth: .infinity)
                 }
             }
-            .navigationTitle("Interval Pro")
+            .navigationTitle("Roundly Pro")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -60,7 +60,7 @@ struct PaywallView: View {
             .alert("Aankoop in behandeling", isPresented: $showPending) {
                 Button("OK", role: .cancel) { dismiss() }
             } message: {
-                Text("Je aankoop wacht op goedkeuring. Zodra die rond is, wordt Interval Pro automatisch ontgrendeld.")
+                Text("Je aankoop wacht op goedkeuring. Zodra die rond is, wordt Roundly Pro automatisch ontgrendeld.")
             }
         }
         .presentationDetents([.large])
@@ -172,7 +172,7 @@ struct PaywallView: View {
         if let price = store.displayPrice {
             return "Ontgrendel voor \(price)"
         }
-        return "Ontgrendel Interval Pro"
+        return "Ontgrendel Roundly Pro"
     }
 
     // MARK: - Actions
