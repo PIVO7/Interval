@@ -537,10 +537,10 @@ struct TimerEngineTests {
         restSeconds: Int,
         rounds: Int,
         clock: TestClock,
-        cues: MockCueOrchestrator = MockCueOrchestrator()
+        cues: MockCueOrchestrator? = nil
     ) -> TimerEngine {
         let workout = Workout(name: "Test", workSeconds: workSeconds, restSeconds: restSeconds, rounds: rounds)
-        return TimerEngine(workout: workout, cues: cues, now: { clock.date })
+        return TimerEngine(workout: workout, cues: cues ?? MockCueOrchestrator(), now: { clock.date })
     }
 
     @Test("A late tick anchors the next phase to the scheduled deadline")

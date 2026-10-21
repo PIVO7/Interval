@@ -144,7 +144,7 @@ final class WorkoutKitExporter {
 
     // MARK: - Authorization
 
-    private func ensureAuthorized() async throws {
+    private nonisolated func ensureAuthorized() async throws {
         let state = await WorkoutScheduler.shared.authorizationState
         switch state {
         case .authorized:
