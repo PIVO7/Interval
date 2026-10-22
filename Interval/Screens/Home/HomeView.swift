@@ -166,11 +166,14 @@ struct HomeView: View {
                 Button(action: startTraining) {
                     startLabel
                         .foregroundStyle(.white)
-                        .padding(.vertical, 18)
+                        .padding(.vertical, 15)
                         .glassEffect(.clear.interactive(), in: .capsule)
                         .background(Capsule().fill(AppTheme.buttonGradient))
                 }
                 .buttonStyle(PressableButtonStyle())
+                // Full width on iPhone, but not a bar across the whole
+                // column on iPad.
+                .frame(maxWidth: 440)
 
                 Button {
                     requestSaveFavorite()
@@ -187,13 +190,16 @@ struct HomeView: View {
             } else {
                 Button(action: startTraining) {
                     startLabel
-                        .padding(.vertical, 18)
+                        .padding(.vertical, 15)
                         .background(AppTheme.buttonGradient)
                         .foregroundStyle(.white)
                         .clipShape(Capsule())
                         .shadow(color: AppTheme.coralDeep.opacity(0.35), radius: 10, x: 0, y: 6)
                 }
                 .buttonStyle(PressableButtonStyle())
+                // Full width on iPhone, but not a bar across the whole
+                // column on iPad.
+                .frame(maxWidth: 440)
 
                 Button {
                     requestSaveFavorite()
@@ -216,7 +222,7 @@ struct HomeView: View {
             Image(systemName: "play.fill")
             Text("Training starten")
         }
-        .font(.system(.title3, design: .rounded, weight: .bold))
+        .font(.system(.headline, design: .rounded, weight: .bold))
         .frame(maxWidth: .infinity)
     }
 
