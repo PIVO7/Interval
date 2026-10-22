@@ -119,6 +119,26 @@ layout identiek houdt:
   glas op iOS 26, translucent wit eronder.
 - **Merk-medaillon** (`BrandIconCircle`): witte glyph, `glassEffect(.clear, in:
   .circle)` over `buttonGradient`-cirkel, glyph-schaduw `black 25% / 3 / y 2`.
+- **Glas is voor controls, niet voor content** (HIG): kaarten met inhoud
+  (ring, intervallenlijst) blijven solide `softCard`s; glas zit op de
+  tab bar, toolbar en knoppen die erboven zweven.
+- **Knoppengroep**: CTA + secundaire knop naast elkaar in één
+  `GlassEffectContainer`, zodat ze als één zwevende groep lezen. Secundair =
+  `glassEffect(.regular.interactive(), in: .capsule)` met `coralText`-glyph;
+  icon-only op iPhone, met titel op iPad.
+- **Achtergrond** (`AmbientBackground`): crème/`darkBg` met zachte
+  coral/amber/salie-gloed in de hoeken (statische `MeshGradient`), zodat het
+  glas iets van de merkkleuren kan breken i.p.v. grijs te ogen.
+
+### Layout op iPad
+
+- `TabView` met `.tabViewStyle(.sidebarAdaptable)`: tab bar op iPhone,
+  zwevende tab bar bovenaan op iPad die de gebruiker tot sidebar uitklapt.
+- Regular width → twee kolommen (hero links, instellingen + acties rechts),
+  max. ~1080pt breed. Compact width of accessibility-tekstgroottes →
+  gestapeld, max. ~620pt.
+- Vaste maten die naast tekst staan (iconcirkels, CTA-hoogte, hero-cijfers)
+  via `@ScaledMetric`, zodat ze meeschalen met Dynamic Type.
 
 ## 7. Motie
 

@@ -45,6 +45,10 @@ struct RootTabView: View {
                 AccountView()
             }
         }
+        // iPhone: bottom tab bar. iPad: the floating top tab bar that the
+        // user can expand into a sidebar (HIG: tab bar or sidebar, never a
+        // custom switcher).
+        .tabViewStyle(.sidebarAdaptable)
         .modifier(TabBarChrome())
         // Presented from the tab root (not HomeView) so the cover overlays
         // the entire tab UI regardless of the selected tab.
