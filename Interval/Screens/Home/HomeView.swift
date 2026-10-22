@@ -25,57 +25,51 @@ struct HomeView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    // Hero metrics scale with Dynamic Type, relative to the text style they
-    // sit next to, so the ring and buttons grow together with the labels.
-    @ScaledMetric(relativeTo: .largeTitle) private var compactDurationSize: CGFloat = 44
-    @ScaledMetric(relativeTo: .largeTitle) private var wideDurationSize: CGFloat = 64
-    @ScaledMetric(relativeTo: .title3) private var ctaHeight: CGFloat = 60
-
-    /// iPad gets a two-column layout: the
-    /// workout ring as hero on the leading side, the settings and actions
-    /// on the trailing side. Accessibility text sizes always stack, so the
-    /// columns never get squeezed into truncation.
+    /// iPad: the intervals list and the summary + actions sit side by side
+    /// instead of one narrow column in the middle of a wide screen.
+    /// Accessibility text sizes always stack so nothing gets squeezed.
     private var usesWideLayout: Bool {
         horizontalSizeClass == .regular && !dynamicTypeSize.isAccessibilitySize
     }
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                Group {
-                    if usesWideLayout {
-                        VStack(spacing: 20) {
-                            header
-                            HStack(alignment: .top, spacing: 28) {
-                                heroCard
-                                VStack(spacing: 20) {
+            ZStack {
+                AppTheme.background.ignoresSafeArea()
+                ScrollView {
+                    Group {
+                        if usesWideLayout {
+                            VStack(spacing: 20) {
+                                header
+                                HStack(alignment: .top, spacing: 24) {
                                     intervalsList
-                                    actionButtons
+                                        .frame(maxWidth: .infinity)
+                                    VStack(spacing: 20) {
+                                        summaryCard
+                                        actionButtons
+                                    }
+                                    .frame(maxWidth: .infinity)
                                 }
-                                .frame(maxWidth: .infinity)
+                            }
+                        } else {
+                            VStack(spacing: 20) {
+                                header
+                                summaryCard
+                                intervalsList
+                                actionButtons
                             }
                         }
-                    } else {
-                        VStack(spacing: 20) {
-                            header
-                            heroCard
-                            intervalsList
-                            actionButtons
-                        }
                     }
+                    .padding(.horizontal, usesWideLayout ? 32 : 20)
+                    .padding(.top, 8)
+                    .padding(.bottom, 24)
+                    .frame(maxWidth: usesWideLayout ? 1080 : 720)
+                    .frame(maxWidth: .infinity)
                 }
-                .padding(.horizontal, usesWideLayout ? 32 : 20)
-                .padding(.top, 8)
-                .padding(.bottom, 24)
-                // Readable width: wide enough for two real columns on iPad,
-                // never a single stretched card across a 13" screen.
-                .frame(maxWidth: usesWideLayout ? 1080 : 620)
-                .frame(maxWidth: .infinity)
+                // Content fits on tall devices — only allow scrolling when
+                // it actually overflows (small screens, large Dynamic Type).
+                .scrollBounceBehavior(.basedOnSize)
             }
-            // Content fits on tall devices — only allow scrolling when
-            // it actually overflows (small screens, large Dynamic Type).
-            .scrollBounceBehavior(.basedOnSize)
-            .background { AmbientBackground().ignoresSafeArea() }
             .navigationTitle("Roundly")
             .navigationBarTitleDisplayMode(.large)
             .toolbarSubtitle(Self.introSubtitle)
@@ -185,177 +179,107 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Hero
-    // The workout as a ring with the total duration in its centre. Content,
-    // not chrome, so it stays a solid card — Liquid Glass is reserved for
-    // the controls and navigation layer floating above (HIG).
-    private var heroCard: some View {
-        VStack(spacing: usesWideLayout ? 24 : 16) {
-            WorkoutRingView(
-                workSeconds: store.current.workSeconds,
-                restSeconds: store.current.restSeconds,
-                rounds: store.current.rounds,
-                lineWidth: usesWideLayout ? 22 : 16
-            ) {
-                ringCenter
+    // MARK: - Summary card (hero)
+    private var summaryCard: some View {
+        HStack(spacing: 18) {
+            BrandIconCircle {
+                Image(systemName: "stopwatch.fill")
+                    .font(.title2)
             }
-            .frame(maxWidth: usesWideLayout ? 400 : 240)
-
-            ringLegend
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Totale duur")
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(AppTheme.secondaryText)
+                Text(verbatim: store.current.totalSeconds.asCompactDuration)
+                    .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    .foregroundStyle(AppTheme.primaryText)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                // Summary subline removed — duplicated the work/rest/rounds
+                // info that already lives in the IntervalsListView right
+                // below this card, and the middle-dot separators read
+                // visually noisy at small footnote size.
+            }
+            Spacer()
         }
-        .padding(usesWideLayout ? 32 : 22)
-        .frame(maxWidth: .infinity)
+        .padding(22)
         .softCard()
     }
 
-    private var ringCenter: some View {
-        VStack(spacing: 4) {
-            Text("Totale duur")
-                .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                .foregroundStyle(AppTheme.secondaryText)
-            Text(verbatim: store.current.totalSeconds.asCompactDuration)
-                .font(.system(
-                    size: usesWideLayout ? wideDurationSize : compactDurationSize,
-                    weight: .bold,
-                    design: .rounded
-                ).monospacedDigit())
-                .foregroundStyle(AppTheme.primaryText)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-                .contentTransition(.numericText())
-                .animation(.appSmooth, value: store.current.totalSeconds)
-            Text("\(store.current.rounds) ronden")
-                .font(.system(.subheadline, design: .rounded))
-                .foregroundStyle(AppTheme.secondaryText)
-        }
-        .multilineTextAlignment(.center)
-        // One VoiceOver stop: "Totale duur, 5m 45s, 8 ronden".
-        .accessibilityElement(children: .combine)
-    }
-
-    private var ringLegend: some View {
-        HStack(spacing: 20) {
-            legendItem("Work", color: AppTheme.coral)
-            if store.current.restSeconds > 0 {
-                legendItem("Rest", color: AppTheme.sage)
-            }
-        }
-        .font(.system(.footnote, design: .rounded, weight: .medium))
-        .foregroundStyle(AppTheme.secondaryText)
-        // The rows below already speak these values; the legend only
-        // explains the ring's colours to sighted users.
-        .accessibilityHidden(true)
-    }
-
-    private func legendItem(_ title: LocalizedStringKey, color: Color) -> some View {
-        HStack(spacing: 6) {
-            Circle()
-                .fill(color)
-                .frame(width: 8, height: 8)
-            Text(title)
-        }
-    }
-
     // MARK: - Action buttons
-    // iOS 26+: Liquid Glass. The primary CTA keeps the brand gradient under
-    // clear glass; the favourite button sits beside it as a plain glass
-    // control inside one GlassEffectContainer, so the two read as a single
-    // floating control group and blend into each other when pressed.
-    // Older systems keep the gradient capsule and a soft card circle.
+    // iOS 26+: Liquid Glass — merk-gradient onder helder glas voor de
+    // primaire CTA, plain "Glass" voor de secundaire. Older systems keep
+    // the original gradient capsule.
     private var actionButtons: some View {
-        Group {
+        VStack(spacing: 14) {
             if #available(iOS 26.0, *) {
-                GlassEffectContainer(spacing: 12) {
-                    HStack(spacing: 12) {
-                        // Zelfde oranje als de merk-gradient: de coral→amber
-                        // `buttonGradient` onder `.clear` glas i.p.v. een
-                        // getinte glassProminent, die het oranje naar dof
-                        // baksteen frostte.
-                        Button(action: startTraining) {
-                            startLabel
-                                .foregroundStyle(.white)
-                                .glassEffect(.clear.interactive(), in: .capsule)
-                                .background(Capsule().fill(AppTheme.buttonGradient))
-                        }
-                        .buttonStyle(PressableButtonStyle())
-
-                        Button(action: requestSaveFavorite) {
-                            saveLabel
-                                .foregroundStyle(AppTheme.coralText)
-                                .glassEffect(.regular.interactive(), in: .capsule)
-                        }
-                        .buttonStyle(PressableButtonStyle())
-                        .disabled(justSaved)
-                    }
+                // Zelfde oranje als de hero-medaillon bovenaan: de
+                // coral→amber `buttonGradient` onder `.clear` glas (à la
+                // BrandIconCircle) i.p.v. een getinte glassProminent, die
+                // het oranje naar dof baksteen frostte.
+                Button(action: startTraining) {
+                    startLabel
+                        .foregroundStyle(.white)
+                        .padding(.vertical, 18)
+                        .glassEffect(.clear.interactive(), in: .capsule)
+                        .background(Capsule().fill(AppTheme.buttonGradient))
                 }
+                .buttonStyle(PressableButtonStyle())
+
+                Button {
+                    requestSaveFavorite()
+                } label: {
+                    saveLabel
+                        .padding(.horizontal, 10)
+                }
+                .buttonStyle(.glass)
+                .buttonBorderShape(.capsule)
+                .controlSize(.large)
+                .tint(AppTheme.coralText)
+                .disabled(justSaved)
+                .animation(.appSmooth, value: justSaved)
             } else {
-                HStack(spacing: 12) {
-                    Button(action: startTraining) {
-                        startLabel
-                            .background(AppTheme.buttonGradient)
-                            .foregroundStyle(.white)
-                            .clipShape(Capsule())
-                            .shadow(color: AppTheme.coralDeep.opacity(0.35), radius: 10, x: 0, y: 6)
-                    }
-                    .buttonStyle(PressableButtonStyle())
-
-                    Button(action: requestSaveFavorite) {
-                        saveLabel
-                            .foregroundStyle(AppTheme.coralText)
-                            .background(Capsule().fill(AppTheme.card))
-                            .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 6)
-                    }
-                    .buttonStyle(PressableButtonStyle())
-                    .disabled(justSaved)
+                Button(action: startTraining) {
+                    startLabel
+                        .padding(.vertical, 18)
+                        .background(AppTheme.buttonGradient)
+                        .foregroundStyle(.white)
+                        .clipShape(Capsule())
+                        .shadow(color: AppTheme.coralDeep.opacity(0.35), radius: 10, x: 0, y: 6)
                 }
+                .buttonStyle(PressableButtonStyle())
+
+                Button {
+                    requestSaveFavorite()
+                } label: {
+                    saveLabel
+                        .foregroundStyle(AppTheme.coralText)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 6)
+                        .contentShape(Rectangle())
+                }
+                .disabled(justSaved)
+                .animation(.appSmooth, value: justSaved)
             }
         }
-        .animation(.appSmooth, value: justSaved)
         .padding(.top, 6)
     }
 
     private var startLabel: some View {
-        Label("Training starten", systemImage: "play.fill")
-            .font(.system(.title3, design: .rounded, weight: .bold))
-            .lineLimit(1)
-            .minimumScaleFactor(0.8)
-            .padding(.horizontal, 20)
-            .frame(maxWidth: .infinity, minHeight: ctaHeight)
-            .contentShape(Capsule())
-    }
-
-    /// Icon-only next to the CTA on iPhone (the start button needs the
-    /// width); with a title on iPad where the trailing column has room.
-    /// Always a full accessibility label either way.
-    private var saveLabel: some View {
-        Label(
-            justSaved ? "Opgeslagen" : "Opslaan als favoriet",
-            systemImage: justSaved ? "checkmark" : "heart"
-        )
-        .labelStyle(SaveLabelStyle(showsTitle: usesWideLayout))
-        .font(.system(.title3, design: .rounded, weight: .semibold))
-        .contentTransition(.symbolEffect(.replace))
-        .padding(.horizontal, usesWideLayout ? 22 : 0)
-        .frame(minWidth: ctaHeight, minHeight: ctaHeight)
-        .contentShape(Capsule())
-    }
-}
-
-/// `Label` that shows its title only when there is room for it.
-private struct SaveLabelStyle: LabelStyle {
-    let showsTitle: Bool
-
-    func makeBody(configuration: Configuration) -> some View {
-        if showsTitle {
-            HStack(spacing: 8) {
-                configuration.icon
-                configuration.title
-                    .font(.system(.headline, design: .rounded, weight: .semibold))
-                    .lineLimit(1)
-            }
-        } else {
-            configuration.icon
+        HStack(spacing: 10) {
+            Image(systemName: "play.fill")
+            Text("Training starten")
         }
+        .font(.system(.title3, design: .rounded, weight: .bold))
+        .frame(maxWidth: .infinity)
+    }
+
+    private var saveLabel: some View {
+        HStack(spacing: 6) {
+            Image(systemName: justSaved ? "checkmark.circle.fill" : "heart")
+            Text(justSaved ? "Opgeslagen" : "Opslaan als favoriet")
+        }
+        .font(.system(.subheadline, design: .rounded, weight: .semibold))
     }
 }
 
