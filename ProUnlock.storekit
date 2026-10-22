@@ -13,22 +13,22 @@
       "localizations" : [
         {
           "description" : "Save and reuse unlimited named favorite workouts.",
-          "displayName" : "Interval Pro",
+          "displayName" : "Roundly Pro",
           "locale" : "en_US"
         },
         {
           "description" : "Enregistrez et réutilisez vos entraînements favoris en illimité.",
-          "displayName" : "Interval Pro",
+          "displayName" : "Roundly Pro",
           "locale" : "fr"
         },
         {
           "description" : "Bewaar en hergebruik onbeperkt benoemde favoriete workouts.",
-          "displayName" : "Interval Pro",
+          "displayName" : "Roundly Pro",
           "locale" : "nl"
         }
       ],
       "productID" : "com.superapp.interval.pro_unlock",
-      "referenceName" : "Interval Pro Unlock",
+      "referenceName" : "Roundly Pro Unlock",
       "type" : "NonConsumable"
     }
   ],

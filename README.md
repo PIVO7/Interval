@@ -1,9 +1,14 @@
-# Interval
+# Roundly (codebase: Interval)
 
 Simpele, betrouwbare interval-timer voor iOS (work/rest/rounds) met stem-cues,
 haptics en optionele sync via Sign in with Apple + Supabase. De timer is
 volledig gratis; favorieten en trainingskleuren zitten achter een eenmalige
-"Interval Pro"-aankoop (€4,99, non-consumable via StoreKit 2).
+"Roundly Pro"-aankoop (€4,99, non-consumable via StoreKit 2).
+
+In de App Store en op het beginscherm heet de app **Roundly**. Het Xcode-project,
+de targets en de bundle-ID (`com.superapp.interval`) heten bewust nog "Interval":
+die zijn onzichtbaar voor gebruikers, en de bundle-ID en het IAP-product-ID
+kunnen na registratie niet meer wijzigen.
 
 ## Project opzetten (verse clone)
 

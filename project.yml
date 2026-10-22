@@ -52,7 +52,7 @@ targets:
       properties:
         CFBundleDevelopmentRegion: $(DEVELOPMENT_LANGUAGE)
         # Home-screen name — NOT the target name ("Interval").
-        CFBundleDisplayName: Interval
+        CFBundleDisplayName: Roundly
         CFBundleExecutable: $(EXECUTABLE_NAME)
         CFBundleIdentifier: $(PRODUCT_BUNDLE_IDENTIFIER)
         # Quoted: unquoted 6.0 parses as a YAML float and XcodeGen emits

@@ -8,7 +8,7 @@ struct OnboardingView: View {
     @State private var showAuthErrorAlert = false
 
     /// Hero title size scales with the user's preferred text size so
-    /// "Interval" stays readable at accessibility text sizes.
+    /// "Roundly" stays readable at accessibility text sizes.
     @ScaledMetric(relativeTo: .largeTitle) private var heroTitleSize: CGFloat = 46
 
     var body: some View {
@@ -61,7 +61,7 @@ struct OnboardingView: View {
             }
 
             VStack(spacing: 10) {
-                Text("Interval")
+                Text("Roundly")
                     .font(.system(size: heroTitleSize, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
                     .opacity(appeared ? 1 : 0)
@@ -98,7 +98,7 @@ struct OnboardingView: View {
             featureRow(
                 icon: "heart.fill",
                 title: "Favorieten",
-                sub: "Sla je schema's op met Interval Pro"
+                sub: "Sla je schema's op met Roundly Pro"
             )
         }
         .opacity(appeared ? 1 : 0)

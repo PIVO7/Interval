@@ -388,25 +388,25 @@
         }
       }
     },
-    "Bewaar je veelgebruikte intervallen met Interval Pro." : {
+    "Bewaar je veelgebruikte intervallen met Roundly Pro." : {
       "comment" : "Favorites empty state subtitle (free users)",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Save your go-to intervals with Interval Pro."
+            "value" : "Save your go-to intervals with Roundly Pro."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enregistrez vos intervalles favoris avec Interval Pro."
+            "value" : "Enregistrez vos intervalles favoris avec Roundly Pro."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bewaar je veelgebruikte intervallen met Interval Pro."
+            "value" : "Bewaar je veelgebruikte intervallen met Roundly Pro."
           }
         }
       }
@@ -984,57 +984,57 @@
         }
       }
     },
-    "Interval" : {
+    "Roundly" : {
       "comment" : "App name — typically not translated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interval"
+            "value" : "Roundly"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interval"
+            "value" : "Roundly"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interval"
+            "value" : "Roundly"
           }
         }
       }
     },
-    "Interval Pro" : {
+    "Roundly Pro" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interval Pro"
+            "value" : "Roundly Pro"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interval Pro"
+            "value" : "Roundly Pro"
           }
         }
       }
     },
-    "Interval Pro actief" : {
+    "Roundly Pro actief" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interval Pro active"
+            "value" : "Roundly Pro active"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interval Pro actif"
+            "value" : "Roundly Pro actif"
           }
         }
       }
@@ -1062,18 +1062,18 @@
         }
       }
     },
-    "Je aankoop wacht op goedkeuring. Zodra die rond is, wordt Interval Pro automatisch ontgrendeld." : {
+    "Je aankoop wacht op goedkeuring. Zodra die rond is, wordt Roundly Pro automatisch ontgrendeld." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your purchase is awaiting approval. Once it clears, Interval Pro unlocks automatically."
+            "value" : "Your purchase is awaiting approval. Once it clears, Roundly Pro unlocks automatically."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Votre achat est en attente d'approbation. Dès qu'il sera validé, Interval Pro se déverrouillera automatiquement."
+            "value" : "Votre achat est en attente d'approbation. Dès qu'il sera validé, Roundly Pro se déverrouillera automatiquement."
           }
         }
       }
@@ -1551,34 +1551,34 @@
         }
       }
     },
-    "Ontgrendel Interval Pro" : {
+    "Ontgrendel Roundly Pro" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlock Interval Pro"
+            "value" : "Unlock Roundly Pro"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Déverrouiller Interval Pro"
+            "value" : "Déverrouiller Roundly Pro"
           }
         }
       }
     },
-    "Ontgrendel met Interval Pro" : {
+    "Ontgrendel met Roundly Pro" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlock with Interval Pro"
+            "value" : "Unlock with Roundly Pro"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Déverrouiller avec Interval Pro"
+            "value" : "Déverrouiller avec Roundly Pro"
           }
         }
       }
@@ -2026,25 +2026,25 @@
         }
       }
     },
-    "Sla je schema's op met Interval Pro" : {
+    "Sla je schema's op met Roundly Pro" : {
       "comment" : "Onboarding feature description",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Save your routines with Interval Pro"
+            "value" : "Save your routines with Roundly Pro"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enregistrez vos routines avec Interval Pro"
+            "value" : "Enregistrez vos routines avec Roundly Pro"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sla je schema's op met Interval Pro"
+            "value" : "Sla je schema's op met Roundly Pro"
           }
         }
       }
