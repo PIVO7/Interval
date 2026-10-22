@@ -155,7 +155,7 @@ lifecycle-coördinator.
 ```swift
 @MainActor
 final class AudioSessionController {
-    private let log = Logger(subsystem: "com.superapp.interval", category: "AudioSession")
+    private let log = Logger(subsystem: "be.pivot-studio.roundly", category: "AudioSession")
 
     func activate() {
         do {

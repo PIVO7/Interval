@@ -27,7 +27,7 @@
           "locale" : "nl"
         }
       ],
-      "productID" : "com.superapp.interval.pro_unlock",
+      "productID" : "be.pivot-studio.roundly.pro_unlock",
       "referenceName" : "Roundly Pro Unlock",
       "type" : "NonConsumable"
     }

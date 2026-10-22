@@ -10,7 +10,7 @@ import os
 /// timer isn't running.
 @MainActor
 final class AudioSessionController {
-    private let log = Logger(subsystem: "com.superapp.interval",
+    private let log = Logger(subsystem: "be.pivot-studio.roundly",
                              category: "AudioSession")
 
     func activate() {

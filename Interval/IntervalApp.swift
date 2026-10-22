@@ -32,7 +32,7 @@ struct IntervalApp: App {
     /// local. If the CloudKit-backed store can't be opened at all, fall
     /// back to a local-only store rather than crash at launch.
     nonisolated private static func makeModelContainer() -> ModelContainer {
-        let log = Logger(subsystem: "com.superapp.interval", category: "Storage")
+        let log = Logger(subsystem: "be.pivot-studio.roundly", category: "Storage")
         do {
             return try ModelContainer(
                 for: WorkoutEntity.self,
