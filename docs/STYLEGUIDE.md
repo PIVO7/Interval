@@ -117,8 +117,9 @@ layout identiek houdt:
   + `.tint(coralText)`. Fallback: platte tekstknop in `coralText`.
 - **Controls op fase-gradients**: `liquidGlassSurface(in:fallbackOpacity:)` —
   glas op iOS 26, translucent wit eronder.
-- **Merk-medaillon** (`BrandIconCircle`): witte glyph, `glassEffect(.clear, in:
-  .circle)` over `buttonGradient`-cirkel, glyph-schaduw `black 25% / 3 / y 2`.
+- **Merk-medaillon** (`BrandIconCircle`): witte glyph op een `buttonGradient`-cirkel,
+  glyph-schaduw `black 25% / 3 / y 2`. Bewust **geen** glas: het is inhoud,
+  geen control (HIG).
 
 ## 7. Motie
 

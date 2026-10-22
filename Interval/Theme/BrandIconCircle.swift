@@ -1,36 +1,22 @@
 import SwiftUI
 
 /// The app icon's look as an in-app medallion: a white glyph over the deep
-/// coral→amber `buttonGradient`. On iOS 26+ the glyph floats on Liquid Glass
-/// that samples the gradient beneath it — echoing the icon's frosted glass
-/// layers — with a plain gradient circle on earlier systems.
+/// coral→amber `buttonGradient`. Deliberately no Liquid Glass — it sits in
+/// cards as content, and the HIG reserves glass for controls and the
+/// navigation layer.
 struct BrandIconCircle<Glyph: View>: View {
     var size: CGFloat = 64
     @ViewBuilder var glyph: Glyph
 
     var body: some View {
-        if #available(iOS 26.0, *) {
-            // `.clear` glass keeps the gradient saturated underneath while
-            // still adding the icon-style specular rim; `.regular` frosts
-            // the small circle out to a pale wash on light backgrounds.
-            glyphContent
-                .glassEffect(.clear, in: .circle)
-                .background(Circle().fill(AppTheme.buttonGradient))
-        } else {
-            ZStack {
-                Circle().fill(AppTheme.buttonGradient)
-                glyphContent
-            }
-            .frame(width: size, height: size)
+        ZStack {
+            Circle().fill(AppTheme.buttonGradient)
+            glyph
+                .foregroundStyle(.white)
+                // Mirrors the app icon's neutral drop shadow under its
+                // solid-white glyph layers.
+                .shadow(color: .black.opacity(0.25), radius: 3, x: 0, y: 2)
         }
-    }
-
-    private var glyphContent: some View {
-        glyph
-            .foregroundStyle(.white)
-            // Mirrors the app icon's neutral drop shadow under its
-            // solid-white glyph layers.
-            .shadow(color: .black.opacity(0.25), radius: 3, x: 0, y: 2)
-            .frame(width: size, height: size)
+        .frame(width: size, height: size)
     }
 }
