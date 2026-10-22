@@ -29,7 +29,6 @@ struct HomeView: View {
                 AppTheme.background.ignoresSafeArea()
                 ScrollView {
                     VStack(spacing: 20) {
-                        header
                         summaryCard
                         IntervalsListView(
                             workSeconds: $store.current.workSeconds,
@@ -52,7 +51,6 @@ struct HomeView: View {
             }
             .navigationTitle("Roundly")
             .navigationBarTitleDisplayMode(.large)
-            .toolbarSubtitle(Self.introSubtitle)
             .sheet(isPresented: $showSaveSheet) {
                 SaveFavoriteSheet(workout: store.current, onSave: saveFavorite)
                     .presentationDetents([.medium])
@@ -77,11 +75,6 @@ struct HomeView: View {
             .onAppear(perform: triggerFirstLaunchNudgeIfNeeded)
         }
     }
-
-    // Shown as a navigation-bar subtitle on iOS 26+ and as the in-content
-    // header row on older systems — one constant so the copy can't drift.
-    private static let introSubtitle: LocalizedStringKey =
-        "Stel je intervallen in en begin wanneer je klaar bent."
 
     private func startTraining() {
         session.start(store.current, cues: cueOrchestrator)
@@ -131,22 +124,6 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Header
-    // On iOS 26+ the intro line lives in the navigation bar as a subtitle
-    // (Apple's iOS 27 kit "Toolbar - Top, Title and Subtitle" pattern);
-    // older systems keep it as the first content row.
-    private var header: some View {
-        Group {
-            if #unavailable(iOS 26.0) {
-                Text(Self.introSubtitle)
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundStyle(AppTheme.secondaryText)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 4)
-            }
-        }
-    }
-
     // MARK: - Summary card (hero)
     private var summaryCard: some View {
         HStack(spacing: 18) {
@@ -188,11 +165,14 @@ struct HomeView: View {
                 Button(action: startTraining) {
                     startLabel
                         .foregroundStyle(.white)
-                        .padding(.vertical, 18)
+                        .padding(.vertical, 15)
                         .glassEffect(.clear.interactive(), in: .capsule)
                         .background(Capsule().fill(AppTheme.buttonGradient))
                 }
                 .buttonStyle(PressableButtonStyle())
+                // Full width on iPhone, but not a bar across the whole
+                // column on iPad.
+                .frame(maxWidth: 440)
 
                 Button {
                     requestSaveFavorite()
@@ -209,13 +189,16 @@ struct HomeView: View {
             } else {
                 Button(action: startTraining) {
                     startLabel
-                        .padding(.vertical, 18)
+                        .padding(.vertical, 15)
                         .background(AppTheme.buttonGradient)
                         .foregroundStyle(.white)
                         .clipShape(Capsule())
                         .shadow(color: AppTheme.coralDeep.opacity(0.35), radius: 10, x: 0, y: 6)
                 }
                 .buttonStyle(PressableButtonStyle())
+                // Full width on iPhone, but not a bar across the whole
+                // column on iPad.
+                .frame(maxWidth: 440)
 
                 Button {
                     requestSaveFavorite()
@@ -238,7 +221,7 @@ struct HomeView: View {
             Image(systemName: "play.fill")
             Text("Training starten")
         }
-        .font(.system(.title3, design: .rounded, weight: .bold))
+        .font(.system(.headline, design: .rounded, weight: .bold))
         .frame(maxWidth: .infinity)
     }
 

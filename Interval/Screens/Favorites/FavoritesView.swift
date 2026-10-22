@@ -25,7 +25,6 @@ struct FavoritesView: View {
                 }
             }
             .navigationTitle("Favorieten")
-            .toolbarSubtitle("Je opgeslagen trainingen.")
             .alert("Verwijderen mislukt", isPresented: $showSyncErrorAlert) {
                 Button("OK", role: .cancel) {}
             } message: {

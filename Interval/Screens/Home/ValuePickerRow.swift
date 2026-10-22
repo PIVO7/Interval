@@ -27,36 +27,56 @@ struct ValuePickerRow: View {
     var isNudging: Bool = false
     let action: () -> Void
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @ScaledMetric(relativeTo: .headline) private var iconSize: CGFloat = 36
+
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 14) {
-                ZStack {
-                    Circle()
-                        .fill(tint.opacity(isSelected ? 0.28 : 0.18))
-                        .frame(width: 36, height: 36)
-                    Image(systemName: systemImage)
-                        .foregroundStyle(tint)
-                        .font(.callout)
+            // At accessibility text sizes the value chip drops below the
+            // title instead of squeezing it into truncation.
+            let layout = dynamicTypeSize.isAccessibilitySize
+                ? AnyLayout(VStackLayout(alignment: .leading, spacing: 10))
+                : AnyLayout(HStackLayout(spacing: 14))
+            layout {
+                HStack(spacing: 14) {
+                    ZStack {
+                        Circle()
+                            .fill(tint.opacity(isSelected ? 0.28 : 0.18))
+                            .frame(width: iconSize, height: iconSize)
+                        Image(systemName: systemImage)
+                            .foregroundStyle(tint)
+                            .font(.callout)
+                    }
+                    Text(title)
+                        .font(.system(.headline, design: .rounded, weight: .semibold))
+                        .foregroundStyle(AppTheme.primaryText)
                 }
-                Text(title)
-                    .font(.system(.headline, design: .rounded, weight: .semibold))
-                    .foregroundStyle(AppTheme.primaryText)
-                Spacer()
-                valueChip
-                // Permanent tap affordance — the first-launch nudge pulses
-                // once and never again, so the chevron is what tells
-                // returning users the row expands. Flips with the accordion.
-                Image(systemName: "chevron.down")
-                    .font(.system(.caption2, weight: .bold))
-                    .foregroundStyle(AppTheme.secondaryText.opacity(0.7))
-                    .rotationEffect(.degrees(isSelected ? -180 : 0))
+                HStack(spacing: 14) {
+                    Spacer(minLength: 0)
+                    valueChip
+                    // Permanent tap affordance — the first-launch nudge pulses
+                    // once and never again, so the chevron is what tells
+                    // returning users the row expands. Flips with the accordion.
+                    Image(systemName: "chevron.down")
+                        .font(.system(.caption2, weight: .bold))
+                        .foregroundStyle(AppTheme.secondaryText.opacity(0.7))
+                        .rotationEffect(.degrees(isSelected ? -180 : 0))
+                }
             }
             .padding(.horizontal, 18)
             .padding(.vertical, 14)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .background(tint.opacity(isSelected ? 0.05 : 0))
             .contentShape(Rectangle())
         }
         .buttonStyle(RowButtonStyle())
+        // VoiceOver: "Inspanning, 0:30, button" and announces the
+        // expanded state like a disclosure row.
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(title))
+        .accessibilityValue(Text(verbatim: value))
+        .accessibilityAddTraits(.isButton)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     private var valueChip: some View {
