@@ -29,7 +29,6 @@ struct HomeView: View {
                 AppTheme.background.ignoresSafeArea()
                 ScrollView {
                     VStack(spacing: 20) {
-                        header
                         summaryCard
                         IntervalsListView(
                             workSeconds: $store.current.workSeconds,
@@ -52,7 +51,6 @@ struct HomeView: View {
             }
             .navigationTitle("Roundly")
             .navigationBarTitleDisplayMode(.large)
-            .toolbarSubtitle(Self.introSubtitle)
             .sheet(isPresented: $showSaveSheet) {
                 SaveFavoriteSheet(workout: store.current, onSave: saveFavorite)
                     .presentationDetents([.medium])
@@ -77,11 +75,6 @@ struct HomeView: View {
             .onAppear(perform: triggerFirstLaunchNudgeIfNeeded)
         }
     }
-
-    // Shown as a navigation-bar subtitle on iOS 26+ and as the in-content
-    // header row on older systems — one constant so the copy can't drift.
-    private static let introSubtitle: LocalizedStringKey =
-        "Stel je intervallen in en begin wanneer je klaar bent."
 
     private func startTraining() {
         session.start(store.current, cues: cueOrchestrator)
@@ -129,22 +122,6 @@ struct HomeView: View {
             try? await Task.sleep(for: .milliseconds(450))
             withAnimation(.appSmooth) { nudgeWork = false }
             hasSeenIntervalsNudge = true
-        }
-    }
-
-    // MARK: - Header
-    // On iOS 26+ the intro line lives in the navigation bar as a subtitle
-    // (Apple's iOS 27 kit "Toolbar - Top, Title and Subtitle" pattern);
-    // older systems keep it as the first content row.
-    private var header: some View {
-        Group {
-            if #unavailable(iOS 26.0) {
-                Text(Self.introSubtitle)
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundStyle(AppTheme.secondaryText)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 4)
-            }
         }
     }
 

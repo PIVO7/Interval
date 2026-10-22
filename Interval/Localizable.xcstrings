@@ -2167,29 +2167,6 @@
         }
       }
     },
-    "Stel je intervallen in en begin wanneer je klaar bent." : {
-      "comment" : "Home screen subtitle",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Set your intervals and start when you're ready."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Réglez vos intervalles et commencez quand vous êtes prêt."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stel je intervallen in en begin wanneer je klaar bent."
-          }
-        }
-      }
-    },
     "Stop" : {
       "localizations" : {
         "en" : {
