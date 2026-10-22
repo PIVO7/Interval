@@ -118,22 +118,6 @@ extension View {
     func softCard() -> some View { modifier(SoftCard()) }
 }
 
-// MARK: - Toolbar subtitle
-/// Apple's iOS 27 kit "Toolbar - Top, Title and Subtitle" pattern: a screen's
-/// intro line lives under the large navigation title. `navigationSubtitle`
-/// only exists on iOS 26+, so this is a no-op on earlier systems — callers
-/// keep their own in-content fallback where one is needed.
-extension View {
-    @ViewBuilder
-    func toolbarSubtitle(_ subtitle: LocalizedStringKey) -> some View {
-        if #available(iOS 26.0, *) {
-            navigationSubtitle(subtitle)
-        } else {
-            self
-        }
-    }
-}
-
 // MARK: - Liquid Glass surface
 /// Subtle Liquid Glass backdrop for controls sitting on the vibrant workout
 /// gradients (iOS 26+). Falls back to the original translucent-white fill on

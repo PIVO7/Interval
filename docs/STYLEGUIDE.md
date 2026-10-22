@@ -82,7 +82,7 @@ hero-cijfers krijgen vaste maten.
 
 | Rol | Stijl |
 |---|---|
-| Schermtitel | large navigation title (+ `navigationSubtitle` op iOS 26) |
+| Schermtitel | large navigation title, zonder subtitel |
 | Rijtitel / knoplabel | `.headline` rounded semibold |
 | Waarde-chip | `.body` rounded bold + `.monospacedDigit()` |
 | Sectiekop | `.subheadline` rounded semibold |
@@ -166,7 +166,7 @@ haptics spelen ook als audio gedempt is.
 - Nederlands als basistaal (ook EN/FR), **je-vorm**, kort en direct:
   "Verder zonder account", "Start training".
 - CTA's zijn werkwoorden; geen uitroeptekens buiten celebratiemomenten.
-- Schermintro's via `navigationSubtitle` (iOS 26), niet als losse bodytekst.
+- Geen schermintro's of subtitels onder de titel: het scherm spreekt voor zich.
 
 ## 11. Toepassen op een nieuwe app (Pump)
 
