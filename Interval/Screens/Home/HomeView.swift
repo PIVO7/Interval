@@ -22,48 +22,28 @@ struct HomeView: View {
     @AppStorage("hasSeenIntervalsNudge") private var hasSeenIntervalsNudge = false
     @State private var nudgeWork = false
 
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-
-    /// iPad: the intervals list and the summary + actions sit side by side
-    /// instead of one narrow column in the middle of a wide screen.
-    /// Accessibility text sizes always stack so nothing gets squeezed.
-    private var usesWideLayout: Bool {
-        horizontalSizeClass == .regular && !dynamicTypeSize.isAccessibilitySize
-    }
-
     var body: some View {
-        NavigationStack {
+        @Bindable var store = store
+        return NavigationStack {
             ZStack {
                 AppTheme.background.ignoresSafeArea()
                 ScrollView {
-                    Group {
-                        if usesWideLayout {
-                            VStack(spacing: 20) {
-                                header
-                                HStack(alignment: .top, spacing: 24) {
-                                    intervalsList
-                                        .frame(maxWidth: .infinity)
-                                    VStack(spacing: 20) {
-                                        summaryCard
-                                        actionButtons
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                }
-                            }
-                        } else {
-                            VStack(spacing: 20) {
-                                header
-                                summaryCard
-                                intervalsList
-                                actionButtons
-                            }
-                        }
+                    VStack(spacing: 20) {
+                        header
+                        summaryCard
+                        IntervalsListView(
+                            workSeconds: $store.current.workSeconds,
+                            restSeconds: $store.current.restSeconds,
+                            rounds: $store.current.rounds,
+                            expandedField: $expandedField,
+                            nudgeWork: nudgeWork
+                        )
+                        actionButtons
+                        Spacer(minLength: 24)
                     }
-                    .padding(.horizontal, usesWideLayout ? 32 : 20)
+                    .padding(.horizontal, 20)
                     .padding(.top, 8)
-                    .padding(.bottom, 24)
-                    .frame(maxWidth: usesWideLayout ? 1080 : 720)
+                    .frame(maxWidth: 720)
                     .frame(maxWidth: .infinity)
                 }
                 // Content fits on tall devices — only allow scrolling when
@@ -96,17 +76,6 @@ struct HomeView: View {
             }
             .onAppear(perform: triggerFirstLaunchNudgeIfNeeded)
         }
-    }
-
-    private var intervalsList: some View {
-        @Bindable var store = store
-        return IntervalsListView(
-            workSeconds: $store.current.workSeconds,
-            restSeconds: $store.current.restSeconds,
-            rounds: $store.current.rounds,
-            expandedField: $expandedField,
-            nudgeWork: nudgeWork
-        )
     }
 
     // Shown as a navigation-bar subtitle on iOS 26+ and as the in-content
