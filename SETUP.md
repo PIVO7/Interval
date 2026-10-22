@@ -13,7 +13,7 @@ Run `xcodegen generate` again any time you add/remove files or change
 ## 2. iCloud
 
 Favorites sync through the user's private CloudKit database
-(container `iCloud.com.superapp.interval`). In Xcode → Signing &
+(container `iCloud.be.pivo7.roundly`). In Xcode → Signing &
 Capabilities, make sure **iCloud → CloudKit** (with that container) and
 **Push Notifications** are enabled. Before shipping, deploy the CloudKit
 schema from Development to Production in the CloudKit Console.

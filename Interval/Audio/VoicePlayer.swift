@@ -22,7 +22,7 @@ import os
 @MainActor
 final class VoicePlayer: CueChannel {
     private let settings: AudioSettings
-    private let log = Logger(subsystem: "com.superapp.interval",
+    private let log = Logger(subsystem: "be.pivo7.roundly",
                              category: "VoicePlayer")
 
     private let engine = AVAudioEngine()

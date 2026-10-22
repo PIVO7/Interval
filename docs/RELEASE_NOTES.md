@@ -7,6 +7,25 @@ release-/TestFlight-notes en getest moeten worden vóór archive.
 
 ## Wijzigingen sinds vorige build
 
+### Nieuwe bundle-ID: `be.pivo7.roundly`
+- Bundle-ID `com.superapp.interval` → `be.pivo7.roundly` (tests:
+  `be.pivo7.roundly.tests`), IAP `be.pivo7.roundly.pro_unlock`, iCloud-container
+  `iCloud.be.pivo7.roundly`. Ook de Logger-subsystems.
+- Handmatig te doen vóór de eerste build met deze ID:
+  - [ ] Xcode → Signing & Capabilities: laat Xcode de nieuwe App ID aanmaken
+        (automatic signing), vink iCloud → CloudKit aan en kies/maak de
+        container `iCloud.be.pivo7.roundly`. Push Notifications aan.
+  - [ ] App Store Connect: nieuw app-record "Roundly" met bundle-ID
+        `be.pivo7.roundly`. Het oude record (`com.superapp.interval`) kan niet
+        omgezet worden; laat het staan of verwijder het.
+  - [ ] Nieuwe IAP `be.pivo7.roundly.pro_unlock` (non-consumable) met de
+        lokalisaties uit APP_STORE_COPY.md en een paywall-screenshot.
+  - [ ] TestFlight-testers opnieuw toevoegen aan het nieuwe record.
+  - [ ] CloudKit Console: schema van `iCloud.be.pivo7.roundly` naar Production
+        deployen vóór release.
+- Oude TestFlight-installaties zijn een andere app: favorieten daaruit komen
+  niet mee. Voor testers is dat geen probleem (nog niet live).
+
 ### Nieuwe feature: workout aanpassen tijdens pauze
 - Tijdens een lopende workout kun je nu work/rest/rounds aanpassen,
   enkel terwijl gepauzeerd (in work- of rest-fase). Niet tijdens de

@@ -7,9 +7,10 @@ volledig gratis; favorieten en trainingskleuren zitten achter een eenmalige
 "Roundly Pro"-aankoop (€4,99, non-consumable via StoreKit 2).
 
 In de App Store en op het beginscherm heet de app **Roundly**. Het Xcode-project,
-de targets en de bundle-ID (`com.superapp.interval`) heten bewust nog "Interval":
-die zijn onzichtbaar voor gebruikers, en de bundle-ID en het IAP-product-ID
-kunnen na registratie niet meer wijzigen.
+de targets en de mappen heten nog "Interval"; dat is onzichtbaar voor
+gebruikers. De bundle-ID is `be.pivo7.roundly` en het IAP-product-ID
+`be.pivo7.roundly.pro_unlock`. Die kunnen na registratie in App Store
+Connect niet meer wijzigen.
 
 ## Project opzetten (verse clone)
 
@@ -36,7 +37,7 @@ kunnen na registratie niet meer wijzigen.
 ## iCloud-sync
 
 Favorieten (`WorkoutEntity`) synchroniseren via de privé-database van de
-gebruiker in CloudKit-container `iCloud.com.superapp.interval`. Daardoor
+gebruiker in CloudKit-container `iCloud.be.pivo7.roundly`. Daardoor
 geldt voor het model: geen `@Attribute(.unique)` en een standaardwaarde op
 elke property.
 
