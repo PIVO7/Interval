@@ -4,7 +4,7 @@ import SwiftData
 struct FavoritesView: View {
     @Environment(WorkoutStore.self) private var store
     @Environment(StoreManager.self) private var pro
-    @Environment(FavoritesSync.self) private var favoritesSync
+    @Environment(\.modelContext) private var modelContext
 
     @Query(sort: \WorkoutEntity.createdAt, order: .reverse)
     private var favorites: [WorkoutEntity]
@@ -32,9 +32,7 @@ struct FavoritesView: View {
                 Text(syncErrorMessage ?? "")
             }
             .sheet(item: $editingEntity) { entity in
-                EditFavoriteSheet(entity: entity) {
-                    favoritesSync.didEdit()
-                }
+                EditFavoriteSheet(entity: entity)
             }
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
@@ -73,12 +71,12 @@ struct FavoritesView: View {
         .frame(maxWidth: .infinity)
     }
 
-    /// Delete locally right away; FavoritesSync queues the remote delete
-    /// and retries it until the server confirms, so an offline delete
-    /// neither reappears here nor lingers on other devices.
+    /// Delete and persist right away; iCloud sync carries the delete to
+    /// the user's other devices.
     private func deleteFavorite(_ entity: WorkoutEntity) {
+        modelContext.delete(entity)
         do {
-            try favoritesSync.delete(entity)
+            try modelContext.save()
         } catch {
             // Couldn't even persist the delete locally — surface it so the
             // row doesn't quietly reappear on next launch with no explanation.
@@ -124,6 +122,5 @@ struct FavoritesView: View {
     FavoritesView()
         .environment(WorkoutStore())
         .environment(StoreManager())
-        .environment(PreviewStore.favoritesSync)
-        .modelContainer(PreviewStore.container)
+        .modelContainer(for: WorkoutEntity.self, inMemory: true)
 }

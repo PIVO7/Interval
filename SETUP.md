@@ -10,30 +10,13 @@ open "Interval.xcodeproj"
 Run `xcodegen generate` again any time you add/remove files or change
 `project.yml`.
 
-## 2. Configure Supabase
+## 2. iCloud
 
-1. Create a project at https://supabase.com
-2. Go to **Authentication → Providers** and enable **Apple**. Add the Apple
-   service ID, team ID, key ID, and private key — see
-   https://supabase.com/docs/guides/auth/social-login/auth-apple
-3. Open **SQL Editor → New query** and paste the contents of
-   [`Interval/Supabase/schema.sql`](Interval/Supabase/schema.sql).
-   Run it to create the `workouts` and `user_preferences` tables with RLS.
-4. Go to **Project Settings → API**, copy:
-   - Project URL → `SupabaseConfig.url`
-   - `anon` public key → `SupabaseConfig.anonKey`
-5. Edit [`Interval/Supabase/SupabaseConfig.swift`](Interval/Supabase/SupabaseConfig.swift)
-   and replace the placeholders.
-6. (Recommended) Stop tracking the config file so your keys don't get
-   committed:
-   ```bash
-   git rm --cached "Interval/Supabase/SupabaseConfig.swift"
-   echo 'Interval/Supabase/SupabaseConfig.swift' >> .gitignore
-   ```
-
-The anon key is safe to ship inside the app binary — security is enforced by
-Row Level Security policies (defined in `schema.sql`). Never embed the
-`service_role` key.
+Favorites sync through the user's private CloudKit database
+(container `iCloud.com.superapp.interval`). In Xcode → Signing &
+Capabilities, make sure **iCloud → CloudKit** (with that container) and
+**Push Notifications** are enabled. Before shipping, deploy the CloudKit
+schema from Development to Production in the CloudKit Console.
 
 ## 3. Bundle the ambient audio files
 
@@ -51,16 +34,15 @@ source. The build extracts new strings automatically because
 ## 5. Build & run
 
 Select the **Interval** scheme and run on an iPhone simulator (or device).
-Sign in with Apple works in the simulator; the Supabase bridge silently
-no-ops if the config is still placeholder.
+Without an iCloud account the app works the same, with favorites kept
+on the device only.
 
 ## v1 scope summary
 
 In v1:
-- Sign in with Apple (skippable)
 - Set work/rest/rounds, start timer
 - Background audio + signal tones + haptics
-- Favorites persisted locally (SwiftData) + synced to Supabase when signed in
+- Favorites persisted locally (SwiftData) + synced via iCloud (CloudKit)
 - Dutch UI, English translation infrastructure ready
 
 Not in v1: workout history, templates, coach→patient sharing, Apple Watch,

@@ -7,11 +7,6 @@ options:
     icon:
       file: true
 
-packages:
-  Supabase:
-    url: https://github.com/supabase/supabase-swift
-    from: 2.0.0
-
 settings:
   base:
     # PRODUCT_NAME omitted — defaults to $(TARGET_NAME) per target so the app
@@ -40,11 +35,14 @@ targets:
     entitlements:
       path: Interval/Interval.entitlements
       properties:
-        com.apple.developer.applesignin:
-          - Default
-    dependencies:
-      - package: Supabase
-        product: Supabase
+        # iCloud (CloudKit) private database: SwiftData syncs favorites
+        # across the user's devices. No accounts or servers of our own.
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.superapp.interval
+        com.apple.developer.icloud-services:
+          - CloudKit
+        # Silent pushes tell SwiftData a remote change is waiting.
+        aps-environment: development
     sources:
       - path: Interval
     info:
@@ -67,12 +65,13 @@ targets:
         ITSAppUsesNonExemptEncryption: false
         LSRequiresIPhoneOS: true
         UIApplicationSupportsIndirectInputEvents: true
-        # No UIBackgroundModes — the timer runs foreground-only in 1.0.
-        # If the user backgrounds the app the OS suspends us within a few
-        # seconds; recomputeFromWallClock fast-forwards through the missed
-        # phases when the user returns. Live Activity / ambient audio /
-        # any other reason to keep the app alive in background were all
-        # removed for the 1.0 ship.
+        # remote-notification only: lets CloudKit's silent pushes wake
+        # SwiftData to pull favorites changed on another device. The timer
+        # itself still runs foreground-only — if the user backgrounds the
+        # app the OS suspends us within a few seconds and
+        # recomputeFromWallClock fast-forwards through the missed phases
+        # when the user returns.
+        UIBackgroundModes: [ remote-notification ]
         UILaunchStoryboardName: LaunchScreen
         UIRequiredDeviceCapabilities: [ arm64 ]
         UIRequiresFullScreen: true

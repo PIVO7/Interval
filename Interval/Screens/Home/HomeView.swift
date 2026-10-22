@@ -6,7 +6,7 @@ struct HomeView: View {
     @Environment(CueOrchestrator.self) private var cueOrchestrator
     @Environment(StoreManager.self) private var pro
     @Environment(ActiveSession.self) private var session
-    @Environment(FavoritesSync.self) private var favoritesSync
+    @Environment(\.modelContext) private var modelContext
 
     @State private var showSaveSheet = false
     @State private var showPaywall = false
@@ -98,16 +98,15 @@ struct HomeView: View {
         }
     }
 
-    /// Persist the current workout as a favorite, queue it for sync, and
-    /// flash the "Opgeslagen" confirmation. Guest mode / unconfigured
-    /// backends are not surfaced as errors — the local save is enough.
+    /// Persist the current workout as a favorite and flash the
+    /// "Opgeslagen" confirmation. iCloud sync happens in the background.
     private func saveFavorite(_ saved: Workout) {
-        // Persists immediately — SwiftData's autosave can lag, and showing
+        modelContext.insert(WorkoutEntity(from: saved))
+        // Force-persist now — SwiftData's autosave can lag, and showing
         // the success toast while the row isn't yet on disk risks losing
-        // the save if the app dies. The upload is queued and retried by
-        // FavoritesSync, so only a local failure is surfaced.
+        // the save if the app dies.
         do {
-            try favoritesSync.saveNew(saved)
+            try modelContext.save()
         } catch {
             syncErrorMessage = error.localizedDescription
             showSyncErrorAlert = true
@@ -257,6 +256,5 @@ struct HomeView: View {
         .environment(WorkoutStore())
         .environment(AudioSettings())
         .environment(StoreManager())
-        .environment(PreviewStore.favoritesSync)
-        .modelContainer(PreviewStore.container)
+        .modelContainer(for: WorkoutEntity.self, inMemory: true)
 }

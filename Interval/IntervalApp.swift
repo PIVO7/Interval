@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import os
 
 @main
 struct IntervalApp: App {
@@ -7,14 +8,13 @@ struct IntervalApp: App {
     // No default here — built once in init() and shared with the cue stack,
     // so there's no throwaway instance.
     @State private var audioSettings: AudioSettings
-    @State private var auth = AuthManager()
+    @State private var onboarding = OnboardingState()
     @State private var appearance = AppearanceSettings()
     @State private var store = StoreManager()
     @State private var cueOrchestrator: CueOrchestrator
     @State private var activeSession = ActiveSession()
-    @State private var favoritesSync: FavoritesSync
 
-    let modelContainer: ModelContainer
+    let modelContainer: ModelContainer = Self.makeModelContainer()
 
     init() {
         // Cue stack is constructed once and shared across workouts.
@@ -23,20 +23,32 @@ struct IntervalApp: App {
         let settings = AudioSettings()
         _audioSettings = State(initialValue: settings)
         _cueOrchestrator = State(initialValue: .makeDefault(settings: settings))
-        let container: ModelContainer
+        Self.applyRoundedNavigationTitles()
+    }
+
+    /// Favorites live in SwiftData and sync through the user's private
+    /// iCloud database (`.automatic` picks the container from the
+    /// entitlements). Without an iCloud account the store simply stays
+    /// local. If the CloudKit-backed store can't be opened at all, fall
+    /// back to a local-only store rather than crash at launch.
+    nonisolated private static func makeModelContainer() -> ModelContainer {
+        let log = Logger(subsystem: "com.superapp.interval", category: "Storage")
         do {
-            container = try ModelContainer(for: WorkoutEntity.self)
+            return try ModelContainer(
+                for: WorkoutEntity.self,
+                configurations: ModelConfiguration(cloudKitDatabase: .automatic)
+            )
+        } catch {
+            log.error("CloudKit store unavailable, using local store: \(error.localizedDescription, privacy: .public)")
+        }
+        do {
+            return try ModelContainer(
+                for: WorkoutEntity.self,
+                configurations: ModelConfiguration(cloudKitDatabase: .none)
+            )
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
         }
-        modelContainer = container
-        // Sync works on the same main context the views' @Query reads, so
-        // reconciled changes show up immediately.
-        _favoritesSync = State(initialValue: FavoritesSync(
-            context: container.mainContext,
-            remote: SupabaseManager.shared
-        ))
-        Self.applyRoundedNavigationTitles()
     }
 
     /// SwiftUI has no modifier for navigation-bar title fonts, so the rounded
@@ -59,12 +71,11 @@ struct IntervalApp: App {
             RootTabView()
                 .environment(workoutStore)
                 .environment(audioSettings)
-                .environment(auth)
+                .environment(onboarding)
                 .environment(appearance)
                 .environment(cueOrchestrator)
                 .environment(store)
                 .environment(activeSession)
-                .environment(favoritesSync)
                 .tint(AppTheme.coral)
                 .preferredColorScheme(appearance.mode.colorScheme)
                 .task {

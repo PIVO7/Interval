@@ -1,21 +1,19 @@
 import SwiftUI
 import SwiftData
-import AuthenticationServices
+import CloudKit
 
 struct AccountView: View {
     @Environment(AudioSettings.self) private var audioSettings
-    @Environment(AuthManager.self) private var auth
     @Environment(AppearanceSettings.self) private var appearance
     @Environment(StoreManager.self) private var pro
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
 
-    @State private var showAuthErrorAlert = false
     @State private var showPaywall = false
     @State private var restoreInFlight = false
-    @State private var showDeleteConfirm = false
-    @State private var deleteInFlight = false
-    @State private var showDeleteError = false
-    @State private var deleteErrorMessage: String?
+    /// Signed in to iCloud on this device. Starts optimistic so the card
+    /// doesn't flash a warning; re-checked on appear and on return to the
+    /// foreground, since the user can sign in from Settings meanwhile.
+    @State private var iCloudAvailable = true
 
     var body: some View {
         NavigationStack {
@@ -23,14 +21,13 @@ struct AccountView: View {
                 AppTheme.background.ignoresSafeArea()
                 ScrollView {
                     VStack(spacing: 20) {
-                        profileCard
+                        syncCard
                         // Pro upgrade/restore card; hidden only when the app
                         // ships free (StoreManager.freeForEveryone).
                         if !StoreManager.freeForEveryone { proSection }
                         signalSection
                         appearanceSection
                         themeSection
-                        logoutButton
                     }
                     .padding(20)
                     .frame(maxWidth: 720)
@@ -38,15 +35,11 @@ struct AccountView: View {
                 }
             }
             .navigationTitle("Account")
-            // Observe errorVersion (monotonic counter) instead of errorMessage
-            // so an identical error string thrown twice still re-presents.
-            .onChange(of: auth.errorVersion) { _, _ in
-                if auth.errorMessage != nil { showAuthErrorAlert = true }
-            }
-            .alert("Inloggen mislukt", isPresented: $showAuthErrorAlert) {
-                Button("OK", role: .cancel) { auth.clearError() }
-            } message: {
-                Text(auth.errorMessage ?? "")
+            .task { await refreshICloudStatus() }
+            .onChange(of: scenePhase) { _, newPhase in
+                if newPhase == .active {
+                    Task { await refreshICloudStatus() }
+                }
             }
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
@@ -124,110 +117,40 @@ struct AccountView: View {
         try? await pro.restore()
     }
 
-    // MARK: - Profile
-    private var profileCard: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack(spacing: 16) {
-                BrandIconCircle {
-                    if let initials = userInitials {
-                        Text(initials)
-                            .font(.system(.title, design: .rounded, weight: .bold))
-                    } else {
-                        Image(systemName: "person.fill")
-                            .font(.title)
-                    }
-                }
-                VStack(alignment: .leading, spacing: 4) {
-                    if auth.isSignedIn {
-                        if let fullName = auth.user?.fullName, !fullName.isEmpty {
-                            Text(fullName)
-                                .font(.system(.title3, design: .rounded, weight: .bold))
-                                .foregroundStyle(AppTheme.primaryText)
-                        } else {
-                            Text("Ingelogd met Apple")
-                                .font(.system(.title3, design: .rounded, weight: .bold))
-                                .foregroundStyle(AppTheme.primaryText)
-                        }
-                        if auth.needsCloudReconnect {
-                            // Don't claim sync works when the cloud
-                            // connection never completed.
-                            Label("Synchronisatie niet verbonden", systemImage: "exclamationmark.icloud.fill")
-                                .font(.system(.footnote, design: .rounded, weight: .semibold))
-                                .foregroundStyle(AppTheme.coralText)
-                        } else if auth.cloudConnection == .connecting {
-                            Label("Verbinden met de cloud…", systemImage: "icloud")
-                                .font(.system(.footnote, design: .rounded))
-                                .foregroundStyle(AppTheme.secondaryText)
-                        } else if let email = auth.user?.email, !email.isEmpty {
-                            Text(email)
-                                .font(.system(.footnote, design: .rounded))
-                                .foregroundStyle(AppTheme.secondaryText)
-                                .lineLimit(1)
-                        } else if auth.user?.supabaseUserId != nil {
-                            Label("Trainingen worden gesyncd", systemImage: "checkmark.icloud.fill")
-                                .font(.system(.footnote, design: .rounded))
-                                .foregroundStyle(AppTheme.secondaryText)
-                        }
-                    } else {
-                        Text("Sync je trainingen")
-                            .font(.system(.title3, design: .rounded, weight: .bold))
-                            .foregroundStyle(AppTheme.primaryText)
-                        Text("Inloggen is optioneel. De app werkt volledig zonder account — log alleen in met Apple als je je favorieten tussen apparaten wilt synchroniseren.")
-                            .font(.system(.footnote, design: .rounded))
-                            .foregroundStyle(AppTheme.secondaryText)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-                Spacer()
+    // MARK: - iCloud sync
+    /// No account of our own: favorites sync through the user's private
+    /// iCloud database. This card only says whether that's active here.
+    private var syncCard: some View {
+        HStack(spacing: 16) {
+            BrandIconCircle {
+                Image(systemName: iCloudAvailable ? "checkmark.icloud.fill" : "icloud.slash.fill")
+                    .font(.title)
             }
-
-            if !auth.isSignedIn {
-                SignInWithAppleButton(
-                    .signIn,
-                    onRequest: { request in
-                        auth.configureSignInRequest(request)
-                    },
-                    onCompletion: { result in
-                        auth.handleAuthorization(result)
-                    }
-                )
-                .signInWithAppleButtonStyle(.black)
-                .frame(height: 48)
-                .clipShape(Capsule())
-            } else if auth.needsCloudReconnect {
-                // Retry needs a fresh Apple identity token (they expire
-                // within minutes), so it goes through Sign in with Apple
-                // again rather than replaying the old credential.
-                Text("Je favorieten worden nu alleen op dit toestel bewaard. Verbind opnieuw om ze te synchroniseren.")
+            VStack(alignment: .leading, spacing: 4) {
+                Text(iCloudAvailable ? "Gesynchroniseerd via iCloud" : "iCloud staat uit")
+                    .font(.system(.title3, design: .rounded, weight: .bold))
+                    .foregroundStyle(AppTheme.primaryText)
+                Text(iCloudAvailable
+                     ? "Je favorieten staan automatisch op al je toestellen met hetzelfde Apple-account."
+                     : "Je favorieten worden alleen op dit toestel bewaard. Log in bij iCloud in Instellingen om ze op al je toestellen te hebben.")
                     .font(.system(.footnote, design: .rounded))
                     .foregroundStyle(AppTheme.secondaryText)
                     .fixedSize(horizontal: false, vertical: true)
-                SignInWithAppleButton(
-                    .continue,
-                    onRequest: { request in
-                        auth.configureSignInRequest(request)
-                    },
-                    onCompletion: { result in
-                        auth.handleAuthorization(result)
-                    }
-                )
-                .signInWithAppleButtonStyle(.black)
-                .frame(height: 48)
-                .clipShape(Capsule())
-                .accessibilityHint(Text("Verbind opnieuw om je favorieten te synchroniseren"))
             }
+            Spacer()
         }
         .padding(20)
         .softCard()
-        .animation(.appSmooth, value: auth.isSignedIn)
-        .animation(.appSmooth, value: auth.needsCloudReconnect)
+        .accessibilityElement(children: .combine)
+        .animation(.appSmooth, value: iCloudAvailable)
     }
 
-    private var userInitials: String? {
-        guard let name = auth.user?.fullName, !name.isEmpty else { return nil }
-        let parts = name.split(separator: " ").prefix(2)
-        let initials = parts.map { $0.prefix(1) }.joined().uppercased()
-        return initials.isEmpty ? nil : initials
+    /// `CKContainer.default()` is the container from the entitlements —
+    /// the same one SwiftData syncs through.
+    private func refreshICloudStatus() async {
+        // A failed check (e.g. offline) keeps the last known state.
+        guard let status = try? await CKContainer.default().accountStatus() else { return }
+        iCloudAvailable = status == .available
     }
 
     // MARK: - Signal tones & haptics
@@ -405,88 +328,6 @@ struct AccountView: View {
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
-    // MARK: - Logout & account deletion
-    private var logoutButton: some View {
-        Group {
-            if auth.isSignedIn {
-                VStack(spacing: 14) {
-                    // iOS 26+: the kit's plain "Glass" capsule in its
-                    // destructive variant — the role tints the label red.
-                    // Outline capsule fallback on older systems.
-                    if #available(iOS 26.0, *) {
-                        Button(role: .destructive) {
-                            auth.signOut(modelContext: modelContext)
-                        } label: {
-                            Text("Log uit")
-                                .font(.system(.headline, design: .rounded, weight: .semibold))
-                                .frame(maxWidth: .infinity)
-                        }
-                        .buttonStyle(.glass)
-                        .buttonBorderShape(.capsule)
-                        .controlSize(.large)
-                    } else {
-                        Button(role: .destructive) {
-                            auth.signOut(modelContext: modelContext)
-                        } label: {
-                            Text("Log uit")
-                                .font(.system(.headline, design: .rounded, weight: .semibold))
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 14)
-                                .background(Capsule().stroke(AppTheme.error.opacity(0.4), lineWidth: 1))
-                                .foregroundStyle(AppTheme.error)
-                        }
-                    }
-
-                    // Required by App Store Review Guideline 5.1.1(v): a user
-                    // who can create an account must be able to delete it
-                    // in-app. Double-confirmed because it's irreversible.
-                    Button {
-                        showDeleteConfirm = true
-                    } label: {
-                        HStack(spacing: 6) {
-                            if deleteInFlight { ProgressView().tint(AppTheme.error) }
-                            Text("Account verwijderen")
-                                .font(.system(.subheadline, design: .rounded, weight: .medium))
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .foregroundStyle(AppTheme.error)
-                    }
-                    .disabled(deleteInFlight)
-                }
-                .padding(.top, 4)
-                .alert("Account verwijderen?", isPresented: $showDeleteConfirm) {
-                    Button("Verwijder", role: .destructive) {
-                        Task { await deleteAccount() }
-                    }
-                    Button("Annuleer", role: .cancel) {}
-                } message: {
-                    Text("Dit verwijdert je account en al je gesynchroniseerde favorieten definitief. Dit kan niet ongedaan worden gemaakt.")
-                }
-                .alert("Verwijderen mislukt", isPresented: $showDeleteError) {
-                    Button("OK", role: .cancel) {}
-                } message: {
-                    Text(deleteErrorMessage ?? "Probeer het later opnieuw.")
-                }
-            }
-        }
-    }
-
-    private func deleteAccount() async {
-        deleteInFlight = true
-        defer { deleteInFlight = false }
-        do {
-            try await auth.deleteAccount(modelContext: modelContext)
-        } catch {
-            // Raw SDK errors are technical English strings — give the user
-            // an actionable Dutch message instead. The most common real
-            // cause is a missing/expired Supabase session (e.g. signed in
-            // with Apple while offline), fixed by signing in again.
-            deleteErrorMessage = String(localized: "Verwijderen is niet gelukt. Controleer je internetverbinding, log zo nodig opnieuw in met Apple en probeer het dan nog eens.")
-            showDeleteError = true
-        }
-    }
-
     // MARK: - Helpers
     private func sectionHeader(_ title: LocalizedStringKey) -> some View {
         Text(title)
@@ -517,7 +358,6 @@ struct AccountView: View {
 #Preview {
     AccountView()
         .environment(AudioSettings())
-        .environment(AuthManager())
         .environment(AppearanceSettings())
         .environment(StoreManager())
         .modelContainer(for: WorkoutEntity.self, inMemory: true)

@@ -56,6 +56,22 @@
         }
       }
     },
+    "Aan de slag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get started"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commencer"
+          }
+        }
+      }
+    },
     "Aankoop in behandeling" : {
       "localizations" : {
         "en" : {
@@ -147,38 +163,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Account"
-          }
-        }
-      }
-    },
-    "Account verwijderen" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete account"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Supprimer le compte"
-          }
-        }
-      }
-    },
-    "Account verwijderen?" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete account?"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Supprimer le compte ?"
           }
         }
       }
@@ -476,22 +460,6 @@
         }
       }
     },
-    "Dit verwijdert je account en al je gesynchroniseerde favorieten definitief. Dit kan niet ongedaan worden gemaakt." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This permanently deletes your account and all your synced favorites. This cannot be undone."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cette action supprime définitivement votre compte et tous vos favoris synchronisés. Elle est irréversible."
-          }
-        }
-      }
-    },
     "Donker" : {
       "comment" : "Appearance mode: force dark",
       "localizations" : {
@@ -737,6 +705,22 @@
         }
       }
     },
+    "Gesynchroniseerd via iCloud" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Synced with iCloud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Synchronisé via iCloud"
+          }
+        }
+      }
+    },
     "GO!" : {
       "comment" : "Countdown go indicator",
       "extractionState" : "stale",
@@ -913,56 +897,18 @@
         }
       }
     },
-    "Ingelogd met Apple" : {
+    "iCloud staat uit" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Signed in with Apple"
+            "value" : "iCloud is off"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connecté avec Apple"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ingelogd met Apple"
-          }
-        }
-      }
-    },
-    "Inloggen is optioneel. De app werkt volledig zonder account — log alleen in met Apple als je je favorieten tussen apparaten wilt synchroniseren." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Signing in is optional. The app works fully without an account — only sign in with Apple if you want to sync your favorites across devices."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La connexion est facultative. L'app fonctionne entièrement sans compte — connectez-vous avec Apple uniquement si vous souhaitez synchroniser vos favoris entre vos appareils."
-          }
-        }
-      }
-    },
-    "Inloggen mislukt" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign-in failed"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Échec de la connexion"
+            "value" : "iCloud est désactivé"
           }
         }
       }
@@ -980,6 +926,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Effort"
+          }
+        }
+      }
+    },
+    "Je favorieten staan automatisch op al je toestellen met hetzelfde Apple-account." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your favorites appear automatically on all your devices signed in with the same Apple Account."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos favoris apparaissent automatiquement sur tous vos appareils connectés au même compte Apple."
+          }
+        }
+      }
+    },
+    "Je favorieten worden alleen op dit toestel bewaard. Log in bij iCloud in Instellingen om ze op al je toestellen te hebben." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your favorites are only stored on this device. Sign in to iCloud in Settings to have them on all your devices."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vos favoris sont enregistrés uniquement sur cet appareil. Connectez-vous à iCloud dans Réglages pour les retrouver sur tous vos appareils."
           }
         }
       }
@@ -1078,22 +1056,6 @@
         }
       }
     },
-    "Je bent ingelogd, maar de verbinding met de cloud is mislukt. Je favorieten worden voorlopig alleen op dit toestel bewaard. Probeer opnieuw via Account." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You're signed in, but connecting to the cloud failed. For now your favorites are only stored on this device. Try again from Account."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vous êtes connecté, mais la connexion au cloud a échoué. Pour l'instant, vos favoris sont enregistrés uniquement sur cet appareil. Réessayez depuis Compte."
-          }
-        }
-      }
-    },
     "Je favorieten staan op al je apparaten." : {
       "localizations" : {
         "en" : {
@@ -1106,22 +1068,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vos favoris sont disponibles sur tous vos appareils."
-          }
-        }
-      }
-    },
-    "Je favorieten worden nu alleen op dit toestel bewaard. Verbind opnieuw om ze te synchroniseren." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your favorites are only stored on this device for now. Reconnect to sync them."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pour l'instant, vos favoris sont enregistrés uniquement sur cet appareil. Reconnectez-vous pour les synchroniser."
           }
         }
       }
@@ -1300,22 +1246,6 @@
         }
       }
     },
-    "Log uit" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Log out"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se déconnecter"
-          }
-        }
-      }
-    },
     "Meld je aan met Apple voor synchronisatie." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1369,22 +1299,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naam"
-          }
-        }
-      }
-    },
-    "Naar Account" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go to Account"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aller au compte"
           }
         }
       }
@@ -2252,38 +2166,6 @@
         }
       }
     },
-    "Sync je trainingen" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sync your workouts"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Synchronisez vos entraînements"
-          }
-        }
-      }
-    },
-    "Synchronisatie niet verbonden" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sync not connected"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Synchronisation non connectée"
-          }
-        }
-      }
-    },
     "Synct overal" : {
       "localizations" : {
         "en" : {
@@ -2530,22 +2412,6 @@
         }
       }
     },
-    "Trainingen worden gesyncd" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Workouts are synced"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entraînements synchronisés"
-          }
-        }
-      }
-    },
     "Trainingskleuren" : {
       "localizations" : {
         "en" : {
@@ -2592,54 +2458,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "v2"
-          }
-        }
-      }
-    },
-    "Verbind opnieuw om je favorieten te synchroniseren" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reconnect to sync your favorites"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reconnectez-vous pour synchroniser vos favoris"
-          }
-        }
-      }
-    },
-    "Verbinden met de cloud…" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Connecting to the cloud…"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Connexion au cloud…"
-          }
-        }
-      }
-    },
-    "Verder zonder account" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continue without an account"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continuer sans compte"
           }
         }
       }
@@ -2692,22 +2510,6 @@
         }
       }
     },
-    "Verwijder" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Supprimer"
-          }
-        }
-      }
-    },
     "Verwijder %@" : {
       "localizations" : {
         "en" : {
@@ -2743,22 +2545,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verwijderen"
-          }
-        }
-      }
-    },
-    "Verwijderen is niet gelukt. Controleer je internetverbinding, log zo nodig opnieuw in met Apple en probeer het dan nog eens." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Deletion failed. Check your internet connection, sign in with Apple again if needed, and try again."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La suppression a échoué. Vérifiez votre connexion Internet, reconnectez-vous avec Apple si nécessaire, puis réessayez."
           }
         }
       }

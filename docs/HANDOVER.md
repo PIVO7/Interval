@@ -1,5 +1,10 @@
 # Interval app — handover na sessie 21–22 mei 2026
 
+> **Verouderd.** Sinds oktober 2026 zijn Live Activity, Sign in with Apple
+> en Supabase uit de app verwijderd; favorieten synchroniseren via iCloud
+> (SwiftData + CloudKit). Zie README.md en docs/RELEASE_NOTES.md voor de
+> huidige stand.
+
 ## Project context
 
 iOS-app `com.superapp.interval` voor coaches/kinesitherapeuten:

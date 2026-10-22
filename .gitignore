@@ -38,7 +38,7 @@ web-build/
 .env
 .env.local
 
-# Local secrets — never commit
+# Local secrets — never commit (left over from the removed Supabase backend)
 Interval/Supabase/SupabaseConfig.swift
 
 # Claude Code local state
@@ -47,5 +47,3 @@ Interval/Supabase/SupabaseConfig.swift
 # Generated Icon Composer previews (ictool)
 Icon/previews/
 
-# Supabase CLI cache
-supabase/.temp/

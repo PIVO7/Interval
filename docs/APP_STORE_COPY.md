@@ -44,7 +44,7 @@ Eén aankoop, voor altijd van jou:
 • Kleurthema's: kies de trainingskleuren die bij jou passen
 
 PRIVACY VOOROP
-Geen account nodig: de timer werkt volledig zonder registratie. Log alleen in met Apple als je je favorieten tussen je apparaten wilt synchroniseren.
+Geen account nodig: geen registratie, geen login. Je favorieten synchroniseren via je eigen iCloud tussen je toestellen, en Roundly verzamelt geen gegevens.
 
 Vragen of suggesties? Mail naar jelle@pivo7.be.
 ```
@@ -91,7 +91,7 @@ Buy once, yours forever:
 • Colour themes: pick the workout colours that suit you
 
 PRIVACY FIRST
-No account needed: the timer works fully without signing up. Only sign in with Apple if you want to sync your favorites across your devices.
+No account needed: no sign-up, no login. Your favorites sync across your devices through your own iCloud, and Roundly collects no data.
 
 Questions or ideas? Email jelle@pivo7.be.
 ```
@@ -138,7 +138,7 @@ Achetez une fois, à vous pour toujours :
 • Thèmes de couleurs : choisissez les couleurs d'entraînement qui vous conviennent
 
 LA CONFIDENTIALITÉ D'ABORD
-Aucun compte requis : le minuteur fonctionne entièrement sans inscription. Connectez-vous avec Apple uniquement si vous souhaitez synchroniser vos favoris entre vos appareils.
+Aucun compte requis : pas d'inscription, pas de connexion. Vos favoris se synchronisent entre vos appareils via votre propre iCloud, et Roundly ne collecte aucune donnée.
 
 Des questions ou des idées ? Écrivez à jelle@pivo7.be.
 ```
@@ -170,4 +170,5 @@ hier strenger dan bij de app-beschrijving).
 - [ ] Zoekwoorden: geen woorden herhalen die al in naam/ondertitel staan (Apple negeert ze en het kost tekens).
 - [ ] Screenshots per taal: de app in die taal draaien (Edit Scheme → Run → Options → App Language) en dezelfde schermen schieten: home, actieve training (inspanning + rust), klaar-scherm, favorieten, paywall.
 - [ ] Support-URL en privacy policy-URL invullen (privacy policy idealiter ook in EN/FR — zie docs/PRIVACY.md).
+- [ ] App Privacy in App Store Connect: **Data Not Collected** (favorieten staan in de eigen iCloud van de gebruiker, er is geen account of server).
 - [ ] Paywall-screenshot uploaden bij de IAP zelf (verplicht voor review).

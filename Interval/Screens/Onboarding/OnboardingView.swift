@@ -1,11 +1,9 @@
 import SwiftUI
-import AuthenticationServices
 
 struct OnboardingView: View {
-    @Environment(AuthManager.self) private var auth
+    @Environment(OnboardingState.self) private var onboarding
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var appeared = false
-    @State private var showAuthErrorAlert = false
 
     /// Hero title size scales with the user's preferred text size so
     /// "Roundly" stays readable at accessibility text sizes.
@@ -26,16 +24,6 @@ struct OnboardingView: View {
             .padding(.horizontal, 40)
             .frame(maxWidth: 560)
             .frame(maxWidth: .infinity)
-        }
-        // Observe errorVersion (monotonic) so identical errors thrown
-        // back-to-back still re-present.
-        .onChange(of: auth.errorVersion) { _, _ in
-            if auth.errorMessage != nil { showAuthErrorAlert = true }
-        }
-        .alert("Inloggen mislukt", isPresented: $showAuthErrorAlert) {
-            Button("OK", role: .cancel) { auth.errorMessage = nil }
-        } message: {
-            Text(auth.errorMessage ?? "")
         }
     }
 
@@ -131,34 +119,19 @@ struct OnboardingView: View {
     }
 
     // MARK: - Buttons
+    // No account needed: favorites sync through the user's own iCloud, so
+    // the welcome flow ends with a single call to action.
     private var bottomButtons: some View {
-        VStack(spacing: 14) {
-            // Primary: Sign in with Apple. Once signed in, AuthManager bridges
-            // the credential into Supabase Auth so the user's favorites sync
-            // across devices.
-            SignInWithAppleButton(
-                .signIn,
-                onRequest: { request in
-                    auth.configureSignInRequest(request)
-                },
-                onCompletion: { result in
-                    auth.handleAuthorization(result)
-                }
-            )
-            .signInWithAppleButtonStyle(.white)
-            .frame(height: 56)
-            .clipShape(Capsule())
-            .shadow(color: Color.black.opacity(0.15), radius: 12, x: 0, y: 6)
-
-            // Secondary: continue without an account (local-only mode).
-            Button(action: auth.skipOnboarding) {
-                Text("Verder zonder account")
-                    .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                    .foregroundStyle(.white.opacity(0.85))
-                    .padding(.vertical, 8)
-            }
-            .accessibilityLabel("Verder zonder account")
+        Button(action: onboarding.finish) {
+            Text("Aan de slag")
+                .font(.system(.headline, design: .rounded, weight: .bold))
+                .foregroundStyle(AppTheme.coralDeep)
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
+                .background(Capsule().fill(.white))
+                .shadow(color: Color.black.opacity(0.15), radius: 12, x: 0, y: 6)
         }
+        .buttonStyle(PressableButtonStyle())
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.5).delay(0.65), value: appeared)
     }
@@ -196,5 +169,5 @@ struct OnboardingView: View {
 
 #Preview {
     OnboardingView()
-        .environment(AuthManager())
+        .environment(OnboardingState())
 }
