@@ -11,7 +11,7 @@ import os
 @MainActor
 final class HapticPlayer: CueChannel {
     private let settings: AudioSettings
-    private let log = Logger(subsystem: "be.pivo7.roundly",
+    private let log = Logger(subsystem: "be.pivot-studio.roundly",
                              category: "HapticPlayer")
 
     private var engine: CHHapticEngine?

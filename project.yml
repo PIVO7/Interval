@@ -1,6 +1,6 @@
 name: Interval
 options:
-  bundleIdPrefix: be.pivo7
+  bundleIdPrefix: be.pivot-studio
   developmentLanguage: nl
   # Icon Composer packages must be a single file reference, not exploded.
   fileTypes:
@@ -30,7 +30,7 @@ targets:
     deploymentTarget: '18.0'
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: be.pivo7.roundly
+        PRODUCT_BUNDLE_IDENTIFIER: be.pivot-studio.roundly
         CODE_SIGN_ENTITLEMENTS: Interval/Interval.entitlements
     entitlements:
       path: Interval/Interval.entitlements
@@ -38,7 +38,7 @@ targets:
         # iCloud (CloudKit) private database: SwiftData syncs favorites
         # across the user's devices. No accounts or servers of our own.
         com.apple.developer.icloud-container-identifiers:
-          - iCloud.be.pivo7.roundly
+          - iCloud.be.pivot-studio.roundly
         com.apple.developer.icloud-services:
           - CloudKit
         # Silent pushes tell SwiftData a remote change is waiting.
@@ -93,7 +93,7 @@ targets:
       - target: Interval
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: be.pivo7.roundly.tests
+        PRODUCT_BUNDLE_IDENTIFIER: be.pivot-studio.roundly.tests
         GENERATE_INFOPLIST_FILE: YES
 
 schemes:

@@ -8,8 +8,8 @@ volledig gratis; favorieten en trainingskleuren zitten achter een eenmalige
 
 In de App Store en op het beginscherm heet de app **Roundly**. Het Xcode-project,
 de targets en de mappen heten nog "Interval"; dat is onzichtbaar voor
-gebruikers. De bundle-ID is `be.pivo7.roundly` en het IAP-product-ID
-`be.pivo7.roundly.pro_unlock`. Die kunnen na registratie in App Store
+gebruikers. De bundle-ID is `be.pivot-studio.roundly` en het IAP-product-ID
+`be.pivot-studio.roundly.pro_unlock`. Die kunnen na registratie in App Store
 Connect niet meer wijzigen.
 
 ## Project opzetten (verse clone)
@@ -37,7 +37,7 @@ Connect niet meer wijzigen.
 ## iCloud-sync
 
 Favorieten (`WorkoutEntity`) synchroniseren via de privé-database van de
-gebruiker in CloudKit-container `iCloud.be.pivo7.roundly`. Daardoor
+gebruiker in CloudKit-container `iCloud.be.pivot-studio.roundly`. Daardoor
 geldt voor het model: geen `@Attribute(.unique)` en een standaardwaarde op
 elke property.
 

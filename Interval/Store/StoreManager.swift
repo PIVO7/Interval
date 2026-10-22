@@ -29,7 +29,7 @@ final class StoreManager {
     static let freeForEveryone = false
 
     /// Must match the product ID in App Store Connect and `ProUnlock.storekit`.
-    static let unlockProductID = "be.pivo7.roundly.pro_unlock"
+    static let unlockProductID = "be.pivot-studio.roundly.pro_unlock"
 
     /// Real StoreKit entitlement state. Read ownership through `isUnlocked`,
     /// which also honours `freeForEveryone`.
@@ -61,7 +61,7 @@ final class StoreManager {
     // without crossing the main actor (same pattern as TimerEngine).
     // `Task.cancel()` itself is thread-safe.
     @ObservationIgnored private nonisolated(unsafe) var updatesTask: Task<Void, Never>?
-    private let log = Logger(subsystem: "be.pivo7.roundly", category: "Store")
+    private let log = Logger(subsystem: "be.pivot-studio.roundly", category: "Store")
 
     init() {
         // Listen for transactions that arrive outside an explicit purchase()
