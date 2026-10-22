@@ -23,7 +23,7 @@
                                     <constraint firstAttribute="height" constant="80" id="h-tm-001"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interval" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-tm-001">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Roundly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-tm-001">
                                 <rect key="frame" x="146" y="466" width="101" height="41"/>
                                 <fontDescription key="fontDescription" type="system" weight="bold" pointSize="34"/>
                                 <color key="textColor" red="0.1686" green="0.1686" blue="0.1686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
