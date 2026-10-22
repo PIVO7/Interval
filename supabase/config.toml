@@ -1,8 +1,0 @@
-# Supabase project config — checked into git so deploys are reproducible.
-#
-# Currently no per-function overrides required: the only Supabase code
-# the app depends on is Auth (Sign in with Apple) + the `workouts` and
-# `user_preferences` tables, neither of which needs custom Edge Function
-# settings.
-
-project_id = "interval"

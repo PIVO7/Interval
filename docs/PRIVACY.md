@@ -1,198 +1,109 @@
 # Privacybeleid — Roundly
 
-_Laatst bijgewerkt: 12 augustus 2026_
+_Laatst bijgewerkt: 22 oktober 2026_
 
 Roundly is een interval-timer-app voor coaches, kinesitherapeuten en
-mensen die regelmatig HIIT/Tabata-style trainingen doen. We willen zo
-min mogelijk persoonsgegevens verwerken, en als we het doen — alleen om
-de app voor jou te laten werken. Geen tracking, geen advertenties,
-geen verkoop van gegevens.
+mensen die regelmatig HIIT/Tabata-style trainingen doen. Roundly
+verzamelt **geen persoonsgegevens**: er is geen account, geen eigen
+server, geen tracking, geen analytics en geen advertenties.
 
-Dit document beschrijft welke gegevens we verzamelen, hoe we ze
-gebruiken, en welke rechten je hebt.
+Dit document legt uit wat er met je gegevens gebeurt en welke rechten
+je hebt.
 
 
 ## 1. Wie we zijn
 
-**Verantwoordelijke voor de gegevensverwerking** (in de zin van
-GDPR / AVG art. 4(7)):
+**Verantwoordelijke** (in de zin van GDPR / AVG art. 4(7)):
 
 Jelle Wauters
 e-mail: [jelle@pivo7.be](mailto:jelle@pivo7.be)
 
-Voor alle vragen over je gegevens, of om je rechten uit te oefenen
-(zie sectie 7), gebruik dat e-mailadres.
 
+## 2. Welke gegevens de app gebruikt
 
-## 2. Welke gegevens we verzamelen
+### a. Favorieten
 
-### a. Inloggen via Sign in with Apple (optioneel)
-
-Je kunt Roundly volledig anoniem gebruiken (knop "Verder zonder
-account" in de onboarding). Doe je dat, dan slaan we **geen
-persoonsgegevens op een server op**. Alleen je workout-instellingen en
-voorkeuren blijven lokaal op je apparaat.
-
-Kies je voor "Sign in with Apple", dan ontvangen wij van Apple:
-
-- een **anonieme gebruikers-ID** (Apple's `userIdentifier`,
-  bv. `001234.abcdef1234567890.0000`),
-- je **volledige naam** — alleen bij de eerste keer inloggen, en
-  alleen als je daar toestemming voor geeft in Apple's dialoogvenster,
-- een **e-mailadres** — kan je echte e-mail zijn of een door Apple
-  gegenereerd "Private Relay" alias als je daarvoor kiest in dezelfde
-  dialoog.
-
-We slaan die gegevens op in onze database (zie sectie 4) zodat we je
-opgeslagen workouts kunnen koppelen aan je account.
-
-### b. Workouts die je opslaat als favoriet
-
-Wanneer je een interval-schema (work / rest / aantal rondes) opslaat
-als favoriet, slaan we het volgende op:
+Wanneer je een interval-schema opslaat als favoriet, bewaart de app:
 
 - de naam die je het schema geeft (bv. "Tabata 30/15"),
-- de duur van de werkfases (seconden),
-- de duur van de rustfases (seconden),
+- de duur van de werk- en rustfases (seconden),
 - het aantal rondes,
 - de datum waarop je hem aangemaakt hebt.
 
-Alleen lokaal als je niet ingelogd bent. Plus in onze cloud database
-als je wel ingelogd bent.
+Die gegevens staan op je toestel. Ben je op je toestel ingelogd bij
+**iCloud**, dan synchroniseert iOS ze via je **eigen, privé
+iCloud-opslag** naar je andere toestellen met hetzelfde Apple-account.
+Die opslag beheert Apple; wij kunnen ze niet inzien en ontvangen niets.
+Staat iCloud uit, dan blijven je favorieten alleen op dit toestel.
 
-### c. In-app aankoop (Roundly Pro)
+### b. In-app aankoop (Roundly Pro)
 
 De eenmalige "Roundly Pro"-aankoop verloopt volledig via Apple's
-App Store (StoreKit). Wij ontvangen **geen betaalgegevens** — geen
-kaartnummers, geen factuuradres, geen Apple-ID. Of je de aankoop
-gedaan hebt wordt door Apple bijgehouden en door de app alleen
-lokaal uitgelezen; wij slaan het niet op onze server op.
+App Store (StoreKit). Wij ontvangen **geen betaalgegevens** en geen
+Apple-ID. Of je de aankoop gedaan hebt, houdt Apple bij; de app leest
+dat alleen lokaal uit.
 
-### d. Lokale voorkeuren
+### c. Lokale voorkeuren
 
-De volgende gegevens worden **alleen lokaal op je apparaat** opgeslagen,
-in iOS' `UserDefaults`, en gaan nooit naar onze server:
+Alleen op je toestel (in iOS' `UserDefaults`):
 
 - of je de onboarding al hebt gezien,
-- welk omgevingsgeluid je laatst koos en op welk volume,
-- of haptic feedback en signaaltonen aan staan,
-- of je licht / donker / systeem-uiterlijk hebt geselecteerd.
+- je instellingen voor signaaltonen, haptics en stemcues,
+- je gekozen uiterlijk (licht / donker / systeem) en trainingskleuren.
 
-### e. Wat we NIET verzamelen
+### d. Wat we NIET verzamelen
 
-- Geen locatie.
-- Geen contactpersonen, foto's, of microfoon-data.
-- Geen gezondheidsgegevens (geen hartslag of vergelijkbare data).
-- Geen analytics-pixels, geen advertentie-IDs.
-- Geen tracking tussen apps of websites.
-
-
-## 3. Waarom we deze gegevens gebruiken
-
-| Doel | Gegevens | Rechtsgrond (GDPR art. 6) |
-|---|---|---|
-| Je account herkennen tussen apparaten | Apple user-ID, naam, e-mail | Uitvoering van de overeenkomst (art. 6.1.b) |
-| Je opgeslagen workouts synchroniseren | Workout-naam + instellingen | Uitvoering van de overeenkomst (art. 6.1.b) |
-| Je per e-mail antwoorden op vragen die je stelt | E-mailadres | Gerechtvaardigd belang (art. 6.1.f) |
-
-We doen **geen profiling**, **geen geautomatiseerde besluitvorming**
-op basis van je gegevens, en gebruiken je gegevens **niet voor
-marketing** (we sturen je nooit een nieuwsbrief tenzij je je daar
-expliciet op inschrijft — wat we momenteel niet eens aanbieden).
+- Geen account, naam of e-mailadres.
+- Geen locatie, contactpersonen, foto's of microfoon-data.
+- Geen gezondheidsgegevens.
+- Geen analytics, geen advertentie-IDs, geen tracking tussen apps of
+  websites.
 
 
-## 4. Met wie we gegevens delen
+## 3. Met wie gegevens gedeeld worden
 
-Wij verkopen je gegevens niet en delen ze niet met derden voor
-commerciële doeleinden. We gebruiken wel de volgende **subverwerkers**
-om de app technisch te laten werken:
+Met niemand. De enige partij die iets van de app verwerkt is **Apple**:
 
-### Supabase (database + authenticatie)
+- **iCloud** bewaart en synchroniseert je favorieten in je eigen
+  iCloud-account, als je iCloud gebruikt.
+- **App Store / StoreKit** handelt de Roundly Pro-aankoop af.
 
-Onze backend draait op [Supabase](https://supabase.com), een
-PostgreSQL-as-a-service provider. Supabase bewaart je account-gegevens
-en opgeslagen workouts op servers in de **Europese Unie** (regio
-`eu-central-1`, Frankfurt). Supabase is verwerker, wij zijn
-verantwoordelijke. Hun privacybeleid:
-[supabase.com/privacy](https://supabase.com/privacy).
-
-### Apple
-
-- **Sign in with Apple**: Apple authentiseert je identiteit. Wij
-  ontvangen alleen wat je in het Apple-dialoogvenster goedkeurt
-  (sectie 2.a).
-- **App Store / StoreKit**: de eenmalige Roundly Pro-aankoop wordt
-  volledig door Apple afgehandeld (sectie 2.c). Apple's privacybeleid:
-  [apple.com/legal/privacy](https://www.apple.com/legal/privacy).
-
-Geen andere derde partijen ontvangen je gegevens.
+Apple's privacybeleid:
+[apple.com/legal/privacy](https://www.apple.com/legal/privacy).
 
 
-## 5. Hoe lang we gegevens bewaren
+## 4. Bewaartermijn en verwijderen
 
-| Categorie | Bewaartermijn |
-|---|---|
-| Account-gegevens (Apple user-ID, naam, e-mail) | Zo lang je account actief is |
-| Opgeslagen workouts | Zo lang je account actief is, of tot je ze handmatig verwijdert |
-| Lokale voorkeuren | Tot je de app verwijdert van je apparaat |
-
-Als je je account wilt laten verwijderen — zie sectie 7. We verwijderen
-dan alles binnen 30 dagen.
+Je beslist zelf: verwijder een favoriet in de app en hij verdwijnt ook
+van je andere toestellen. Verwijder je de app, dan verdwijnen de lokale
+gegevens. Wat in iCloud staat, kun je wissen via **Instellingen → [je
+naam] → iCloud → Beheer opslag → Roundly**.
 
 
-## 6. Beveiliging
+## 5. Jouw rechten
 
-- Alle communicatie tussen de app en onze backend gaat via **HTTPS / TLS 1.2+**.
-- Database-tabellen hebben **Row Level Security (RLS)**: je eigen
-  gegevens zijn alleen toegankelijk vanuit jouw geauthenticeerde
-  sessie.
-- Je privé Apple-wachtwoord raken wij nooit aan — Sign in with Apple
-  gebruikt alleen identity tokens.
-
-
-## 7. Jouw rechten
-
-Onder de Europese Algemene Verordening Gegevensbescherming (AVG / GDPR)
-heb je het recht om:
-
-- **inzage** te vragen in welke gegevens we van jou hebben (art. 15),
-- **rectificatie** te vragen als gegevens incorrect zijn (art. 16),
-- **verwijdering** te vragen van je gegevens (art. 17 — "right to be
-  forgotten"),
-- **beperking** van de verwerking te vragen (art. 18),
-- **overdraagbaarheid** van je gegevens te vragen — wij sturen je dan
-  een JSON-bestand met alles wat we van je hebben (art. 20),
-- **bezwaar te maken** tegen onze verwerking (art. 21),
-- een **klacht in te dienen** bij de Gegevensbeschermingsautoriteit
-  (GBA / Belgische DPA — [gegevensbeschermingsautoriteit.be](https://www.gegevensbeschermingsautoriteit.be))
-  of de toezichthouder in je eigen EU-land.
-
-Stuur een mail naar [jelle@pivo7.be](mailto:jelle@pivo7.be) en we
-verwerken je verzoek binnen 30 dagen.
-
-Wil je gewoon je hele account weg? Mail "Verwijder mijn account" naar
-het bovenstaande adres met je Apple user-ID of de e-mail waarmee je
-Sign in with Apple gedaan hebt, en we doen dat binnen 7 werkdagen.
+Onder de AVG / GDPR heb je recht op inzage, rectificatie, verwijdering,
+beperking, overdraagbaarheid en bezwaar. Omdat wij geen gegevens over
+jou bewaren, oefen je die rechten in de praktijk rechtstreeks uit in de
+app en in je iCloud-instellingen. Vragen kun je altijd mailen naar
+[jelle@pivo7.be](mailto:jelle@pivo7.be). Je kunt ook een klacht
+indienen bij de Gegevensbeschermingsautoriteit
+([gegevensbeschermingsautoriteit.be](https://www.gegevensbeschermingsautoriteit.be))
+of de toezichthouder in je eigen EU-land.
 
 
-## 8. Wijzigingen aan dit beleid
+## 6. Wijzigingen
 
-Als we dit beleid materieel wijzigen (bv. nieuwe subverwerkers, nieuwe
-gegevenscategorieën) updaten we de "Laatst bijgewerkt" datum bovenaan
-en notificeren we ingelogde gebruikers per e-mail. Triviale wijzigingen
-(typo's, verduidelijkingen) verschijnen gewoon hier zonder notificatie.
-
-De huidige en eerdere versies blijven raadpleegbaar via de
-versiegeschiedenis van deze pagina.
+Wijzigt dit beleid materieel, dan passen we de datum bovenaan aan. De
+eerdere versies blijven raadpleegbaar via de versiegeschiedenis.
 
 
-## 9. Contact
+## 7. Contact
 
-Vragen? Klachten? Mail [jelle@pivo7.be](mailto:jelle@pivo7.be).
+Vragen? Mail [jelle@pivo7.be](mailto:jelle@pivo7.be).
 
 ---
 
-_Korte versie voor wie haast heeft: we slaan alleen je Apple-naam,
-e-mail, en favorieten op een Europese Supabase server op (als je
-inlogt). Daar gebeurt verder niets mee. Geen advertenties, geen
-analytics, geen verkoop. Mail ons als je je account weg wilt._
+_Korte versie: Roundly verzamelt niets. Je favorieten staan op je
+toestel en, als je iCloud gebruikt, in je eigen iCloud. Geen account,
+geen server, geen analytics._

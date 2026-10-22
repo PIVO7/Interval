@@ -6,7 +6,7 @@ struct FinishedView: View {
     let onHome: () -> Void
     let onRestart: () -> Void
 
-    @Environment(FavoritesSync.self) private var favoritesSync
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(StoreManager.self) private var pro
     @Query private var favorites: [WorkoutEntity]
@@ -170,13 +170,12 @@ struct FinishedView: View {
         }
     }
 
-    /// Persist this workout as a favorite and queue it for sync.
-    /// Guest mode / unconfigured backends are not surfaced as errors.
+    /// Persist this workout as a favorite. iCloud sync happens in the
+    /// background.
     private func saveFavorite(_ saved: Workout) {
-        // The upload is queued and retried by FavoritesSync, so only a
-        // local save failure is surfaced.
+        modelContext.insert(WorkoutEntity(from: saved))
         do {
-            try favoritesSync.saveNew(saved)
+            try modelContext.save()
         } catch {
             syncErrorMessage = error.localizedDescription
             showSyncErrorAlert = true
@@ -218,7 +217,6 @@ struct FinishedView: View {
                        startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
         FinishedView(workout: .placeholder, onHome: {}, onRestart: {})
             .environment(StoreManager())
-            .environment(PreviewStore.favoritesSync)
-            .modelContainer(PreviewStore.container)
+            .modelContainer(for: WorkoutEntity.self, inMemory: true)
     }
 }

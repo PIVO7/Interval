@@ -1,7 +1,8 @@
 # Roundly (codebase: Interval)
 
 Simpele, betrouwbare interval-timer voor iOS (work/rest/rounds) met stem-cues,
-haptics en optionele sync via Sign in with Apple + Supabase. De timer is
+haptics en sync van favorieten via iCloud (SwiftData + CloudKit, geen account
+of eigen server). De timer is
 volledig gratis; favorieten en trainingskleuren zitten achter een eenmalige
 "Roundly Pro"-aankoop (€4,99, non-consumable via StoreKit 2).
 
@@ -15,18 +16,7 @@ kunnen na registratie niet meer wijzigen.
 1. **Vereisten:** Xcode 16+, [XcodeGen](https://github.com/yonaskolb/XcodeGen)
    (`brew install xcodegen`).
 
-2. **Supabase-config aanmaken** — dit bestand is bewust gitignored, zonder
-   bouwt het project niet:
-
-   ```bash
-   cp SupabaseConfig.example.swift "Interval/Supabase/SupabaseConfig.swift"
-   ```
-
-   Vul daarna je project-URL en publishable key in
-   (Supabase → Project Settings → API). Placeholders laten staan kan ook:
-   de app draait dan volledig lokaal, zonder login/sync.
-
-3. **Project genereren en openen:**
+2. **Project genereren en openen:**
 
    ```bash
    xcodegen generate
@@ -36,23 +26,29 @@ kunnen na registratie niet meer wijzigen.
    `project.pbxproj` wordt gegenereerd uit `project.yml` — nieuwe bestanden
    toevoegen = opnieuw `xcodegen generate` draaien.
 
-4. **Tests:** Cmd+U, of:
+3. **Tests:** Cmd+U, of:
 
    ```bash
    xcodebuild test -project "Interval.xcodeproj" -scheme "Interval" \
      -destination 'platform=iOS Simulator,name=iPhone 17'
    ```
 
-## Backend (Supabase)
+## iCloud-sync
 
-Migraties staan in `supabase/migrations/`. Deployen:
+Favorieten (`WorkoutEntity`) synchroniseren via de privé-database van de
+gebruiker in CloudKit-container `iCloud.com.superapp.interval`. Daardoor
+geldt voor het model: geen `@Attribute(.unique)` en een standaardwaarde op
+elke property.
 
-```bash
-SUPABASE_DB_PASSWORD='<database-wachtwoord>' supabase db push
-```
-
-Let op: gratis Supabase-projecten pauzeren na ~1 week inactiviteit
-(dashboard → Restore project).
+- In Xcode → Signing & Capabilities moeten **iCloud (CloudKit)** met die
+  container en **Push Notifications** aan staan (de entitlements staan al
+  in `Interval.entitlements`).
+- **Vóór de App Store-release:** in het
+  [CloudKit Console](https://icloud.developer.apple.com) het schema van
+  Development naar Production deployen ("Deploy Schema Changes"), anders
+  synct de App Store-build niet.
+- Sync testen kan op twee echte toestellen met hetzelfde iCloud-account;
+  de simulator synct alleen als je er bij iCloud inlogt.
 
 ## Docs
 
